@@ -3,69 +3,71 @@ package org.mmpp.impruth.service;
 import java.util.LinkedList;
 import java.util.List;
 
+import javassist.NotFoundException;
+
 import org.mmpp.impruth.model.ShelfObject;
 
 public class ShelfServiceImpl implements ShelfService {
 
-	private List<ShelfObject> _shelfObjects=null;
-	
+	private java.util.Map<String,java.util.List<Integer>> _shelfObjects=null;
+	private MediaService _mediaService;
 	public ShelfServiceImpl(){
 		super();
 	}
-	@Override
-	public ShelfObject find(Integer id) {
-		for(ShelfObject shelfObject : findAll()){
-			if(shelfObject.getId().equals(id))
-				return shelfObject;
+	public void setMediaService(MediaService mediaService){
+		this._mediaService = mediaService;
+	}
+	public MediaService getMediaService(){
+		return this._mediaService;
+	}
+	public ShelfObject find(String userName,Integer id) throws NotFoundException {
+		if(!getUserShelf(userName).contains(id)){
+			throw new NotFoundException("指定の書籍情報は存在しておりません");
 		}
-		return null;
+		
+		return getMediaService().find(id);
 	}
 
-	@Override
-	public List<ShelfObject> findAll() {
-
+	/**
+	 * ユーザ所有の書籍一覧
+	 * @param userName ユーザ 
+	 * @return
+	 */
+	private java.util.List<Integer> getUserShelf(String userName) {
+		return getShelfObjects().get(userName);
+	}
+	private java.util.Map<String,java.util.List<Integer>> getShelfObjects(){
 		if(_shelfObjects==null){
-			_shelfObjects = new LinkedList<ShelfObject>();
-			{
-				ShelfObject shelfObject = new ShelfObject();
-				shelfObject.setTitle("ONE PIECE");
-				shelfObject.setNumber(1);
-				shelfObject.setNumberValue("1");
-				shelfObject.setAuthorName("尾田 栄一郎");
-				shelfObject.setPublishCompanyName("集英社");
-				shelfObject.setId(_shelfObjects.size());
-				_shelfObjects.add(shelfObject);
-			}
-			{
-				ShelfObject shelfObject = new ShelfObject();
-				shelfObject.setTitle("無限のリヴァイアス コンプリートアートワークス");
-				shelfObject.setNumberValue("");
-				shelfObject.setAuthorName("VA");
-				shelfObject.setPublishCompanyName("新紀元社");
-				shelfObject.setId(_shelfObjects.size());
-				_shelfObjects.add(shelfObject);
-			}
+			_shelfObjects = new java.util.LinkedHashMap<String,java.util.List<Integer>>();
+			// TODO イニシャライズ
 		}
 		return _shelfObjects;
 	}
-	@Override
-	public ShelfObject createNew() {
-		ShelfObject shelfObject = new ShelfObject();
-		shelfObject.setId(_shelfObjects.size()+1);
 
-		return shelfObject;
+	public List<ShelfObject> findAll(String userName) {
+		List<ShelfObject> shelfResults = new LinkedList<ShelfObject>();
+		for(Integer id : getUserShelf(userName)){
+			shelfResults.add(getMediaService().find(id));
+		}
+		
+		return shelfResults;
 	}
-	@Override
-	public ShelfObject insert(ShelfObject shelfObject) {
-		shelfObject.setId(_shelfObjects.size()+1);
-		_shelfObjects.add(shelfObject);
-		return shelfObject;
+	public ShelfObject createNew(String userName) {
+		return getMediaService().createNew();
 	}
-	@Override
-	public ShelfObject delete(Integer id) {
-		ShelfObject shelfObject = find(id);
-		_shelfObjects.remove(shelfObject);
-		return shelfObject;
+	public ShelfObject insert(String userName,ShelfObject shelfObject) {
+
+		ShelfObject shelfObjectResult = getMediaService().insert(shelfObject);
+
+		this.getShelfObjects().get(userName).add(shelfObjectResult.getId());
+		
+		return shelfObjectResult;
+	}
+	public ShelfObject remove(String userName,Integer id) throws NotFoundException {
+		ShelfObject shelfObjectResult = find(userName, id);
+		this.getShelfObjects().get(userName).remove(shelfObjectResult.getId());
+
+		return shelfObjectResult;
 	}
 
 }

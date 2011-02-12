@@ -1,7 +1,7 @@
 package org.mmpp.impruth.action;
 
 import org.mmpp.impruth.action.models.DetailBook;
-import org.mmpp.impruth.action.models.ListBook;
+import org.mmpp.impruth.action.models.MediaListTableBook;
 import org.mmpp.impruth.model.ShelfObject;
 import org.mmpp.impruth.service.ShelfService;
 import org.springframework.beans.BeansException;
@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author mmpp kou
  *
  */
-public class DetailPageAction  extends AbstractBookShlfServicePageAction {
+public class DetailPageAction  extends AbstractMediaServicePageAction {
 	
 	/**
 	 * 
@@ -35,7 +35,7 @@ public class DetailPageAction  extends AbstractBookShlfServicePageAction {
 	
 	public DetailBook getDetailBook(){
 		if(_detailBook==null){
-			_detailBook = DetailBook.valueOf(getShelfService().find(getId()));
+			_detailBook = DetailBook.valueOf(getMediaService().find(getId()));
 		}
 		return _detailBook;
 	}

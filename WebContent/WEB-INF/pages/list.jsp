@@ -25,20 +25,29 @@
 		<table border="1">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th>タイトル</th>
-					<th>通巻数</th>
-					<th>著者</th>
-					<th>出版社</th>
+					<th>No △</th>
+					<!--
+					<th>書籍イメージ(テスト)</th>
+					-->
+					<th>タイトル □</th>
+					<th>通巻数 □</th>
+					<th>著者 □</th>
+					<th>出版社 □</th>
 				</tr>
 			</thead>
 			<tbody>
-				<s:iterator status="list" value="books" >
-				 <s:url var="detailUrl" action="detail">
+				<s:iterator status="list" value="books" id="listBook" >
+				 <s:url id="detailUrl" action="detail">
 				 	<s:param name="id" value="id" />
+				 </s:url> 
+				 <s:url id="pictureUrl" method="readImage">
+				 	<s:param name="fileName" value="pictureFilename" />
 				 </s:url> 
 				<tr>
 					<th><s:property value="%{#list.index+1}"/></th>
+					<!--
+					<td><img src='<s:property value="%{pictureUrl}" />' /></td>
+					-->
 					<td><s:a href="%{detailUrl}" ><s:property value="title"/></s:a></td>
 					<td><s:property value="number"/></td>
 					<td><s:property value="authorName"/></td>

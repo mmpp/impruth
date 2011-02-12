@@ -9,5 +9,30 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 
-	<bean name="shelfService" class="org.mmpp.impruth.service.ShelfServiceImpl"/>
+	<bean name="mediaService" class="org.mmpp.impruth.service.MediaServiceImpl"/>
+	
+	<bean name="shelfService" class="org.mmpp.impruth.service.ShelfServiceImpl">
+		<property name="mediaService" ref="mediaService" />
+	</bean>
+	<bean name="hopeService" class="org.mmpp.impruth.service.HopeServiceImpl">
+		<property name="mediaService" ref="mediaService" />
+	</bean>
+	
+	<bean id="spListPageAction" scope="prototype" class="org.mmpp.impruth.action.ListPageAction">
+    	<property name="mediaService" ref="mediaService" />
+    </bean>
+    <bean id="spDetailPageAction" scope="prototype" class="org.mmpp.impruth.action.DetailPageAction">
+    	<property name="mediaService" ref="mediaService" />
+    </bean>
+    <bean id="spDeletePageAction" scope="prototype" class="org.mmpp.impruth.action.DeletePageAction">
+    	<property name="mediaService" ref="mediaService" />
+    </bean>
+    <bean id="spNewPageAction" scope="prototype" class="org.mmpp.impruth.action.NewPageAction">
+    	<property name="mediaService" ref="mediaService" />
+    </bean>
+    
+    <bean id="spHopePageAction" scope="prototype" class="org.mmpp.impruth.action.HopePageAction">
+    	<property name="hopeService" ref="hopeService" />
+    </bean>
+
 </beans>

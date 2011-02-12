@@ -32,6 +32,11 @@ public class ScanBarcodeJsonBook {
 	 * 管理ID
 	 */
 	private String _id;
+
+	/**
+	 * 発売日
+	 */
+	private String _releaseDate;
 	
 	public String getTitle() {
 		return _title;
@@ -72,5 +77,11 @@ public class ScanBarcodeJsonBook {
 	public String getBarcode() {
 
 		return _barcode;
+	}
+	public void setReleaseDate(String releaseDate){
+		_releaseDate = releaseDate;
+	}
+	public String getReleaseDate() {
+		return _releaseDate;
 	}
 }

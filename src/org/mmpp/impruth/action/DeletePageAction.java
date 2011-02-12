@@ -6,7 +6,7 @@ package org.mmpp.impruth.action;
  * @author mmpp kou
  *
  */
-public class DeletePageAction extends AbstractBookShlfServicePageAction{
+public class DeletePageAction extends AbstractMediaServicePageAction{
 
 	/**
 	 * 
@@ -20,7 +20,7 @@ public class DeletePageAction extends AbstractBookShlfServicePageAction{
 	public String execute(){
 
 		
-		getShelfService().delete(_id);
+		getMediaService().delete(_id);
 		
 		return SUCCESS;
 	}

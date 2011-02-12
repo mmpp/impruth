@@ -1,5 +1,7 @@
 package org.mmpp.impruth.action.models;
 
+import java.text.ParseException;
+
 import org.mmpp.impruth.model.ShelfObject;
 
 /**
@@ -47,6 +49,12 @@ public class NewBook implements java.io.Serializable {
 	 * 管理ID
 	 */
 	private Integer _id;
+	
+	
+	private String _releaseDate;
+	private String _publishSeriesName;
+	
+	private String _subtitle;
 	
 	public String getTitle() {
 		return _title;
@@ -101,6 +109,33 @@ public class NewBook implements java.io.Serializable {
 
 		return _barcode;
 	}
+	
+	public String getReleaseDate() {
+		return _releaseDate;
+	}
+	public void setReleaseDate(String releaseDate) {
+		this._releaseDate = releaseDate;
+	}
+	public String getPublishSeriesName() {
+		return _publishSeriesName;
+	}
+	public void setPublishSeriesName(String publishSeriesName) {
+		this._publishSeriesName = publishSeriesName;
+	}
+
+	public String getSubtitle() {
+		return _subtitle;
+	}
+	public void setSubtitle(String subtitle) {
+		this._subtitle = subtitle;
+	}
+
+	
+	/**
+	 * 変換
+	 * @param shelfObject
+	 * @return
+	 */
 	public static NewBook valueOf(ShelfObject shelfObject) {
 		NewBook newBook = new NewBook();
 		newBook.setTitle(shelfObject.getTitle());
@@ -127,6 +162,15 @@ public class NewBook implements java.io.Serializable {
 		shelfObject.setId(getId());
 		shelfObject.setBarcode(getBarcode());
 
+		shelfObject.setSubtitle(getSubtitle());
+		if(getReleaseDate().length()>0){
+			try {
+				shelfObject.setReleaseDate(new java.text.SimpleDateFormat("yyyy/MM/dd").parse(getReleaseDate().replaceAll("-", "/")));
+			} catch (ParseException e) {
+			}
+		}
+		shelfObject.setPublishSeriesName(getPublishSeriesName());
+		
 		return shelfObject;
 	}
 }

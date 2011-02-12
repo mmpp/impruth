@@ -57,6 +57,7 @@
 			myEditForm.new_newBook_title.value=jsonResultObject.jsonBook.title;
 			myEditForm.new_newBook_authorName.value=jsonResultObject.jsonBook.authorName;
 			myEditForm.new_newBook_publishCompanyName.value=jsonResultObject.jsonBook.publishCompanyName;
+			myEditForm.new_newBook_releaseDate.value=jsonResultObject.jsonBook.releaseDate;
 		}
 		
 		/**
@@ -84,6 +85,15 @@
 			}
 		}
 
+		function onkeyDownBarcode(form,event) {
+			pressKey=event.keyCode;
+
+			if(pressKey==13){
+				form.btnScan.onclick(); 
+				return false;
+			} 
+		}
+		
 		</script>
 	</head>
 	<body>
@@ -133,6 +143,13 @@
 				</td>
 			</tr>
 			<tr>
+				<th>サブタイトル</th>
+				<td>
+					<s:textfield key="newBook.subtitle"/>
+					<input type="button" value="Guess case" onclick="onGuessCaseText(this.form.new_newBook_subtitle);" />
+				</td>
+			</tr>
+			<tr>
 				<th>著者</th>
 				<td>
 					<s:textfield key="newBook.authorName"/>
@@ -161,6 +178,7 @@
 				<tr>
 					<th>No</th>
 					<th>出版社</th>
+					<th>出版シリーズ</th>
 					<th>出版年月</th>
 					<th>出版社管理番号</th>
 					<th>バーコード</th>
@@ -172,12 +190,13 @@
 					<td><s:textfield key="newBook.publishCompanyName"/>
 						<input type="button" value="Guess case" onclick="onGuessCaseText(this.form.new_newBook_publishCompanyName);" />
 					</td>
-					<td>1997/12/24</td>
+					<td><s:textfield key="newBook.publishSeriesName"/></td>
+					<td><s:textfield key="newBook.releaseDate"/></td>
 					<td> </td>
 					<td><s:url var="urlBarcodeJson" action="scanBarcode" />
-						<s:textfield key="newBook.barcode"/>
+						<s:textfield key="newBook.barcode" onkeydown="return onkeyDownBarcode(this.form,event);" />
 						<input type="button" value="Guess case" onclick="onGuessCaseBarcode(this.form.new_newBook_barcode);" />
-					    <input type="button" value="スキャン" onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')" /> 
+					    <input name="btnScan" type="button" value="スキャン" onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')" /> 
 					</td>
 				</tr>
 			</tbody>

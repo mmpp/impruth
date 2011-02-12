@@ -1,5 +1,7 @@
 package org.mmpp.impruth.model;
 
+import java.util.Date;
+
 /**
  * 書籍管理情報
  * @author mmpp kou
@@ -42,7 +44,25 @@ public class ShelfObject {
 	 * バーコード
 	 */
 	private String _barcode;
+	private String _pictureFilename;
+	/**
+	 * 書籍サブタイトル
+	 */
+	private String _subtitle;
+	/**
+	 * 発売日
+	 */
+	private Date _releaseDate;
 	
+	/**
+	 * 出版種別名
+	 */
+	private String _publishSeriesName;
+	/**
+	 * オブジェクトの種別を格納します
+	 */
+	private String _objectKind;
+
 	public String getTitle() {
 		return _title;
 	}
@@ -92,5 +112,35 @@ public class ShelfObject {
 	public void setBarcode(String barcode) {
 		_barcode = barcode;
 	}
+	public String getPictureFilename(){
+		return _pictureFilename;
+	}
+	public void setPictureFilename(String filename){
+		_pictureFilename = filename;
+	}
+	public void setSubtitle(String subtitle) {
+		this._subtitle = subtitle;
+	}
+	public String getSubtitle() {
+		return _subtitle;
+	}
+	public void setReleaseDate(Date releaseDate) {
+		this._releaseDate = releaseDate;
+	}
+	public java.util.Date getReleaseDate() {
+		return this._releaseDate;
+	}
+	public void setPublishSeriesName(String publishSeriesName) {
+		this._publishSeriesName = publishSeriesName;
+	}
+	public String getPublishSeriesName() {
+		return this._publishSeriesName;
+	}
+	public void setObjectKind(String objectKind) {
+		this._objectKind = objectKind;
+	}
 
+	public String getObjectKind(){
+		return this._objectKind;
+	}
 }

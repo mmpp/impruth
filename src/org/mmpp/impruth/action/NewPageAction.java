@@ -2,19 +2,13 @@ package org.mmpp.impruth.action;
 
 import org.mmpp.impruth.action.models.NewBook;
 import org.mmpp.impruth.model.ShelfObject;
-import org.mmpp.impruth.service.ShelfService;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * 新規作成ページ
  * @author mmpp kou
  *
  */
-public class NewPageAction extends AbstractBookShlfServicePageAction{
+public class NewPageAction extends AbstractMediaServicePageAction{
 
 	/**
 	 * 
@@ -26,7 +20,7 @@ public class NewPageAction extends AbstractBookShlfServicePageAction{
 	public String execute(){
 		if(_currentId==null)
 			return INPUT;
-		_currentId = getShelfService().insert(_newBook.toShelfBook()).getId();
+		_currentId = getMediaService().insert(_newBook.toShelfBook()).getId();
 		return SUCCESS;
 	}
 	private Integer _currentId=null;
@@ -41,7 +35,7 @@ public class NewPageAction extends AbstractBookShlfServicePageAction{
 	}
 	public NewBook getNewBook(){
 		if(_newBook==null){
-			ShelfObject shelfObject = getShelfService().createNew();
+			ShelfObject shelfObject = getMediaService().createNew();
 			_newBook = NewBook.valueOf(shelfObject);
 		}
 		return _newBook;
@@ -57,4 +51,5 @@ public class NewPageAction extends AbstractBookShlfServicePageAction{
 		System.out.println(" scanBarcode : " + _newBook.getBarcode());
 		return INPUT;
 	}
+	
 }

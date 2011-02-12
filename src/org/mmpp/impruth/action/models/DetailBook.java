@@ -1,5 +1,7 @@
 package org.mmpp.impruth.action.models;
 
+import java.util.Date;
+
 import org.mmpp.impruth.model.ShelfObject;
 
 /**
@@ -38,6 +40,13 @@ public class DetailBook {
 	 * 管理ID
 	 */
 	private Integer _id;
+	/**
+	 * サブタイトル
+	 */
+	private String _subtitle;
+	private String _publishSeriesName;
+	private String _releaseDate;
+	private String _barcode;
 	
 	public String getTitle() {
 		return _title;
@@ -52,6 +61,13 @@ public class DetailBook {
 	}
 	public void setTitleKana(String titleKana) {
 		this._titleKana = titleKana;
+	}
+
+	public String getSubtitle() {
+		return _subtitle;
+	}
+	public void setSubtitle(String subtitle) {
+		this._subtitle = subtitle;
 	}
 	
 	public Integer getNumber() {
@@ -88,16 +104,42 @@ public class DetailBook {
 
 		return _id;
 	}
+	public void setPublishSeriesName(String publishSeriesName) {
+		_publishSeriesName = publishSeriesName;
+	}
+	public String getPublishSeriesName() {
+		return _publishSeriesName;
+	}
+
+	public void setReleaseDate(String releaseDate) {
+		_releaseDate = releaseDate;
+	}
+	public String getReleaseDate() {
+		return _releaseDate;
+	}
+	public void setBarcode(String barcode) {
+		_barcode = barcode;
+	}
+	public String getBarcode() {
+		return _barcode;
+	}
+		
 	public static DetailBook valueOf(ShelfObject shelfObject) {
 		DetailBook detailBook = new DetailBook();
 		detailBook.setTitle(shelfObject.getTitle());
+		detailBook.setSubtitle(shelfObject.getSubtitle());
 		detailBook.setTitleKana(shelfObject.getTitleKana());
 		detailBook.setNumber(shelfObject.getNumber());
 		detailBook.setNumberValue(shelfObject.getNumberValue());
 		detailBook.setPublishCompanyName(shelfObject.getPublishCompanyName());
 		detailBook.setAuthorName(shelfObject.getAuthorName());
-		detailBook.setPublishCompanyName(shelfObject.getPublishCompanyName());
+		detailBook.setPublishSeriesName(shelfObject.getPublishSeriesName());
 		detailBook.setId(shelfObject.getId());
+		detailBook.setBarcode(shelfObject.getBarcode());
+
+		if(shelfObject.getReleaseDate()!=null)
+			detailBook.setReleaseDate(new java.text.SimpleDateFormat("yyyy/MM/dd").format(shelfObject.getReleaseDate()));
 		return detailBook;
 	}
+
 }

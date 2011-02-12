@@ -30,6 +30,10 @@
 				<td><s:property value="detailBook.titleKana"/></td>
 			</tr>
 			<tr>
+				<th>サブタイトル</th>
+				<td><s:property value="detailBook.subtitle"/></td>
+			</tr>
+			<tr>
 				<th>通巻表記</th>
 				<td><s:property value="detailBook.numberValue"/></td>
 			</tr>
@@ -63,6 +67,7 @@
 				<tr>
 					<th>No</th>
 					<th>出版社</th>
+					<th>出版シリーズ</th>
 					<th>出版年月</th>
 					<th>出版社管理番号</th>
 					<th>バーコード</th>
@@ -72,9 +77,10 @@
 				<tr>
 					<th>1</th>
 					<td><s:property value="detailBook.publishCompanyName"/></td>
-					<td>1997/12/24</td>
+					<td><s:property value="detailBook.publishSeriesName"/></td>
+					<td><s:property value="detailBook.releaseDate"/></td>
 					<td> </td>
-					<td>9784088725093</td>
+					<td><s:property value="detailBook.barcode"/></td>
 				</tr>
 			</tbody>
 		</table>
