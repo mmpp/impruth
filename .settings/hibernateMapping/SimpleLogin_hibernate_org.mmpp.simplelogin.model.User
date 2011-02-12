@@ -1,0 +1,16 @@
+#
+#Sat Feb 12 21:58:16 JST 2011
+org.mmpp.simplelogin.model.User.ownBooks.state=true
+OwnBook.y=305
+OwnBook.x=704
+org.mmpp.impruth.model.OwnBook.y=17
+org.mmpp.impruth.model.OwnBook.x=24
+org.mmpp.simplelogin.model.User.state=false
+org.mmpp.impruth.model.OwnBook.user.state=true
+USER.y=17
+USER.x=1352
+OwnBook.state=false
+org.mmpp.simplelogin.model.User.y=33
+org.mmpp.impruth.model.OwnBook.state=false
+org.mmpp.simplelogin.model.User.x=704
+USER.state=false

@@ -64,5 +64,29 @@
      </action>
   </package>
   
+    <package name="org.mmpp.simplelogin" namespace="/" extends="struts-default">
+    	<action name="login" class="spLoginPageAction" >
+    		<result name="input">/WEB-INF/pages/login.jsp</result>
+			<result type="redirectAction">ownList</result>
+		</action>
+    </package>
+    <package name="org.mmpp.impruth.secure" namespace="/" extends="struts-default">
+    	<interceptors >
+    		<interceptor name="authorticationInrceptor" class="org.mmpp.simplelogin.interceptor.AuthenticationInterceptor" />
+    		<interceptor-stack name="defaultStack" >
+	    		<interceptor-ref name="authorticationInrceptor" />
+	    		<interceptor-ref name="defaultStack" />
+    		</interceptor-stack>
+    	</interceptors>
+    	<default-interceptor-ref name="defaultStack" />
+    	<global-results>
+    		<result name="login" type="redirectAction">login</result>
+    	</global-results>
+    	<action name="ownList" class="spOwnListPageAction" >
+			<result >/WEB-INF/pages/own_shelf/list.jsp</result>
+		</action>
+    	
+	 </package>
+    	
 </struts>
 

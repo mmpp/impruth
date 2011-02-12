@@ -9,6 +9,76 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 
+   <bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean
+                class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="MYSQL" />
+                <property name="showSql" value="true" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost/bookdb" />
+        <property name="username" value="root" />
+        <property name="password" value="kou307" />
+    </bean>
+
+    <bean id="transactionManager"
+        class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!--
+	   <property name="configLocation"> 
+	     <value>hibernate.cfg.xml</value> 
+	   </property> 
+		-->
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+       <property name="hibernateProperties">
+	       <props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.c3p0.minPoolSize">${hibernate.c3p0.minPoolSize}</prop>
+				<prop key="hibernate.c3p0.maxPoolSize">${hibernate.c3p0.maxPoolSize}</prop>
+				<prop key="hibernate.c3p0.timeout">${hibernate.c3p0.timeout}</prop>
+				<prop key="hibernate.c3p0.max_statement">${hibernate.c3p0.max_statement}</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+			</props>
+	    </property>
+	</bean>
+    <bean id="loginService" class="org.mmpp.simplelogin.service.LoginServiceImpl" />
+    <bean id="ownBookService" class="org.mmpp.impruth.service.OwnBookServiceImpl" />
+    
+    <!--
+	<bean id="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="singleSession" value="true"/>
+		<property name="flushModeName">
+			<value>FLUSH_AUTO</value>
+		</property>
+	</bean> 
+        
+    -->
+    <bean id="spLoginPageAction" scope="prototype" class="org.mmpp.simplelogin.action.LoginPageAction">
+    	<property name="loginService" ref="loginService" />
+    </bean>
+    
+   <bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
+    	<property name="ownBookService" ref="ownBookService" />
+    </bean>
+    
+    
 	<bean name="mediaService" class="org.mmpp.impruth.service.MediaServiceImpl"/>
 	
 	<bean name="shelfService" class="org.mmpp.impruth.service.ShelfServiceImpl">

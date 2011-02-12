@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.mmpp.impruth.model">
+  <class name="OwnBook" table="OWN_BOOK">
+  	
+	<composite-id>
+		<key-many-to-one name="user" class="org.mmpp.simplelogin.model.User" column="user_id" lazy="false" />
+		<!-- key-many-to-one name="book_id" class="Book" / -->
+		<key-property name="barcode" column="barcode" type="string" length="13" />
+	</composite-id>
+	<many-to-one name="user" class="org.mmpp.simplelogin.model.User" column="user_id" insert="false" update="false" lazy="false" />
+  	<property name="barcode" type="string" insert="false" update="false" />
+
+  </class>
+</hibernate-mapping>
