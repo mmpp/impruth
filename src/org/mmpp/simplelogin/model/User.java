@@ -1,6 +1,6 @@
 package org.mmpp.simplelogin.model;
 
-// Generated 2011/02/12 22:05:41 by Hibernate Tools 3.2.4.GA
+// Generated 2011/02/14 21:37:58 by Hibernate Tools 3.2.4.GA
 
 import java.util.HashSet;
 import java.util.Set;

@@ -10,14 +10,13 @@
 <body>
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
-<s:submit method="onClickAddOwnBook" value="+ 新規追加" />
+<s:submit method="onClickAddOwnBook" value="+ 新規追加"  disabled="disabled"/>
+<s:submit method="onClickAddOwnBook" value="= 一覧"  disabled="disabled"/>
 </s:form>
+<s:form theme="simple">
 		<table border="1">
 			<thead>
 				<tr>
-					<!--
-					<th>書籍イメージ(テスト)</th>
-					-->
 					<th>バーコード</th>
 					<th>タイトル</th>
 					<th>著者</th>
@@ -25,16 +24,21 @@
 				</tr>
 			</thead>
 			<tbody>
-				<s:iterator status="list" value="ownBooks" id="ownBooks" >
-
 				<tr>
-					<td><s:property value="barcode"/></td>
-					<td><s:property value="title"/></td>
-					<td><s:property value="author"/></td>
-					<td><s:property value="publisher"/></td>
+					<td><s:textfield name="ownBook.barcode"/></td>
+					<td><input value="title" disabled="disabled"/></td>
+					<td><input value="author" disabled="disabled"/></td>
+					<td><input value="publisher" disabled="disabled"/></td>
 				</tr>
-				</s:iterator>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<s:submit value="新規登録" method="onClickRegist"/>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
+</s:form>
 </body>
 </html>

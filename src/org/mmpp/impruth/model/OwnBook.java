@@ -1,6 +1,6 @@
 package org.mmpp.impruth.model;
 
-// Generated 2011/02/12 22:05:41 by Hibernate Tools 3.2.4.GA
+// Generated 2011/02/14 21:37:58 by Hibernate Tools 3.2.4.GA
 
 import org.mmpp.simplelogin.model.User;
 
@@ -9,24 +9,26 @@ import org.mmpp.simplelogin.model.User;
  */
 public class OwnBook implements java.io.Serializable {
 
-	private User user;
+	private int userId;
 	private String barcode;
+	private User user;
 
-	public OwnBook() {
+
+	public OwnBook(){
+		
 	}
-
-	public OwnBook(User user, String barcode) {
-		this.user = user;
+	public OwnBook(int userId, String barcode) {
+		this.userId = userId;
 		this.barcode = barcode;
 	}
 
 
-	public User getUser() {
-		return this.user;
+	public int getUserId() {
+		return this.userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getBarcode() {
@@ -35,6 +37,14 @@ public class OwnBook implements java.io.Serializable {
 
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

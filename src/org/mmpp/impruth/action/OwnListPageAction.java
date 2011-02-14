@@ -1,5 +1,6 @@
 package org.mmpp.impruth.action;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -51,6 +52,30 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 		for(OwnBook ownBook:ownBooks){
 			ownBookListElements.add(OwnBookListElement.valueOf(ownBook));
 		}
+		java.util.Collections.sort( ownBookListElements , new Comparator<OwnBookListElement>() {
+
+			@Override
+			public int compare(OwnBookListElement ownBook1, OwnBookListElement ownBook2) {
+				return ownBook1.getBarcode().compareTo(ownBook2.getBarcode());
+			}
+		});
 		return ownBookListElements;
+	}
+	private OwnBookListElement _ownBook;
+	public OwnBookListElement getOwnBook(){
+		return _ownBook;
+	}
+	public void setOwnBook(OwnBookListElement ownBook){
+		_ownBook = ownBook;
+	}
+	public String onClickAddOwnBook(){
+		_ownBook = new OwnBookListElement();
+		return INPUT;
+	}
+	
+	public String onClickRegist(){
+		// TODO 新規登録処理
+		getOwnBookService().registOwnBook(getUser(),getOwnBook().getBarcode());
+		return SUCCESS;
 	}
 }

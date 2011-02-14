@@ -1,28 +1,24 @@
 package org.mmpp.simplelogin.service;
 
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.mmpp.simplelogin.model.User;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 
 public class LoginServiceImpl implements LoginService{
 
-    private javax.persistence.EntityManager _em;
+    private HibernateTemplate _hibernateTemplate;
 
-    @PersistenceContext
-    public void setEntityManager(javax.persistence.EntityManager em) {
-        this._em = em;
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate){
+    	this._hibernateTemplate = hibernateTemplate;
     }
-    private javax.persistence.EntityManager getEntityManager() {
-        return _em;
+    public HibernateTemplate getHibernateTemplate(){
+    	return _hibernateTemplate;
     }
 
 	public User findUserByEmailAddress(String emailAddress) {
 		if(emailAddress.indexOf(" ")>=0)
 			return null;
-       Query query = getEntityManager().createQuery("select u FROM User u where emailAddress = '"+emailAddress+"'");
-       java.util.List<User> results =  query.getResultList();
+		java.util.List<User> results =  getHibernateTemplate().find("select u FROM User u where emailAddress = '"+emailAddress+"'");
         if(results.size()!=1)
         	return null;
         return results.get(0);

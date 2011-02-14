@@ -5,10 +5,9 @@
   xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-
+    <!--
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-
-
+   -->
    <bean id="entityManagerFactory"
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
@@ -29,35 +28,20 @@
         <property name="password" value="kou307" />
     </bean>
 
-    <bean id="transactionManager"
-        class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
+<bean id="sessionFactory"
+    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+    factory-bean="entityManagerFactory" factory-method="getSessionFactory">
+</bean>
+<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+	    <property name="sessionFactory" ref="sessionFactory" />
+</bean>
+
+    <bean id="loginService" class="org.mmpp.simplelogin.service.LoginServiceImpl" >
+	    <property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
-	
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<!--
-	   <property name="configLocation"> 
-	     <value>hibernate.cfg.xml</value> 
-	   </property> 
-		-->
-		<property name="dataSource">
-			<ref bean="dataSource"/>
-		</property>
-       <property name="hibernateProperties">
-	       <props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.c3p0.minPoolSize">${hibernate.c3p0.minPoolSize}</prop>
-				<prop key="hibernate.c3p0.maxPoolSize">${hibernate.c3p0.maxPoolSize}</prop>
-				<prop key="hibernate.c3p0.timeout">${hibernate.c3p0.timeout}</prop>
-				<prop key="hibernate.c3p0.max_statement">${hibernate.c3p0.max_statement}</prop>
-				<prop key="hibernate.generate_statistics">true</prop>
-			</props>
-	    </property>
-	</bean>
-    <bean id="loginService" class="org.mmpp.simplelogin.service.LoginServiceImpl" />
-    <bean id="ownBookService" class="org.mmpp.impruth.service.OwnBookServiceImpl" />
-    
+    <bean id="ownBookService" class="org.mmpp.impruth.service.OwnBookServiceImpl" >
+	    <property name="hibernateTemplate" ref="hibernateTemplate" />
+    </bean>
     <!--
 	<bean id="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
 		<property name="sessionFactory">
