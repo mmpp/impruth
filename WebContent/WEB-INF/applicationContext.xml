@@ -42,6 +42,13 @@
     <bean id="ownBookService" class="org.mmpp.impruth.service.OwnBookServiceImpl" >
 	    <property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
+    <bean name="mediaService" class="org.mmpp.impruth.service.MediaServiceImpl" >
+        <property name="hibernateTemplate" ref="hibernateTemplate" />
+    </bean>
+    <bean name="releaseService" class="org.mmpp.impruth.service.ReleaseServiceImpl" >
+        <property name="hibernateTemplate" ref="hibernateTemplate" />
+    </bean>
+    
     <!--
 	<bean id="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
 		<property name="sessionFactory">
@@ -60,10 +67,10 @@
     
    <bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
     	<property name="ownBookService" ref="ownBookService" />
+    	<property name="releaseService" ref="releaseService" />
     </bean>
     
     
-	<bean name="mediaService" class="org.mmpp.impruth.service.MediaServiceImpl"/>
 	
 	<bean name="shelfService" class="org.mmpp.impruth.service.ShelfServiceImpl">
 		<property name="mediaService" ref="mediaService" />
@@ -88,5 +95,11 @@
     <bean id="spHopePageAction" scope="prototype" class="org.mmpp.impruth.action.HopePageAction">
     	<property name="hopeService" ref="hopeService" />
     </bean>
+    
+    
+    <bean id="spScanBarcodeJsonAction" scope="prototype" class="org.mmpp.impruth.action.ScanBarcodeJsonAction">
+    	<property name="releaseService" ref="releaseService" />
+    </bean>
+
 
 </beans>

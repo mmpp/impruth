@@ -157,6 +157,7 @@
 				</td>
 			</tr>
 		</table>
+		<!--
 		<h3>書籍詳細情報</h3>
 		<table border="1" >
 			<tr>
@@ -172,6 +173,7 @@
 				<td>200</td>
 			</tr>
 		</table>
+		-->
 		<h3>出版情報</h3>
 		<table border="1" >
 			<thead>

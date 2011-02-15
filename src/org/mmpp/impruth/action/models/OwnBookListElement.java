@@ -1,6 +1,7 @@
 package org.mmpp.impruth.action.models;
 
 import org.mmpp.impruth.model.OwnBook;
+import org.mmpp.impruth.model.ReleaseInformation;
 
 /**
  * 所有書籍情報表示カラム情報
@@ -49,10 +50,12 @@ public class OwnBookListElement {
 	public void setPublisher(String publisher) {
 		this._publisher = publisher;
 	}
-	public static OwnBookListElement valueOf(OwnBook ownBook) {
+	public static OwnBookListElement valueOf(OwnBook ownBook,ReleaseInformation release) {
 		OwnBookListElement ownBookListElement = new OwnBookListElement();
-		ownBookListElement.setBarcode(ownBook.getBarcode());
-		// 書籍情報を結合すると、ここで書籍の詳細情報を登録する
+		ownBookListElement.setBarcode(release.getBarcode());
+		ownBookListElement.setTitle(release.getTitle());
+		ownBookListElement.setAuthor(release.getAuthor());
+		ownBookListElement.setPublisher(release.getPublisher());
 		return ownBookListElement;
 	}
 	

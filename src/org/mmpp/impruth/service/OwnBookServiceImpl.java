@@ -7,10 +7,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.mmpp.impruth.model.OwnBook;
+import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.simplelogin.model.User;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class OwnBookServiceImpl implements OwnBookService {
+public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWare {
 
     private HibernateTemplate _hibernateTemplate;
 
@@ -33,16 +34,17 @@ public class OwnBookServiceImpl implements OwnBookService {
 	@Override
 	public OwnBook registOwnBook(User user, String barcode) {
 
-		String slectSql = "select o FROM OwnBook o where userId = "+user.getId() + " and barcode = '"+barcode+"'";
+		String slectSql = "select o FROM OwnBook o ,ReleaseInformation r where o.releaseId = r.id and o.userId = "+user.getId() + " and r.barcode = '"+barcode+"'";
 		java.util.List<OwnBook> results = getHibernateTemplate().find(slectSql);
 		if(results.size()!=0)
 			return null;
 //		String insertSql = "insert OWN_BOOK(user_id,barcode) values("+user.getId() + ",'"+barcode+"')";
 		HibernateTemplate hibernateTemplate = getHibernateTemplate();
 		User tmpUser = (User)(hibernateTemplate.find("select u FROM User u where id = "+user.getId())).get(0);
+		ReleaseInformation tmpReleaseInformation = (ReleaseInformation)(hibernateTemplate.find("select r FROM ReleaseInformation r where barcode = '"+barcode+"'")).get(0);
 		
 //		tmpUser.getOwnBooks().add(ownBook);
-		OwnBook ownBook = new OwnBook(tmpUser.getId(),barcode);
+		OwnBook ownBook = new OwnBook(tmpUser.getId(),tmpReleaseInformation.getId());
 		hibernateTemplate.save(ownBook);
 //		hibernateTemplate.flush();
 //		Query query = entityManager.createQuery(insertSql);

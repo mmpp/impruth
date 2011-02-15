@@ -6,7 +6,9 @@ import java.util.Set;
 
 import org.mmpp.impruth.action.models.OwnBookListElement;
 import org.mmpp.impruth.model.OwnBook;
+import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.service.OwnBookService;
+import org.mmpp.impruth.service.ReleaseService;
 import org.mmpp.simplelogin.action.UserAware;
 import org.mmpp.simplelogin.model.User;
 
@@ -40,6 +42,9 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	private List<OwnBookListElement> getOwnBookListElements(User user) {
 		return getOwnBookListElements(getOwnBookService().findOwnBooksByUser(user));
 	}
+	private ReleaseInformation findReleaseInformation(OwnBook ownBook) {
+		return getReleaseService().findReleaseInformationById(ownBook.getReleaseId());
+	}
 	private OwnBookService _ownBookService;
 	private OwnBookService getOwnBookService() {
 		return _ownBookService;
@@ -47,10 +52,18 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	public void setOwnBookService(OwnBookService ownBookService) {
 		_ownBookService = ownBookService;
 	}
+	private ReleaseService _releaseService;
+
+	public void setReleaseService(ReleaseService releaseService) {
+		this._releaseService = releaseService;
+	}
+	public ReleaseService getReleaseService() {
+		return _releaseService;
+	}
 	private List<OwnBookListElement> getOwnBookListElements(Set<OwnBook> ownBooks) {
 		 java.util.List<OwnBookListElement> ownBookListElements = new java.util.LinkedList<OwnBookListElement>();
 		for(OwnBook ownBook:ownBooks){
-			ownBookListElements.add(OwnBookListElement.valueOf(ownBook));
+			ownBookListElements.add(OwnBookListElement.valueOf(ownBook,findReleaseInformation(ownBook)));
 		}
 		java.util.Collections.sort( ownBookListElements , new Comparator<OwnBookListElement>() {
 

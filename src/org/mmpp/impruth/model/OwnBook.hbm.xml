@@ -6,13 +6,11 @@
   <class name="OwnBook" table="OWN_BOOK">
   	
 	<composite-id>
-		<!-- key-many-to-one name="book_id" class="Book" / -->
 		<key-property name="userId" column="user_id" type="int" />
-		<key-property name="barcode" column="barcode" type="string" length="13" />
+		<key-property name="releaseId" column="release_id" type="int" />
 	</composite-id>
 	<!--  many-to-one name="user" class="org.mmpp.simplelogin.model.User" column="user_id" insert="false" update="false" lazy="false" / -->
-  	<property name="barcode" type="string" insert="false" update="false" />
-  	<property name="userId" column="user_id" type="int" insert="false" update="false" />
-
+	<!-- many-to-one name="release" class="org.mmpp.simplelogin.model.ReleaseInformation" column="release_id"  foreign-key="id"/ -->
+	<property name="releaseId" column="release_id" type="int"  insert="false" update="false"/>
   </class>
 </hibernate-mapping>

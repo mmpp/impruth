@@ -59,7 +59,7 @@
 	</package>
 	
 	<package name="json"  extends="json-default">
-     <action name="scanBarcode" class="org.mmpp.impruth.action.ScanBarcodeJsonAction" >
+     <action name="scanBarcode" class="spScanBarcodeJsonAction" >
         <result type="json"/>
      </action>
   </package>

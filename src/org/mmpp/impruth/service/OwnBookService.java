@@ -26,4 +26,5 @@ public interface OwnBookService {
 	 */
 	public OwnBook registOwnBook(User user,String barcode);
 
+
 }

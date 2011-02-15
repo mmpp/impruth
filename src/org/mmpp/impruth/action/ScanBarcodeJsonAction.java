@@ -2,9 +2,10 @@ package org.mmpp.impruth.action;
 
 import javassist.NotFoundException;
 
-import javax.xml.ws.Holder;
 
 import org.mmpp.impruth.action.models.ScanBarcodeJsonBook;
+import org.mmpp.impruth.model.ReleaseInformation;
+import org.mmpp.impruth.service.ReleaseService;
 
 import com.ECS.client.jax.ext.AwsHandlerResolver;
 import com.opensymphony.xwork2.ActionSupport;
@@ -17,6 +18,13 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class ScanBarcodeJsonAction extends ActionSupport{
 
+	private ReleaseService _releaseService;
+	public void setReleaseService(ReleaseService releaseService){
+		_releaseService =releaseService ;
+	}
+	private ReleaseService getReleaseService( ){
+		return _releaseService;
+	}
 	/**
 	 * 
 	 */
@@ -34,18 +42,38 @@ public class ScanBarcodeJsonAction extends ActionSupport{
 		return SUCCESS;
 	}
 	private ScanBarcodeJsonBook scanWebBook() throws NotFoundException {
-
-		// TODO Web amazon?からデータを抽出します
-		ScanBarcodeJsonBook jsonBook = lookupAmazon(getBarcorde());
+		String barcode = getBarcorde( );
+		ScanBarcodeJsonBook jsonBook=null;
+		// サービスが存在するかの判断
+		if(getReleaseService( )!=null){
+			// DBから情報を取得する
+			ReleaseInformation releaseInformation =  getReleaseService( ).find(barcode);
+			if(releaseInformation!=null)
+				jsonBook = castScanBarcodeJsonBook(releaseInformation);
+		}
+		if(jsonBook==null){
+			// Amazonから情報を取得する
+			jsonBook = lookupAmazon(barcode);
+			if(jsonBook!=null && getReleaseService( )!=null){
+					// DBに結果を保存します
+					saveLoadJsonBook(jsonBook);
+			}
+		}
 		return jsonBook;
 	}
-	
+	/**
+	 * Amazonからバーコードの情報を取得します
+	 * @param barcorde
+	 * @return
+	 * @throws NotFoundException
+	 */
 	private ScanBarcodeJsonBook lookupAmazon(String barcorde) throws NotFoundException {
 		// AmazonAssociateID.
 		// TODO Amazon AssociateIDは環境変数で定義すること
 		String amazonAssociateID = "AKIAJREFU54PMFQ5DVCQ";
 		String amazonSecretAccessKey = "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";
-		
+		System.out.println("ScanBarcodeJson request : " + barcorde);
+
 			System.out.println("create service... ");
 		com.ECS.client.jax.AWSECommerceService service = new com.ECS.client.jax.AWSECommerceService();
 		service.setHandlerResolver(new AwsHandlerResolver(amazonSecretAccessKey));
@@ -115,7 +143,7 @@ public class ScanBarcodeJsonAction extends ActionSupport{
 	                return jsonBook;
 	            }        
 	        }
-
+	   System.out.println("  当該情報はありません！ ( barcode : " +  barcorde +" )");
 	   throw new NotFoundException("当該情報はありません！ ( barcode : " +  barcorde +" )");
 	}
 
@@ -141,4 +169,45 @@ public class ScanBarcodeJsonAction extends ActionSupport{
 	public ScanBarcodeJsonBook getJsonBook(){
 		return _jsonBook;
 	}
+	
+	/**
+	 * 内部データベース形式からJSON形式に変換します
+	 * @param releaseInformation 内部リリース情報
+	 * @return JSON形式
+	 */
+	private ScanBarcodeJsonBook castScanBarcodeJsonBook(ReleaseInformation releaseInformation) {
+		ScanBarcodeJsonBook jsonBook = new ScanBarcodeJsonBook();
+		jsonBook.setBarcode(releaseInformation.getBarcode());
+		jsonBook.setAuthorName(releaseInformation.getAuthor());
+		jsonBook.setTitle(releaseInformation.getTitle());
+		jsonBook.setPublishCompanyName(releaseInformation.getPublisher());
+		jsonBook.setId(String.valueOf(releaseInformation.getId()));
+		jsonBook.setReleaseDate("");
+	
+		System.out.println("DB cast : barcode : " + releaseInformation.getBarcode()+" title : " + releaseInformation.getTitle());
+		return jsonBook;
+	}
+	/**
+	 * 検索結果をDBに保存します
+	 * @param jsonBook
+	 */
+	private void saveLoadJsonBook(ScanBarcodeJsonBook jsonBook) {
+		ReleaseInformation releaseInformation = castReleaseInformation(jsonBook); 
+		getReleaseService().save(releaseInformation);
+	}
+	/**
+	 * JSON(Amazon検索結果)からDB格納変数に変換します
+	 * @param jsonBook JSON(Amazon検索結果)
+	 * @return 内部格納変数
+	 */
+	private ReleaseInformation castReleaseInformation(ScanBarcodeJsonBook jsonBook) {
+		ReleaseInformation releaseInformation = new ReleaseInformation();
+		releaseInformation.setBarcode(jsonBook.getBarcode());
+		releaseInformation.setTitle(jsonBook.getTitle());
+		releaseInformation.setAuthor(jsonBook.getAuthorName());
+		releaseInformation.setPublisher(jsonBook.getPublishCompanyName());
+		
+		return releaseInformation;
+	}
+
 }
