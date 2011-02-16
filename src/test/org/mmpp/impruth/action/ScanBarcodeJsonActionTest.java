@@ -24,15 +24,17 @@ public class ScanBarcodeJsonActionTest {
 		assertEquals("9784047265868",jsonBook.getBarcode());
 		assertEquals("エンターブレイン",jsonBook.getPublishCompanyName());
 		assertEquals("4047265861",jsonBook.getId());
+		assertEquals("http://ecx.images-amazon.com/images/I/51Nk-ykrXEL._SL160_.jpg", jsonBook.getImageUrl());
+		assertEquals("4047265861", jsonBook.getASIN());
 	}
 	@Test
 	public void testGetJsonBookEnglish(){
 		ScanBarcodeJsonAction pageAction = new ScanBarcodeJsonAction();
-		pageAction.setBarcode("9784840231428");
+		pageAction.setBarcode("9780596007126");
 		assertEquals(pageAction.SUCCESS,pageAction.execute());
 		ScanBarcodeJsonBook jsonBook = pageAction.getJsonBook();
 		assertEquals("Head First Design Patterns", jsonBook.getTitle());
-		assertEquals("[Elisabeth Freeman, Eric Freeman, Bert Bates, Kathy Sierra]", jsonBook.getAuthorName());
+		assertArrayEquals((new String[]{"Elisabeth Freeman", "Eric Freeman", "Bert Bates", "Kathy Sierra"}), jsonBook.getAuthorName().split(","));
 		assertEquals("978-0596007126",jsonBook.getBarcode());
 		assertEquals("O'Reilly Media",jsonBook.getPublishCompanyName());
 		assertEquals("0596007124",jsonBook.getId());

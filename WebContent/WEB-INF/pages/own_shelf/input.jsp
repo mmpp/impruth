@@ -24,6 +24,7 @@
 			}
 			// Webから抽出させます... //
 			jsonUrl += "?barcode="+barcode;
+			myEditForm.scan.disabled=true;
 			callJson(jsonUrl);
 			
 			
@@ -40,6 +41,16 @@
 			myEditForm.author.value=jsonResultObject.jsonBook.authorName;
 			myEditForm.publisher.value=jsonResultObject.jsonBook.publishCompanyName;
 			// myEditForm.new_newBook_releaseDate.value=jsonResultObject.jsonBook.releaseDate;
+			if(jsonResultObject.jsonBook.imageUrl !=null )
+				if(jsonResultObject.jsonBook.imageUrl.length>0){
+				myEditForm.imageUrl.value=jsonResultObject.jsonBook.imageUrl;
+				// 画像を表示する
+				refreshImage(myEditForm.imageUrl.value);
+			}
+			
+			// ボタンを戻す
+			myEditForm.scan.disabled=false;
+
 		}
 		
 		/**
@@ -67,6 +78,16 @@
 			}
 		}
 		</script>
+		<script language="JavaScript">
+			function refreshImage(url){
+				// 現在の表示をクリア
+				var imageForm = document.getElementById("imageForm");
+				imageForm.innserHTML = "";
+				var img = document.createElement("img");
+				img.src = url;
+				imageForm.appendChild(img);
+			}
+		</script>
 	</head>
 	<body>
 所有書籍情報 : <s:property value="user.firstName" /><Br>
@@ -82,14 +103,17 @@
 					<th>タイトル</th>
 					<th>著者</th>
 					<th>出版社</th>
+					<th>イメージ</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr><s:url var="urlBarcodeJson" action="scanBarcode" />
-					<td><s:textfield name="ownBook.barcode"/><input type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/></td>
+					<td><s:textfield name="ownBook.barcode"/><input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/></td>
 					<td><input name="title" disabled="disabled"/></td>
 					<td><input name="author" disabled="disabled"/></td>
 					<td><input name="publisher" disabled="disabled"/></td>
+	
+					<td><input name="imageUrl" disabled="disabled" /><span id="imageForm"></span></td>
 				</tr>
 			</tbody>
 			<tfoot>

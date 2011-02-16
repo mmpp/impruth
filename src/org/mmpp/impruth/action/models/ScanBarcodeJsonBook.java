@@ -37,6 +37,16 @@ public class ScanBarcodeJsonBook {
 	 * 発売日
 	 */
 	private String _releaseDate;
+
+	/**
+	 * 画像Url
+	 */
+	private String _imageUrl;
+
+	/**
+	 * アマゾンID
+	 */
+	private String _asin;
 	
 	public String getTitle() {
 		return _title;
@@ -83,5 +93,17 @@ public class ScanBarcodeJsonBook {
 	}
 	public String getReleaseDate() {
 		return _releaseDate;
+	}
+	public String getImageUrl() {
+		return _imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		_imageUrl = imageUrl;
+	}
+	public String getASIN() {
+		return _asin;
+	}
+	public void setASIN(String asin) {
+		_asin = asin;
 	}
 }
