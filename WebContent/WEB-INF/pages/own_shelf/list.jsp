@@ -11,6 +11,7 @@
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加" />
+<s:submit method="onClickChangeImageList" value="□ 画像一覧" />
 </s:form>
 		<table border="1">
 			<thead>

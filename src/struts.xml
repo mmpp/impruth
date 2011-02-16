@@ -84,6 +84,7 @@
     	</global-results>
     	<action name="ownList" class="spOwnListPageAction" >
 			<result name="input">/WEB-INF/pages/own_shelf/input.jsp</result>
+			<result name="imagelist">/WEB-INF/pages/own_shelf/imagelist.jsp</result>
 			<result >/WEB-INF/pages/own_shelf/list.jsp</result>
 		</action>
     	

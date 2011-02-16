@@ -93,7 +93,7 @@
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加"  disabled="disabled"/>
-<s:submit method="onClickAddOwnBook" value="= 一覧"  disabled="disabled"/>
+<s:submit method="onClickChangeList" value="□ 表一覧" />
 </s:form>
 <s:form theme="simple">
 		<table border="1">

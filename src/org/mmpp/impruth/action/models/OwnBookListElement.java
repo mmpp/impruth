@@ -25,6 +25,11 @@ public class OwnBookListElement {
 	 * 出版社
 	 */
 	private String _publisher;
+
+	/**
+	 * 表紙絵Url
+	 */
+	private String _imageUrl;
 	
 	public String getBarcode() {
 		return _barcode;
@@ -50,12 +55,19 @@ public class OwnBookListElement {
 	public void setPublisher(String publisher) {
 		this._publisher = publisher;
 	}
+	public void setImageUrl(String imageUrl) {
+		this._imageUrl = imageUrl;
+	}
+	public String getImageUrl() {
+		return _imageUrl;
+	}
 	public static OwnBookListElement valueOf(OwnBook ownBook,ReleaseInformation release) {
 		OwnBookListElement ownBookListElement = new OwnBookListElement();
 		ownBookListElement.setBarcode(release.getBarcode());
 		ownBookListElement.setTitle(release.getTitle());
 		ownBookListElement.setAuthor(release.getAuthor());
 		ownBookListElement.setPublisher(release.getPublisher());
+		ownBookListElement.setImageUrl(release.getAmazonImage());
 		return ownBookListElement;
 	}
 	

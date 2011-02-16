@@ -87,8 +87,14 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	}
 	
 	public String onClickRegist(){
-		// TODO 新規登録処理
+		// 新規登録処理
 		getOwnBookService().registOwnBook(getUser(),getOwnBook().getBarcode());
+		return SUCCESS;
+	}
+	public String onClickChangeImageList(){
+		return "imagelist";
+	}
+	public String onClickChangeList(){
 		return SUCCESS;
 	}
 }
