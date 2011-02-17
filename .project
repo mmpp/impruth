@@ -3,7 +3,6 @@
 	<name>impruth.prj</name>
 	<comment></comment>
 	<projects>
-		<project>AmazonSOAPLib.prj</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

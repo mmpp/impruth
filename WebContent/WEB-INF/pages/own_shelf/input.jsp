@@ -50,7 +50,8 @@
 			
 			// ボタンを戻す
 			myEditForm.scan.disabled=false;
-
+			// 登録ボタンを戻す
+			myEditForm.regist.disabled=false;
 		}
 		
 		/**
@@ -77,6 +78,18 @@
 				}
 			}
 		}
+		/**
+		 * バーコード入力欄のキープレス処理
+		 */
+		function onkeyDownBarcode(form,event) {
+			pressKey=event.keyCode;
+
+			// 改行処理
+			if(pressKey==13){
+				form.scan.onclick(); 
+				return false;
+			} 
+		}
 		</script>
 		<script language="JavaScript">
 			function refreshImage(url){
@@ -87,9 +100,10 @@
 				img.src = url;
 				imageForm.appendChild(img);
 			}
+			
 		</script>
 	</head>
-	<body>
+	<body >
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加"  disabled="disabled"/>
@@ -108,7 +122,7 @@
 			</thead>
 			<tbody>
 				<tr><s:url var="urlBarcodeJson" action="scanBarcode" />
-					<td><s:textfield name="ownBook.barcode"/><input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/></td>
+					<td><s:textfield name="ownBook.barcode" onkeydown="return onkeyDownBarcode(this.form,event);" /><input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/></td>
 					<td><input name="title" disabled="disabled"/></td>
 					<td><input name="author" disabled="disabled"/></td>
 					<td><input name="publisher" disabled="disabled"/></td>
@@ -119,7 +133,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="4">
-						<s:submit value="新規登録" method="onClickRegist"/>
+						<s:submit value="新規登録" method="onClickRegist" disabled="true" id="regist" />
 					</td>
 				</tr>
 			</tfoot>

@@ -84,6 +84,7 @@
 		var checkSumValue = barcode.charAt(12);
 		// 入力値のチェックサムを算出します
 		var sumCheckValue = processISBN13(barcode);
+
 		// 評価します
 		return (checkSumValue==sumCheckValue);
 	}
@@ -112,5 +113,11 @@
 	function createCheckDegit13(sumcheckValue){
 		var deg = sumcheckValue %10;
 
-		return 10 -deg;
+		var checkSumValue = 10 -deg;
+
+		// 10の場合は、チェックサム0となる。
+		if(checkSumValue==10)
+			checkSumValue = 0;
+		
+		return checkSumValue;
 	}

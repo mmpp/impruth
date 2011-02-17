@@ -3,9 +3,6 @@
     <wb-module deploy-name="impruth.prj">
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="AmazonSOAPLib.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/AmazonSOAPLib.prj/AmazonSOAPLib.prj">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="java-output-path" value="/impruth.prj/build/classes"/>
         <property name="context-root" value="impruth"/>
     </wb-module>
