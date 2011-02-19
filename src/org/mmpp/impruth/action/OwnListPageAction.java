@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.mmpp.impruth.action.models.OwnBookListElement;
+import org.mmpp.impruth.action.models.OwnListPageType;
 import org.mmpp.impruth.model.OwnBook;
 import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.service.OwnBookService;
@@ -20,8 +21,64 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public final int DEFAULT_LINE_BOOK_COUNT=8;
 
+	/**
+	 * 標準のページ表示書籍数
+	 */
+	public final int DEFAULT_PAGE_COUNT=40;
+	/**
+	 * 表示ページデータ件数
+	 */
+	private int _pageCount = DEFAULT_PAGE_COUNT;
+
+	/**
+	 * ページの表示タイプ
+	 */
+	private OwnListPageType _showType=OwnListPageType.LIST;
+	/**
+	 * ページ表示タイプを格納します
+	 * @param showType ページ表示タイプ
+	 */
+	public void setShowType(OwnListPageType showType){
+		_showType = showType;
+	}
+	/**
+	 * ページ表示タイプを取得します
+	 * @return ページ表示タイプ
+	 */
+	public OwnListPageType getShowType(){
+		return _showType ;
+	}
+	/**
+	 * ページの表示件数を取得します
+	 * @return
+	 */
+	public int getPageCount(){
+		return _pageCount;
+	}
+	/**
+	 * 現在表示ページ番号
+	 */
+	private int _pageNumber = 1;
+	/**
+	 * 表示ページ番号を取得する
+	 * @return ページ番号
+	 */
+	public int getPageNumber(){
+		return _pageNumber;
+	}
+	/**
+	 * 表示ページ番号を格納します
+	 * @param pageNumber ページ番号
+	 */
+	public void setPageNumber(int pageNumber){
+		_pageNumber = pageNumber;
+	}
+	
 	public String execute() {
+		if(getShowType()==OwnListPageType.IMAGE)
+			return "imagelist";
 		return SUCCESS;
 	}
 
@@ -40,7 +97,7 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 		return getOwnBookListElements(getUser());
 	}
 	private List<OwnBookListElement> getOwnBookListElements(User user) {
-		return getOwnBookListElements(getOwnBookService().findOwnBooksByUser(user));
+		return getOwnBookListElements(getOwnBookService().findOwnBooksByUser(user,getPageCount(),getPageNumber()));
 	}
 	private ReleaseInformation findReleaseInformation(OwnBook ownBook) {
 		return getReleaseService().findReleaseInformationById(ownBook.getReleaseId());
@@ -89,12 +146,52 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	public String onClickRegist(){
 		// 新規登録処理
 		getOwnBookService().registOwnBook(getUser(),getOwnBook().getBarcode());
-		return SUCCESS;
+		return execute();
 	}
 	public String onClickChangeImageList(){
-		return "imagelist";
+		setShowType(OwnListPageType.IMAGE);
+		return execute();
 	}
 	public String onClickChangeList(){
-		return SUCCESS;
+		setShowType(OwnListPageType.LIST);
+		return execute();
+	}
+	
+	/**
+	 * ユーザ所有登録書籍件数
+	 * @return 登録件数
+	 */
+	public int getTotalBookCount(){
+		if(_totalBookCount<0){
+			_totalBookCount = getOwnBookService().findCountBook(getUser());
+		}
+		
+		return _totalBookCount;
+	}
+	private int _totalBookCount=-1;
+	
+	private int _pageMaxNumber=-1;
+	/**
+	 * 最大表示ページ番号を取得する
+	 * @return 最大表示ページ番号
+	 */
+	public int getPageMaxNumber(){
+		if(_pageMaxNumber<0){
+			_pageMaxNumber = getTotalBookCount() / getPageCount();
+			if((getTotalBookCount() % getPageCount())>0){
+				_pageMaxNumber++;
+			}
+		}
+		return _pageMaxNumber;
+	}
+	public String onClickPrePage(){
+		if(_pageNumber>0)
+			_pageNumber--;
+		return execute();
+	}
+	public String onClickNextPage(){
+		if(_pageNumber<=getPageMaxNumber())
+			_pageNumber++;
+		return execute();
 	}
 }

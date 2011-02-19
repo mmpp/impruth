@@ -122,7 +122,7 @@
 			</thead>
 			<tbody>
 				<tr><s:url var="urlBarcodeJson" action="scanBarcode" />
-					<td><s:textfield name="ownBook.barcode" onkeydown="return onkeyDownBarcode(this.form,event);" /><input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/></td>
+					<td><s:textfield name="ownBook.barcode" onkeydown="return onkeyDownBarcode(this.form,event);" size="13" /><input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/></td>
 					<td><input name="title" disabled="disabled"/></td>
 					<td><input name="author" disabled="disabled"/></td>
 					<td><input name="publisher" disabled="disabled"/></td>

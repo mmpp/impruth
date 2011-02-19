@@ -11,11 +11,17 @@
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加" />
-<s:submit method="onClickChangeImageList" value="□ 画像一覧" />
-</s:form>
-		<table border="1">
+<s:submit method="onClickChangeImageList" value="□ 画像一覧" disabled="%{showType.toString()=='IMAGE'}"/>
+<s:submit method="onClickChangeList" value="■ 表一覧" disabled="%{showType.toString()=='LIST'}"/> <br>
+<s:property value="totalBookCount" /> 件中 <s:property value="%{(pageNumber-1)*pageCount+1}" /> 〜 <s:property value="%{pageNumber*pageCount}" />件表示。
+(最大 <s:property value="pageMaxNumber" />ページ)<br />
+<s:hidden  name="showType" />
+<s:hidden  name="pageNumber" />
+ <s:submit method="onClickPrePage" value="<< 戻る" disabled="%{pageNumber<=1}"/> <s:submit method="onClickNextPage" value="次へ >> " disabled="%{pageNumber>=pageMaxNumber}"/></s:form>
+
+		<table border="1" width="1200">
 			<thead>
-				<tr>
+				<tr style='background-color:#CCCCCC;' >
 					<!--
 					<th>書籍イメージ(テスト)</th>
 					-->
@@ -28,7 +34,7 @@
 			<tbody>
 				<s:iterator status="list" value="ownBooks" id="ownBooks" >
 
-				<tr>
+				<tr style='background-color:<s:property value="%{#list.index % 2 ==0 ?'#FFFFFF':'#EEEEEE'}" />; ' >
 					<td><s:property value="barcode"/></td>
 					<td><s:property value="title"/></td>
 					<td><s:property value="author"/></td>

@@ -2,13 +2,11 @@ package org.mmpp.impruth.service;
 
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.mmpp.impruth.model.OwnBook;
 import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.simplelogin.model.User;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWare {
@@ -22,14 +20,34 @@ public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWar
     	return _hibernateTemplate;
     }
 
+    private final String SELECT_OWNBOOKS = "select o FROM OwnBook o,ReleaseInformation r where o.releaseId = r.id and o.userId = ? order by r.barcode ";
 	@Override
 	public Set<OwnBook> findOwnBooksByUser(User user) {
-		java.util.List<OwnBook> results =  getHibernateTemplate().find("select o FROM OwnBook o  where userId = "+user.getId());
+		java.util.List<OwnBook> results =  getHibernateTemplate().find(SELECT_OWNBOOKS,user.getId());
 		java.util.Set<OwnBook> ownBooks = new java.util.HashSet<OwnBook>();
 		for(OwnBook ownBook : results){
 			ownBooks.add(ownBook);
 		}
 		return ownBooks;
+	}
+
+	@Override
+	public Set<OwnBook> findOwnBooksByUser(User user, int pageCount, int pageNumber) {
+		java.util.List<OwnBook> results =  getHibernateTemplate().find(SELECT_OWNBOOKS,user.getId());
+		java.util.Set<OwnBook> ownBooks = new java.util.HashSet<OwnBook>();
+		int firstCount = (pageNumber-1)*pageCount;
+		int lastCount = pageNumber*pageCount;
+		for(OwnBook ownBook : results){
+			int i = results.indexOf(ownBook);
+			if(firstCount>i)
+				continue;
+			if(lastCount<=i)
+				continue;
+
+			ownBooks.add(ownBook);
+		}
+		return ownBooks;
+
 	}
 	@Override
 	public OwnBook registOwnBook(User user, String barcode) {
@@ -55,6 +73,10 @@ public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWar
 			return null;
 			
 		return (OwnBook) results.get(0);
+	}
+	@Override
+	public int findCountBook(User user) {
+		return DataAccessUtils.intResult( getHibernateTemplate().find("select count(*) FROM OwnBook o  where userId = "+user.getId()));
 	}
 
 }

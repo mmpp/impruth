@@ -26,5 +26,21 @@ public interface OwnBookService {
 	 */
 	public OwnBook registOwnBook(User user,String barcode);
 
+	/**
+	 * 所有書籍件数を取得します
+	 * @param user ユーザ情報
+	 * @return 所有書籍件数
+	 */
+	public int findCountBook(User user);
+
+	/**
+	 * ユーザの所有書籍情報を取得します
+	 * @param user ユーザ
+	 * @param pageCount 表示件数
+	 * @param pageNumber 表示ページ数 (1..)
+	 * @return
+	 */
+	public Set<OwnBook> findOwnBooksByUser(User user, int pageCount, int pageNumber);
+
 
 }
