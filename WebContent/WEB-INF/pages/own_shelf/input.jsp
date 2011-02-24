@@ -132,7 +132,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="4">
+					<td colspan="5">
 						<s:submit value="新規登録" method="onClickRegist" disabled="true" id="regist" />
 					</td>
 				</tr>

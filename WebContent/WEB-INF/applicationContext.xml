@@ -48,6 +48,9 @@
     <bean name="releaseService" class="org.mmpp.impruth.service.ReleaseServiceImpl" >
         <property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
+    <bean id="userService" class="org.mmpp.impruth.service.UserServiceImpl" >
+	    <property name="hibernateTemplate" ref="hibernateTemplate" />
+    </bean>
     
     <!--
 	<bean id="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
@@ -68,6 +71,7 @@
    <bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
     	<property name="ownBookService" ref="ownBookService" />
     	<property name="releaseService" ref="releaseService" />
+    	<property name="userService" ref="userService" />
     </bean>
     
     
