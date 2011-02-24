@@ -15,9 +15,9 @@
   	<property name="lastName" column="last_name" type="string"  />
   	<property name="organization" type="string"  />
   	<property name="notification" type="boolean" />
-  	<!--  set name="ownBooks" >
-	  	<key column="user_id" />
-	  	<one-to-many class="org.mmpp.impruth.model.OwnBook" />
-  	</set -->
+	<set name="books" table="OWN_BOOK" lazy="true">
+		<key column="user_id" />
+		<many-to-many class="org.mmpp.impruth.model.ReleaseInformation" column="release_id" />
+	</set>
   </class>
 </hibernate-mapping>

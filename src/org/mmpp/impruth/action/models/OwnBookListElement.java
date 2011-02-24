@@ -62,12 +62,26 @@ public class OwnBookListElement {
 		return _imageUrl;
 	}
 	public static OwnBookListElement valueOf(OwnBook ownBook,ReleaseInformation release) {
+		return valueOf(release.getBarcode(),
+			release.getTitle(),
+			release.getAuthor(),
+			release.getPublisher(),
+			release.getAmazonImage());
+	}
+	public static OwnBookListElement valueOf(ReleaseInformation releaseInformation) {
+		return valueOf(releaseInformation.getBarcode(),
+				releaseInformation.getTitle(),
+				releaseInformation.getAuthor(),
+				releaseInformation.getPublisher(),
+				releaseInformation.getAmazonImage());
+	}
+	public static OwnBookListElement valueOf(String barcode,String title,String author,String publisher,String amazonImage){
 		OwnBookListElement ownBookListElement = new OwnBookListElement();
-		ownBookListElement.setBarcode(release.getBarcode());
-		ownBookListElement.setTitle(release.getTitle());
-		ownBookListElement.setAuthor(release.getAuthor());
-		ownBookListElement.setPublisher(release.getPublisher());
-		ownBookListElement.setImageUrl(release.getAmazonImage());
+		ownBookListElement.setBarcode(barcode);
+		ownBookListElement.setTitle(title);
+		ownBookListElement.setAuthor(author);
+		ownBookListElement.setPublisher(publisher);
+		ownBookListElement.setImageUrl(amazonImage);
 		return ownBookListElement;
 	}
 	

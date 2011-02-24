@@ -16,6 +16,9 @@
 	<property name="releaseDate" type="string" column="release_date"/>
 	<property name="amazonId" column="amazon_id" type="string" />
 	<property name="amazonImage" column="amazon_image" type="string" />
-	
+	<set name="users" table="OWN_BOOK">
+		<key column="release_id" />
+		<many-to-many class="org.mmpp.simplelogin.model.User" column="user_id" />
+	</set>
  </class>
 </hibernate-mapping>
