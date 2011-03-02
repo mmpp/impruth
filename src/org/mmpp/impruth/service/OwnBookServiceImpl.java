@@ -52,29 +52,29 @@ public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWar
 	@Override
 	public OwnBook registOwnBook(User user, String barcode) {
 
-//		String slectSql = "select o FROM OwnBook o ,ReleaseInformation r where o.releaseId = r.id and o.userId = "+user.getId() + " and r.barcode = '"+barcode+"'";
-//		java.util.List<OwnBook> results = getHibernateTemplate().find(slectSql);
-		String slectSql = "select o FROM OwnBook o ,ReleaseInformation r where o.releaseId = r.id and o.userId = ? and r.barcode = ?";
-		java.util.List<OwnBook> results = getHibernateTemplate().find(slectSql,new Object[]{user.getId(),barcode});
-		if(results.size()!=0)
-			return null;
-//		String insertSql = "insert OWN_BOOK(user_id,barcode) values("+user.getId() + ",'"+barcode+"')";
-		HibernateTemplate hibernateTemplate = getHibernateTemplate();
-		User tmpUser = (User)(hibernateTemplate.find("select u FROM User u where id = ?",user.getId())).get(0);
-		ReleaseInformation tmpReleaseInformation = (ReleaseInformation)(hibernateTemplate.find("select r FROM ReleaseInformation r where barcode = ? ",barcode)).get(0);
+//		String slectSql = "select o FROM OwnBook o ,ReleaseInformation r where o.releaseId = r.id and o.userId = ? and r.barcode = ?";
+//		java.util.List<OwnBook> results = getHibernateTemplate().find(slectSql,new Object[]{user.getId(),barcode});
+//		if(results.size()!=0)
+//			return null;
+//		HibernateTemplate hibernateTemplate = getHibernateTemplate();
+//		User tmpUser = (User)(hibernateTemplate.find("select u FROM User u where id = ?",user.getId())).get(0);
+//		ReleaseInformation tmpReleaseInformation = (ReleaseInformation)(hibernateTemplate.find("select r FROM ReleaseInformation r where barcode = ? ",barcode)).get(0);
 		
-//		tmpUser.getOwnBooks().add(ownBook);
-		OwnBook ownBook = new OwnBook(tmpUser.getId(),tmpReleaseInformation.getId());
-		hibernateTemplate.save(ownBook);
-//		hibernateTemplate.flush();
-//		Query query = entityManager.createQuery(insertSql);
-//		query.executeUpdate();
+//		OwnBook ownBook = new OwnBook(tmpUser.getId(),tmpReleaseInformation.getId());
+//		hibernateTemplate.save(ownBook);
 
-		results = hibernateTemplate.find(slectSql,new Object[]{user.getId(),barcode});
-		if(results.size()!=1)
-			return null;
-			
-		return (OwnBook) results.get(0);
+//		results = hibernateTemplate.find(slectSql,new Object[]{user.getId(),barcode});
+//		if(results.size()!=1)
+//			return null;
+//			
+//		return (OwnBook) results.get(0);
+		ReleaseInformation tmpReleaseInformation = (ReleaseInformation)(getHibernateTemplate().find("select r FROM ReleaseInformation r where barcode = ? ",barcode)).get(0);
+		OwnBook bookOwn = new OwnBook(user.getId(),tmpReleaseInformation.getId());
+		// メモリ上でのリレーション追加 TODO 本来は不要
+		user.getBooks().add(tmpReleaseInformation);
+		
+		getHibernateTemplate().save(bookOwn);
+		return null;
 	}
 	@Override
 	public int findCountBook(User user) {

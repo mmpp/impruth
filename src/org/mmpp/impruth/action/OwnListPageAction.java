@@ -103,15 +103,11 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	}
 	
 	public java.util.List<OwnBookListElement> getOwnBooks(){
-		// Caused by: org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: org.mmpp.simplelogin.model.User.ownBooks, no session or session was closed
-		// return getOwnBookListElements(getUser( ).getOwnBooks());
 
-		
 		return getOwnBookListElements(getUser());
 	}
 	private List<OwnBookListElement> getOwnBookListElements(User user) {
 		return getOwnBookListElements(user.getBooks());
-//		return getOwnBookListElements(getOwnBookService().findOwnBooksByUser(user,getPageCount(),getPageNumber()));
 	}
 	private ReleaseInformation findReleaseInformation(OwnBook ownBook) {
 		return getReleaseService().findReleaseInformationById(ownBook.getReleaseId());
