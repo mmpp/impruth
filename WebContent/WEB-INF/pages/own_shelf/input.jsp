@@ -24,7 +24,8 @@
 			}
 			// Webから抽出させます... //
 			jsonUrl += "?barcode="+barcode;
-			myEditForm.scan.disabled=true;
+			// ボタン等の表示処理
+			enabledScanButton(false);
 			callJson(jsonUrl);
 			
 			
@@ -47,12 +48,8 @@
 				// 画像を表示する
 				refreshImage(myEditForm.imageUrl.value);
 			}
-			
-			// ボタンを戻す
-			myEditForm.scan.disabled=false;
-			// 登録ボタンを戻す
-			myEditForm.regist.disabled=false;
-			myEditForm.edit.disabled=false;
+			// ボタン等の表示処理
+			enabledScanButton(true);
 		}
 		
 		/**
@@ -96,6 +93,31 @@
 			form.scan.disabled=true;
 
 		}
+		
+		function enabledScanButton(flag){
+			var scanWaitAnimation = document.getElementById("scanWaitingImg");
+			if(flag){
+				// 有効化
+					
+				// ボタンを戻す
+				myEditForm.scan.disabled=false;
+	
+				// 登録ボタンを戻す
+				myEditForm.regist.disabled=false;
+				myEditForm.edit.disabled=false;
+				scanWaitAnimation.style.display="none";
+				return ;
+			}
+			// 無効化
+			myEditForm.scan.disabled=true;
+			// 登録ボタンを戻す
+			myEditForm.regist.disabled=true;
+			myEditForm.edit.disabled=true;
+
+			// 待ち時間中のイメージ表示 //
+			scanWaitAnimation.style.display="";
+
+		}
 		</script>
 		<script language="JavaScript">
 			function refreshImage(url){
@@ -126,6 +148,7 @@
 					<span>
 						<s:textfield name="ownBook.barcode" onkeydown="return onkeyDownBarcode(this.form,event);" size="13" maxlength="13" />
 						<input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/>
+						<img id="scanWaitingImg" src="img/wait.gif" style="display:none;"/>
 						</span><span>
 						<input type="button" id="edit" disabled="disabled" value="内容編集" onclick="onClickEdit(this.form)"/>
 						</span>
