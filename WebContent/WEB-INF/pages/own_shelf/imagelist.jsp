@@ -17,7 +17,7 @@
 (最大 <s:property value="pageMaxNumber" />ページ)<br />
 <s:hidden  name="showType" />
 <s:hidden  name="pageNumber" />
- <s:submit method="onClickPrePage" value="<< 戻る" disabled="%{pageNumber<=1}"/> <s:submit method="onClickNextPage" value="次へ >> " disabled="%{pageNumber>=pageMaxNumber}"/></s:form>
+ <s:submit method="onClickPrePage" value="<< 戻る" disabled="%{pageNumber<=1}" /> <s:submit method="onClickNextPage" value="次へ >> " disabled="%{pageNumber>=pageMaxNumber}" /></s:form>
 
  <table  style="width:0px;">
 				<tr>

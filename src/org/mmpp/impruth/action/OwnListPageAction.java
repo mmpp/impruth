@@ -139,25 +139,7 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	public ReleaseService getReleaseService() {
 		return _releaseService;
 	}
-	/**
-	 * 表示書籍一覧を変換します
-	 * @param ownBooks 書籍情報DB情報
-	 * @return 表表示書籍一覧
-	 */
-//	private List<OwnBookListElement> getOwnBookListElements(Set<OwnBook> ownBooks) {
-//		 java.util.List<OwnBookListElement> ownBookListElements = new java.util.LinkedList<OwnBookListElement>();
-//		for(OwnBook ownBook:ownBooks){
-//			ownBookListElements.add(OwnBookListElement.valueOf(ownBook,findReleaseInformation(ownBook)));
-//		}
-//		java.util.Collections.sort( ownBookListElements , new Comparator<OwnBookListElement>() {
-//
-//			@Override
-//			public int compare(OwnBookListElement ownBook1, OwnBookListElement ownBook2) {
-//				return ownBook1.getBarcode().compareTo(ownBook2.getBarcode());
-//			}
-//		});
-//		return ownBookListElements;
-//	}
+
 	/**
 	 * 一時編集書籍情報格納変数
 	 */
@@ -263,7 +245,11 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 		return execute();
 	}
 	
-
+	/**
+	 * 表示書籍一覧を変換します
+	 * @param ownBooks 書籍情報DB情報
+	 * @return 表表示書籍一覧
+	 */
 	private List<OwnBookListElement> getOwnBookListElements(Set<ReleaseInformation> books) {
 		int pageNumber = getPageNumber();
 		int pageCount = DEFAULT_PAGE_COUNT;

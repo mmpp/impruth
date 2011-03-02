@@ -21,18 +21,12 @@
 				<param name="bufferSize">1024</param>
 			</result>
 		</global-results>
-		<action name="/{id:\d+}/detail" >
+		<action name="/{isbn:\d+}/detail" >
 			<result type="chain">
-				<param name="actionName">detail</param>
+				<param name="actionName">index</param>
 			</result>
 		</action>
 		
-		<action name="list" class="spListPageAction" >
-			<result >/WEB-INF/pages/list.jsp</result>
-		</action>
-		<action name="detail" class="spDetailPageAction" >
-			<result >/WEB-INF/pages/detail.jsp</result>
-		</action>
 		<action name="delete" class="spDeletePageAction" >
 			<result type="redirectAction">list</result>
 		</action>
@@ -54,6 +48,11 @@
 		<action name="shelf" class="org.mmpp.impruth.action.ShelfPageAction" >
 			<result name="hope_list" type="redirectAction">hope</result>
 			<result >/WEB-INF/pages/shelf/list.jsp</result>
+		</action>
+
+		<action name="index" class="spIndexPageAction" >
+			<result name="detail" >/WEB-INF/pages/detail.jsp</result>
+			<result >/WEB-INF/pages/index.jsp</result>
 		</action>
 
 	</package>

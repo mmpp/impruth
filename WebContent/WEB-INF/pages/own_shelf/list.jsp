@@ -17,7 +17,7 @@
 (最大 <s:property value="pageMaxNumber" />ページ)<br />
 <s:hidden  name="showType" />
 <s:hidden  name="pageNumber" />
- <s:submit method="onClickPrePage" value="<< 戻る" disabled="%{pageNumber<=1}"/> <s:submit method="onClickNextPage" value="次へ >> " disabled="%{pageNumber>=pageMaxNumber}"/></s:form>
+ <s:submit method="onClickPrePage" value=" 戻る" disabled="%{pageNumber <= 1}" /> <s:submit method="onClickNextPage" value="次へ " disabled="%{pageNumber >= pageMaxNumber}" /></s:form>
 
 		<table border="1" width="1200">
 			<thead>
@@ -33,10 +33,10 @@
 			</thead>
 			<tbody>
 				<s:iterator status="list" value="ownBooks" id="ownBooks" >
-
+				<s:url id="urlList" action="index" ><s:param name="isbn" value="{barcode}" /></s:url>
 				<tr style='background-color:<s:property value="%{#list.index % 2 ==0 ?'#FFFFFF':'#EEEEEE'}" />; ' >
 					<td><s:property value="barcode"/></td>
-					<td><s:property value="title"/></td>
+					<td><s:a href="%{urlList}"><s:property value="title"/></s:a></td>
 					<td><s:property value="author"/></td>
 					<td><s:property value="publisher"/></td>
 				</tr>

@@ -67,14 +67,18 @@
     <bean id="spLoginPageAction" scope="prototype" class="org.mmpp.simplelogin.action.LoginPageAction">
     	<property name="loginService" ref="loginService" />
     </bean>
-    
+
+	<!-- 所用書籍情報管理ページ -->    
    <bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
     	<property name="ownBookService" ref="ownBookService" />
     	<property name="releaseService" ref="releaseService" />
     	<property name="userService" ref="userService" />
     </bean>
     
-    
+	<bean id="spIndexPageAction" scope="prototype" class="org.mmpp.impruth.action.IndexPageAction">
+    	<property name="releaseService" ref="releaseService" />
+    </bean>
+	
 	
 	<bean name="shelfService" class="org.mmpp.impruth.service.ShelfServiceImpl">
 		<property name="mediaService" ref="mediaService" />
@@ -83,16 +87,7 @@
 		<property name="mediaService" ref="mediaService" />
 	</bean>
 	
-	<bean id="spListPageAction" scope="prototype" class="org.mmpp.impruth.action.ListPageAction">
-    	<property name="mediaService" ref="mediaService" />
-    </bean>
-    <bean id="spDetailPageAction" scope="prototype" class="org.mmpp.impruth.action.DetailPageAction">
-    	<property name="mediaService" ref="mediaService" />
-    </bean>
-    <bean id="spDeletePageAction" scope="prototype" class="org.mmpp.impruth.action.DeletePageAction">
-    	<property name="mediaService" ref="mediaService" />
-    </bean>
-    <bean id="spNewPageAction" scope="prototype" class="org.mmpp.impruth.action.NewPageAction">
+	<bean id="spNewPageAction" scope="prototype" class="org.mmpp.impruth.action.NewPageAction">
     	<property name="mediaService" ref="mediaService" />
     </bean>
     

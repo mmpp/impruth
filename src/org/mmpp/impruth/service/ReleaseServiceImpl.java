@@ -1,8 +1,11 @@
 package org.mmpp.impruth.service;
 
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.mmpp.impruth.model.ReleaseInformation;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -64,5 +67,14 @@ public class ReleaseServiceImpl implements ReleaseService,HibernateTemplateWare 
 			_session = getHibernateTemplate().getSessionFactory().openSession();
 		}
 		return _session;
+	}
+	/**
+	 * 書籍情報を取得します
+	 */
+	@Override
+	public List<ReleaseInformation> findAll() {
+		Criteria criteria = getSession().createCriteria(ReleaseInformation.class);
+		criteria.addOrder(Order.asc("barcode"));	
+		return criteria.list();
 	}
 }

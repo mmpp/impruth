@@ -14,6 +14,11 @@ public interface ReleaseService {
 	  * @return
 	  */
 	public ReleaseInformation find(String barcode);
+	 /**
+	  * リリース情報一覧を取得します
+	  * @return リリース情報一覧
+	  */
+	public java.util.List<ReleaseInformation> findAll();
 	/**
 	 * 
 	 * @param releaseId

@@ -52,6 +52,7 @@
 			myEditForm.scan.disabled=false;
 			// 登録ボタンを戻す
 			myEditForm.regist.disabled=false;
+			myEditForm.edit.disabled=false;
 		}
 		
 		/**
@@ -90,12 +91,18 @@
 				return false;
 			} 
 		}
+		function onClickEdit(form){
+			form.ownList_ownBook_barcode.disabled=true;
+			form.scan.disabled=true;
+
+		}
 		</script>
 		<script language="JavaScript">
 			function refreshImage(url){
 				// 現在の表示をクリア
 				var imageForm = document.getElementById("imageForm");
-				imageForm.innserHTML = "";
+				// 内容をクリアする
+				imageForm.innerHTML = "";
 				var img = document.createElement("img");
 				img.src = url;
 				imageForm.appendChild(img);
@@ -114,25 +121,49 @@
 			<thead>
 				<tr>
 					<th>バーコード</th>
-					<th>タイトル</th>
-					<th>著者</th>
-					<th>出版社</th>
-					<th>イメージ</th>
+						<s:url var="urlBarcodeJson" action="scanBarcode" />
+					<td>
+					<span>
+						<s:textfield name="ownBook.barcode" onkeydown="return onkeyDownBarcode(this.form,event);" size="13" maxlength="13" />
+						<input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/>
+						</span><span>
+						<input type="button" id="edit" disabled="disabled" value="内容編集" onclick="onClickEdit(this.form)"/>
+						</span>
+					</td>
 				</tr>
 			</thead>
 			<tbody>
-				<tr><s:url var="urlBarcodeJson" action="scanBarcode" />
-					<td><s:textfield name="ownBook.barcode" onkeydown="return onkeyDownBarcode(this.form,event);" size="13" /><input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/></td>
-					<td><input name="title" disabled="disabled"/></td>
-					<td><input name="author" disabled="disabled"/></td>
-					<td><input name="publisher" disabled="disabled"/></td>
-	
-					<td><input name="imageUrl" disabled="disabled" /><span id="imageForm"></span></td>
+				<tr>
+					<th>タイトル</th>
+					<td><input name="title" disabled="disabled" size=64/></td>
+				</tr>
+				<tr>
+					<th>タイトル(Kana)</th>
+					<td><input name="titleKana" disabled="disabled" size=64/></td>
+				</tr>
+				<tr>
+					<th>シリーズ通巻</th>
+					<td><input name="seriesNumber" disabled="disabled" size=64/></td>
+				</tr>				<tr>
+					<th>著者</th>
+					<td><input name="author" disabled="disabled" size="64"/></td>
+				</tr>
+				<tr>
+					<th>出版社</th>
+					<td><input name="publisher" disabled="disabled" size="64"/></td>
+				</tr>
+				<tr>
+					<th>出版管理番号</th>
+					<td><input name="publisherNo" disabled="disabled" size=64/></td>
+				</tr>
+				<tr>
+					<th>イメージ</th>	
+					<td><input name="imageUrl" disabled="disabled"  size="64"/><br/><span id="imageForm"></span></td>
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="5">
+					<td colspan="2">
 						<s:submit value="新規登録" method="onClickRegist" disabled="true" id="regist" />
 					</td>
 				</tr>
