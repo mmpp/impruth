@@ -7,6 +7,10 @@ package org.mmpp.impruth.model;
  */
 public class Media implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String title;
 	private String subtitle;

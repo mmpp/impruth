@@ -3,7 +3,6 @@ package org.mmpp.impruth.action.models;
 import org.mmpp.impruth.model.HopeBook;
 import org.mmpp.impruth.model.HopeBookUserInformation;
 import org.mmpp.impruth.model.ShelfObject;
-import org.mmpp.impruth.model.User;
 
 /**
  * 希望書籍一覧表時用クラス

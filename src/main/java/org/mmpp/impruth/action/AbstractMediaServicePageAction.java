@@ -1,10 +1,6 @@
 package org.mmpp.impruth.action;
 
 import org.mmpp.impruth.service.MediaService;
-import org.mmpp.impruth.service.ShelfService;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 

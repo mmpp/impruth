@@ -10,6 +10,10 @@ import java.util.Set;
  */
 public class ReleaseInformation implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String title;
 	private String author;
@@ -19,7 +23,7 @@ public class ReleaseInformation implements java.io.Serializable {
 	private String releaseDate;
 	private String amazonId;
 	private String amazonImage;
-	private Set users = new HashSet(0);
+	private Set<User> users = new HashSet<User>(0);
 
 	public ReleaseInformation() {
 	}
@@ -32,7 +36,7 @@ public class ReleaseInformation implements java.io.Serializable {
 
 	public ReleaseInformation(String title, String author, String barcode,
 			String publisher, String publisherCode, String releaseDate,
-			String amazonId, String amazonImage, Set users) {
+			String amazonId, String amazonImage, Set<User> users) {
 		this.title = title;
 		this.author = author;
 		this.barcode = barcode;
@@ -116,11 +120,11 @@ public class ReleaseInformation implements java.io.Serializable {
 		this.amazonImage = amazonImage;
 	}
 
-	public Set getUsers() {
+	public Set<User> getUsers() {
 		return this.users;
 	}
 
-	public void setUsers(Set users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 

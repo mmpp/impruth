@@ -5,7 +5,6 @@ import java.util.List;
 import org.mmpp.impruth.model.HopeBook;
 import org.mmpp.impruth.model.HopeBookUserInformation;
 import org.mmpp.impruth.model.HopeLevel;
-import org.mmpp.impruth.model.ShelfObject;
 
 public class HopeServiceImpl implements HopeService {
 

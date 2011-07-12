@@ -7,6 +7,10 @@ package org.mmpp.impruth.model;
  */
 public class OwnBook implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int userId;
 	private int releaseId;
 

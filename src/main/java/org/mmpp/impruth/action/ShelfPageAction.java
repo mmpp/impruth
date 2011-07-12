@@ -13,6 +13,10 @@ import com.opensymphony.xwork2.ActionSupport;
 public class ShelfPageAction extends ActionSupport{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * 蔵書情報
 	 */
 	private ShelfBook _shelfBook = null;

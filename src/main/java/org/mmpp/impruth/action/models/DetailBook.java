@@ -1,7 +1,5 @@
 package org.mmpp.impruth.action.models;
 
-import java.util.Date;
-
 import org.mmpp.impruth.model.ShelfObject;
 
 /**

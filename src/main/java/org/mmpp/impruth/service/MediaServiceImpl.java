@@ -18,6 +18,7 @@ public class MediaServiceImpl implements MediaService,HibernateTemplateWare{
 	    
 	@Override
 	public List<ShelfObject> findAll() {
+		@SuppressWarnings("unchecked")
 		List<Media> results = getHibernateTemplate().find("select m from Media m ");
 		List<ShelfObject>  findAlls = new java.util.LinkedList<ShelfObject> ();
 		for(Media media : results){
@@ -38,6 +39,7 @@ public class MediaServiceImpl implements MediaService,HibernateTemplateWare{
 	}
 	@Override
 	public ShelfObject find(Integer id) {
+		@SuppressWarnings("unchecked")
 		List<Media> results = getHibernateTemplate().find("select m from Media m where id = " + id);
 		return castShelfObject(results.get(0));
 	}

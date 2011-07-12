@@ -2,7 +2,6 @@ package org.mmpp.impruth.service;
 
 import java.util.Set;
 
-import org.mmpp.impruth.action.models.OwnBookListElement;
 import org.mmpp.impruth.model.OwnBook;
 import org.mmpp.simplelogin.model.User;
 

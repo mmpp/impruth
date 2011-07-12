@@ -71,6 +71,7 @@ public class ReleaseServiceImpl implements ReleaseService,HibernateTemplateWare 
 	/**
 	 * 書籍情報を取得します
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ReleaseInformation> findAll() {
 		Criteria criteria = getSession().createCriteria(ReleaseInformation.class);

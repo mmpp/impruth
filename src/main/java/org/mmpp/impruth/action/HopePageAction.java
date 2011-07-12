@@ -4,9 +4,6 @@ import org.mmpp.impruth.action.models.HopeTableBook;
 import org.mmpp.impruth.action.service.HopePageActionService;
 import org.mmpp.impruth.action.service.HopePageActionServiceImpl;
 import org.mmpp.impruth.service.HopeService;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 

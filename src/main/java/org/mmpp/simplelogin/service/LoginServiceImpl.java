@@ -18,6 +18,7 @@ public class LoginServiceImpl implements LoginService{
 	public User findUserByEmailAddress(String emailAddress) {
 		if(emailAddress.indexOf(" ")>=0)
 			return null;
+		@SuppressWarnings("unchecked")
 		java.util.List<User> results =  getHibernateTemplate().find("select u FROM User u where emailAddress = '"+emailAddress+"'");
         if(results.size()!=1)
         	return null;

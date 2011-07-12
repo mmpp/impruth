@@ -81,6 +81,7 @@ public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWar
 		return DataAccessUtils.intResult( getHibernateTemplate().find("select count(*) FROM OwnBook o  where userId = "+user.getId()));
 	}
 
+	@SuppressWarnings("unchecked")
 	private java.util.List<OwnBook>  findUserBooks(User user){ 
 		return getHibernateTemplate().find(SELECT_OWNBOOKS,user.getId());
 	}

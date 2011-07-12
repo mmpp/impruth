@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.mmpp.impruth.action.models.OwnBookListElement;
 import org.mmpp.impruth.action.models.OwnListPageType;
-import org.mmpp.impruth.model.OwnBook;
 import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.service.OwnBookService;
 import org.mmpp.impruth.service.ReleaseService;
@@ -108,9 +107,6 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	}
 	private List<OwnBookListElement> getOwnBookListElements(User user) {
 		return getOwnBookListElements(user.getBooks());
-	}
-	private ReleaseInformation findReleaseInformation(OwnBook ownBook) {
-		return getReleaseService().findReleaseInformationById(ownBook.getReleaseId());
 	}
 	private OwnBookService _ownBookService;
 	private OwnBookService getOwnBookService() {
