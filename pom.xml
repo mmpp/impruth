@@ -40,26 +40,17 @@
 		</plugins>
   </build>
   <dependencies>
+      <dependency>
+      <groupId>org.mmpp.amazon</groupId>
+      <artifactId>amazon-ecs</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/amazon_ecs.jar</systemPath>
+    </dependency>
   	<dependency>
   		<groupId>org.springframework</groupId>
   		<artifactId>spring</artifactId>
-  		<version>2.5.6.SEC02</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  		<optional>true</optional>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.struts</groupId>
-  		<artifactId>struts2-core</artifactId>
-  		<version>2.2.1.1</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  		<optional>true</optional>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.springframework</groupId>
-  		<artifactId>spring-web</artifactId>
-  		<version>2.5.6.SEC02</version>
+  		<version>2.5.6</version>
   		<type>jar</type>
   		<scope>compile</scope>
   		<optional>true</optional>
@@ -100,27 +91,6 @@
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
-  		<groupId>org.springframework</groupId>
-  		<artifactId>spring-dao</artifactId>
-  		<version>2.0.8</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.springframework</groupId>
-  		<artifactId>spring-hibernate3</artifactId>
-  		<version>2.0.8</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.hibernate</groupId>
-  		<artifactId>ejb3-persistence</artifactId>
-  		<version>3.3.2.Beta1</version>
-  		<type>pom</type>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
   		<groupId>org.hibernate</groupId>
   		<artifactId>hibernate-commons-annotations</artifactId>
   		<version>3.3.0.ga</version>
@@ -131,13 +101,6 @@
   		<groupId>org.hibernate</groupId>
   		<artifactId>hibernate-annotations</artifactId>
   		<version>3.4.0.GA</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.springframework</groupId>
-  		<artifactId>spring-orm</artifactId>
-  		<version>2.5.6.SEC02</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
@@ -170,6 +133,20 @@
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
+  		<groupId>commons-codec</groupId>
+  		<artifactId>commons-codec</artifactId>
+  		<version>20041127.091804</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-orm</artifactId>
+  		<version>2.5.6</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
   		<groupId>org.apache.struts</groupId>
   		<artifactId>struts2-json-plugin</artifactId>
   		<version>2.2.1.1</version>
@@ -177,17 +154,31 @@
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
-  		<groupId>commons-codec</groupId>
-  		<artifactId>commons-codec</artifactId>
-  		<version>20041127.091804</version>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-jdbc</artifactId>
+  		<version>2.5.6</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
   </dependencies>
-  <dependencyManagement>
-  	<dependencies>
-  	</dependencies>
-  </dependencyManagement>
-  <modules>
-  </modules>
+    <repositories>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots />
+      <id>Maven Snapshots</id>
+      <url>http://snapshots.maven.codehaus.org/maven2/</url>
+    </repository>
+  </repositories>
+    <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots />
+      <id>Maven Snapshots</id>
+      <url>http://snapshots.maven.codehaus.org/maven2/</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
