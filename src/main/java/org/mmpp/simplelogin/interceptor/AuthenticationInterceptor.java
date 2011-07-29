@@ -19,24 +19,36 @@ public class AuthenticationInterceptor implements Interceptor{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void destroy() {
-		
-	}
-
-	public void init() {
-		
-	}
-
+	@Override
 	public String intercept(ActionInvocation actionInvocation) throws Exception {
-		java.util.Map<String,Object> session = actionInvocation.getInvocationContext().getSession();
-		User user  = (User)session.get("USER");
-		if(user==null)
+		User user = getUserFromSession(actionInvocation);
+		if(user==null){
 			return Action.LOGIN;
+		}
 		Action action = (Action)actionInvocation.getAction();
 		if(action instanceof UserAware){
 			((UserAware)action).setUser(user);
 		}
 		return actionInvocation.invoke();
+	}
+	/**
+	 * セッションからログインユーザ情報を取得します
+	 * @param actionInvocation 
+	 * @return ログインユーザ情報
+	 */
+	private User getUserFromSession(ActionInvocation actionInvocation){
+		java.util.Map<String,Object> session = actionInvocation.getInvocationContext().getSession();
+		User user  = (User)session.get("USER");
+
+		return user;
+	}
+
+	@Override
+	public void destroy() {
+	}
+
+	@Override
+	public void init() {
 	}
 
 }

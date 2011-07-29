@@ -5,14 +5,310 @@
 <meta name="robots" content="noindex,nofollow" />
  
 <title>書庫管理システム ＜蒼のインプルス＞</title>
+
+		<script language="JavaScript">
+		
+		var myEditForm;
+
+		
+		/**
+		 * HTTPリクエスト
+		 */
+		var httpRequest;
+
+		function callJson(url){
+			if(window.XMLHttpRequest){
+				httpRequest = new XMLHttpRequest();
+			}
+			else if ( window.ActiveXObject ){
+				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			httpRequest.open("GET", url, true);
+			httpRequest.onreadystatechange = callback;
+			httpRequest.send(null);
+		}
+
+		function callback(){
+			if(httpRequest.readyState==4){
+				if(httpRequest.status==200){
+					populateJSON(httpRequest.responseText);
+				}
+			}
+		}
+
+		</script>
 </head>
-<body>
-<h1>書庫管理システム ＜蒼のインプルス＞</h1>
+<body style="background-color: #d2b48c">
+<h1 style="font-size:0.5em; font-style: normal; ">書庫管理システム ＜蒼のインプルス＞</h1>
+<div style="text-align: right;">
+ ようこそ○○さん or 
+ ログイン
+</div>
+TODO 11/07/29 : このページが登録書籍の一般ページにします。<br>
+ログインが必要な私はここで、ログインをして右にユーザ名がでる！<br>
+そして、管理メニューも追加されます。<br>
+<br>
+<div>
+<span style="background-color: #fffacd">本棚</span>
+<span style="background-color: #bdb76b">管理メニュー</span>
+</div>
+<div style="background-color: #deb887">
+普通にこのサイトを訪れたら、書籍の一覧が表示されています。<br>
+最初は私の本棚と言う意味合い<br>
+<style type="text/css">
+tabe{
+	width:1000px;
+}
+tr {
+	height:250px;
+}
+td{
+	width:250px;
+}
+div.book{
+	position:relative;
+	background-color: #f8f8ff;
+	width:160px;
+	height:180px;
+	top:-180px;
+	left: 80px;
+}
+div.cover{
+	position:relative;
+	left: 10px;
+	background-color: #f8f8ff;
+	width: 80px;
+	height:180px;
+}
+</style>
+<table border="2" id="shelf">
+<tr>
+	<td >
+		<div style="height:180px">
+		<div class="cover">
+			
+		</div>
+		<div class="book">
+			<div>GOSICKVIII下‐ゴシック・神々の黄昏‐</div>
+			<div>著：桜庭一樹</div>
+			<div>絶賛発売中</div>
+			<div>定価（税込）：540円</div>
+		</div>
+		</div>
+	</td>
+<td >
+急行アルプス殺人事件
+著：西村京太郎
+絶賛発売中
+定価（税込）：620円
+</td>
+<td >
+相田みつを ザ・ベスト 一生感動一生青春
+著：相田みつを
+絶賛発売中
+定価（税込）：540円
+</td>
+<td >
+初恋ソムリエ
+著：初野晴
+絶賛発売中
+定価（税込）：580円
+</td>
+</tr>
+<tr>
+<td >
+「おじさん」的思考
+著：内田樹
+絶賛発売中
+定価（税込）：580円
+</td>
+<td >
+文庫版 妖怪の理 妖怪の檻
+著：京極夏彦
+絶賛発売中
+定価（税込）：860円
+</td>
+<td >
+玉ねぎフライパン作戦
+著：椎名誠
+絶賛発売中
+定価（税込）：620円
+</td>
+<td >
+暗殺者メギド
+著：渡辺裕之
+絶賛発売中
+定価（税込）：620円
+</td>
+</tr>
+<tr>
+<td >
+早春物語 赤川次郎ベストセレクション(17)
+著：赤川次郎
+絶賛発売中
+定価（税込）：500円
+</td>
+<td >
+怖い絵 泣く女篇
+著：中野京子
+絶賛発売中
+定価（税込）：700円
+</td>
+<td >
+スタンレー・ホークの事件簿I 仮面‐‐ペルソナ
+著：山藍紫姫子　イ：本仁戻
+絶賛発売中
+定価（税込）：580円
+</td>
+<td >
+スノーフレーク
+著：大崎梢　イ：中島梨絵
+絶賛発売中
+定価（税込）：540円
+</td>
+</tr>
+<tr>
+<td >
+ボクら星屑のダンス
+著：佐倉淳一
+絶賛発売中
+定価（税込）：780円
+</td>
+<td >
+左近の桜
+著：長野まゆみ　デ：角川書店装丁室西村弘美
+絶賛発売中
+定価（税込）：580円
+</td>
+<td >
+瑠璃の雫
+著：伊岡瞬
+絶賛発売中
+定価（税込）：820円
+</td>
+<td >
+なんでもありか 静と理恵子の血みどろ絵日誌
+著：伊集院静　著：西原理恵子　イ：西原理恵子
+絶賛発売中
+定価（税込）：780円
+</td>
+</tr>
+<tr>
+<td >
+はなたちばな亭恋空事
+著：澤見彰
+絶賛発売中
+定価（税込）：580円
+</td>
+<td >
+美しき武士と騎士の寝室
+著：桐生操
+絶賛発売中
+定価（税込）：580円
+</td>
+<td >
+魔界転生 下 山田風太郎ベストコレクション
+著：山田風太郎
+絶賛発売中
+定価（税込）：780円
+</td>
+<td >
+魔界転生 上 山田風太郎ベストコレクション
+著：山田風太郎
+絶賛発売中
+定価（税込）：780円
+</td>
+</tr>
+<tr>
+<td >
+荒俣宏の裏・世界遺産(3) 衛生博覧会を求めて
+著：荒俣宏
+絶賛発売中
+定価（税込）：860円
+</td>
+<td >
+風のささやき 介護する人への13の話
+著：姫野カオルコ
+絶賛発売中
+定価（税込）：500円
+</td>
+<td >
+ウェルカム トゥ パールハーバー(上)
+著：西木正明
+絶賛発売中
+定価（税込）：1100円
+</td>
+<td >
+ウェルカム トゥ パールハーバー(下)
+著：西木正明
+絶賛発売中
+定価（税込）：1100円
+</td>
+</tr>
+<tr>
+<td >
+別冊図書館戦争I 図書館戦争シリーズ(5)
+著：有川浩　イ：徒花スクモ
+絶賛発売中
+定価（税込）：660円
+</td>
+<td >
+図書館革命 図書館戦争シリーズ4
+著：有川浩　イ：徒花スクモ
+絶賛発売中
+定価（税込）：700円
+</td>
+<td >
+図書館危機 図書館戦争シリーズ3
+著：有川浩　イ：徒花スクモ
+絶賛発売中
+定価（税込）：700円
+</td>
+<td >
+源氏物語 千年の謎
+著：高山由紀子
+絶賛発売中
+定価（税込）：660円
+</td>
+</tr>
+</table>
 <a href="index.action">書籍情報DB管理</a>(作成中)<br />
 <p>書籍情報をメンテします。※登録編集はログイン必要、参照はログイン不要</p>
 <a href="userlogin.html?page=hope">ユーザ毎のソーシャル機能（案）</a>(提案中)<br />
 <p>ユーザが探している書籍情報を登録します。※　要ログイン</p>
 <a href="login.action">蔵書情報ログイン画面 </a>(作成中)<br />
 <p>ユーザの所有している書籍情報を登録します。※　要ログイン</p>
+管理メニュー<br>
+1.自分の書籍を登録する。<br>
+2.一般書籍の登録をする<br>
+3.画像を管理する<br>
+4.パスワードを管理する<br>
+
+今後<br>
+検索機能など<br>
+</div>
+	<script language="JavaScript">
+		function populateJSON(result){
+			// jsonの結果を格納します
+			var jsonResultObject = eval('('+result+')');
+			var tblShelf = document.getElementById("shelf");
+			var nowRow = tblShelf.rows.length;
+			if(tblShelf.rows.item(nowRow-1).cells.length>=4){
+				tblShelf.appendChild(document.createElement("tr"));
+				nowRow++;
+			}
+			alert(result.length);
+			tblShelf.rows.item(nowRow-1).insertCell(createBookCell(result));
+		}
+		function createBookCell(result){
+			var elmTd = document.createElement("td");
+			elmTd.innerHTML=result.item[0].title;
+			return elmTd;
+		}
+		callJson("book.json");
+
+		
+	</script>
+
 </body>
 </html>

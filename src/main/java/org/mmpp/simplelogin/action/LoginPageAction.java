@@ -38,7 +38,11 @@ public class LoginPageAction extends com.opensymphony.xwork2.ActionSupport imple
 			return INPUT;
 		return SUCCESS;
 	}
-	
+	/**
+	 * ユーザ認証を行います
+	 * @return 認証結果
+	 * @throws Exception
+	 */
 	private boolean authenticate() throws Exception{
 		if(getLoginService()==null){
 			return false;
