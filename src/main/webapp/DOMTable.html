@@ -1,0 +1,28 @@
+<html>
+<body>
+<input type="button" value="+" onclick="onclickPlus()"/>
+<table id="shelf" border="1"></table>
+	<script language="JavaScript">
+		function onclickPlus(){
+			var tblShelf = document.getElementById("shelf");
+			var nowRow = tblShelf.rows.length;
+			if(nowRow==0){
+				tblShelf.insertRow(nowRow++);
+			}
+
+			var currentRow = tblShelf.rows.item(nowRow-1);
+			if(currentRow.cells.length>=4){
+				tblShelf.insertRow(nowRow++);
+				currentRow = tblShelf.rows.item(nowRow-1);
+			}
+			var newCell = currentRow.insertCell(0);
+
+			newCell.innerHTML="hoge";
+		}
+
+
+		
+	</script>
+
+</body>
+</html>

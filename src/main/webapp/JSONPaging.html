@@ -1,0 +1,49 @@
+<html>
+<body>
+<input type="button" value="readJSON" onclick="onloadPage()"/><span id="pageStatus"></span>
+<table id="shelf" border="1"></table>
+	<script language="JavaScript">
+var datas = {"pageNo":1,"pageView":8,"results":[{"author":"桜庭一樹","title":"GOSICKVIII下‐ゴシック・神々の黄昏‐","price":"540"},{"author":"西村京太郎","title":"急行アルプス殺人事件","price":"620"},{"author":"相田みつを","title":"相田みつを ザ・ベスト 一生感動一生青春","price":"540"},{"author":"初野晴","title":"初恋ソムリエ","price":"540"},{"author":"内田樹","title":"「おじさん」的思考","price":"580"},{"author":"京極夏彦","title":"文庫版 妖怪の理 妖怪の檻","price":"860"},{"author":"椎名誠","title":"玉ねぎフライパン作戦","price":"620"},{"author":"渡辺裕之","title":"暗殺者メギド","price":"620"},{"author":"赤川次郎","title":"早春物語 赤川次郎ベストセレクション(17)","price":"500"},{"author":"中野京子","title":"怖い絵 泣く女篇","price":"700"},{"author":"山藍紫姫子　イ：本仁戻","title":"スタンレー・ホークの事件簿I 仮面‐‐ペルソナ","price":"580"},{"author":"大崎梢　イ：中島梨絵","title":"スノーフレーク","price":"540"},{"author":"佐倉淳一","title":"ボクら星屑のダンス","price":"780"},{"author":"長野まゆみ　デ：角川書店装丁室西村弘美","title":"左近の桜","price":"580"},{"author":"伊岡瞬","title":"瑠璃の雫","price":"820"},{"author":"伊集院静　著：西原理恵子　イ：西原理恵子","title":"なんでもありか 静と理恵子の血みどろ絵日誌","price":"780"},{"author":"澤見彰","title":"はなたちばな亭恋空事","price":"580"},{"author":"桐生操","title":"美しき武士と騎士の寝室","price":"580"},{"author":"山田風太郎","title":"魔界転生 下 山田風太郎ベストコレクション","price":"780"},{"author":"山田風太郎","title":"魔界転生 上 山田風太郎ベストコレクション","price":"780"},{"author":"荒俣宏","title":"荒俣宏の裏・世界遺産(3) 衛生博覧会を求めて","price":"860"},{"author":"姫野カオルコ","title":"風のささやき 介護する人への13の話","price":"580"},{"author":"西木正明","title":"ウェルカム トゥ パールハーバー(上)","price":"1100"},{"author":"西木正明","title":"ウェルカム トゥ パールハーバー(下)","price":"1100"},{"author":"有川浩　イ：徒花スクモ","title":"別冊図書館戦争I 図書館戦争シリーズ(5)","price":"660"},{"author":"有川浩　イ：徒花スクモ","title":"図書館革命 図書館戦争シリーズ4","price":"700"},{"author":"有川浩　イ：徒花スクモ","title":"図書館危機 図書館戦争シリーズ3","price":"700"},{"author":"高山由紀子","title":"源氏物語 千年の謎","price":"660"}],"totalCount":100};
+		function onloadPage(){
+			var tblShelf = document.getElementById("shelf");
+			var nowRow = tblShelf.rows.length;
+			if(nowRow==0){
+				tblShelf.insertRow(nowRow++);
+			}
+document.getElementById("pageStatus").innerHTML = datas.pageNo + " " + datas.pageView + " " + datas.totalCount;
+			var currentRow = tblShelf.rows.item(nowRow-1);
+			if(currentRow.cells.length>=4){
+				tblShelf.insertRow(nowRow++);
+				currentRow = tblShelf.rows.item(nowRow-1);
+			}
+			for(var i = 0 ; i < datas.results.length ; i ++){
+				if(i>=datas.pageView)
+					break;
+				var book = datas.results[i];
+				var currentRow = tblShelf.rows.item(nowRow-1);
+				if(currentRow.cells.length>=4){
+					tblShelf.insertRow(nowRow++);
+					currentRow = tblShelf.rows.item(nowRow-1);
+				}
+				var newCell = currentRow.insertCell(0);
+				var html="";
+				html += '<div style="height:180px">';
+				html += '<div class="cover">';
+				html += '</div>';
+				html += '<div class="book">';
+				html += '<div>'+book.title+'</div>';
+				html += '<div>著：'+book.author+'</div>';
+				html += '<div>定価（税込）：'+book.price+'円</div>';
+				html += '</div>';
+				html += '</div>';
+
+				newCell.innerHTML = html;
+			}
+		}
+
+
+		
+	</script>
+
+</body>
+</html>

@@ -61,6 +61,9 @@
      <action name="scanBarcode" class="spScanBarcodeJsonAction" >
         <result type="json"/>
      </action>
+     <action name="book" class="org.mmpp.impruth.action.BookJsonAction" >
+        <result type="json"/>
+     </action>
   </package>
   
     <package name="org.mmpp.simplelogin" namespace="/" extends="struts-default">
