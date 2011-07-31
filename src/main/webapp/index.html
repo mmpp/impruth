@@ -81,9 +81,8 @@ div.cover{
 	height:180px;
 }
 </style>
-<style id="pageStatus"></style>
+<div id="pageStatus"></div>
 <table border="2" id="shelf"></table>
-<a href="index.action">書籍情報DB管理</a>(作成中)<br />
 <p>書籍情報をメンテします。※登録編集はログイン必要、参照はログイン不要</p>
 <a href="userlogin.html?page=hope">ユーザ毎のソーシャル機能（案）</a>(提案中)<br />
 <p>ユーザが探している書籍情報を登録します。※　要ログイン</p>
@@ -99,10 +98,13 @@ div.cover{
 検索機能など<br>
 </div>
 	<script language="JavaScript">
+		var pageNo ; 
 		function populateJSON(result){
 			// jsonの結果を格納します
 			var jsonResultObject = eval('('+result+')');
+			updateStatus(jsonResultObject);
 			var tblShelf = document.getElementById("shelf");
+			tblShelf.innerHTML='';
 			var nowRow = tblShelf.rows.length;
 			if(nowRow==0){
 				tblShelf.insertRow(nowRow++);
@@ -119,16 +121,49 @@ div.cover{
 				var html="";
 				html += '<div style="height:180px">';
 				html += '<div class="cover">';
+				if(book.imageUrl!=null)
+					html += '<img style="width:55px;" src="'+book.imageUrl+'"　/>';
 				html += '</div>';
 				html += '<div class="book">';
 				html += '<div>'+book.title+'</div>';
 				html += '<div>著：'+book.author+'</div>';
-				html += '<div>定価（税込）：'+book.price+'円</div>';
+				html += '<div>ISBN：'+book.barcode+'</div>';
 				html += '</div>';
 				html += '</div>';
 
 				newCell.innerHTML = html;
 			}
+		}
+		function updateStatus(jsonResultObject){
+			// ページングを処理する
+			var html = '';
+			pageNo = jsonResultObject.pageNo;
+			var totalPage = Math.ceil(jsonResultObject.totalCount/jsonResultObject.pageView);
+			var isPrePage = !(jsonResultObject.pageNo==1);
+			var isNextPage = !((jsonResultObject.pageNo+1)>totalPage);
+			if(isPrePage)
+				html+=' <a href="#" onclick="onClickPrePage();return false;">前有り</a> ';
+			else
+				html+=' 前なし ';
+			if(isNextPage)
+				html+=' <a href="#" onclick="onClickNextPage();return false;">次有り</a> ';
+			else
+				html+=' 次なし ';
+			
+			html+='全'+jsonResultObject.totalCount+'件 '; 
+			html+=pageNo+'ページ'; 
+			html+=' / '+totalPage+'ページ'; 
+			html+=' @ '+jsonResultObject.pageView+'件 '; 
+			document.getElementById("pageStatus").innerHTML = html;
+		}
+		
+		function onClickPrePage(){
+			pageNo--;
+			callJson("book.action?pageNo="+pageNo);
+		}
+		function onClickNextPage(){
+			pageNo++;
+			callJson("book.action?pageNo="+pageNo);
 		}
 		callJson("book.action");
 

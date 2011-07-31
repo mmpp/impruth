@@ -25,17 +25,17 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/bookdb" />
         <property name="username" value="bookadmin" />
-        <property name="password" value="passwrd" />
+        <property name="password" value="bookpasswd" />
     </bean>
 
-<bean id="sessionFactory"
-    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-    factory-bean="entityManagerFactory" factory-method="getSessionFactory">
-</bean>
-<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-	    <property name="sessionFactory" ref="sessionFactory" />
-</bean>
-
+	<bean id="sessionFactory"
+	    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+	    factory-bean="entityManagerFactory" factory-method="getSessionFactory">
+	</bean>
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- データアクセス層 -->	
     <bean id="loginService" class="org.mmpp.simplelogin.service.LoginServiceImpl" >
 	    <property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
@@ -68,18 +68,24 @@
     	<property name="loginService" ref="loginService" />
     </bean>
 
-	<!-- 所用書籍情報管理ページ -->    
-   <bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
-    	<property name="ownBookService" ref="ownBookService" />
+
+	<!-- ビジネス層 -->	
+	<bean id="bookService" class="org.mmpp.impruth.service.BookServiceImpl">
     	<property name="releaseService" ref="releaseService" />
-    	<property name="userService" ref="userService" />
-    </bean>
-    
-	<bean id="spIndexPageAction" scope="prototype" class="org.mmpp.impruth.action.IndexPageAction">
-    	<property name="releaseService" ref="releaseService" />
-    </bean>
+	</bean>
 	
-	
+	<!-- アプリケーション層 -->
+		<!-- 所用書籍情報管理ページ -->    
+   		<bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
+    		<property name="ownBookService" ref="ownBookService" />
+    		<property name="releaseService" ref="releaseService" />
+			<property name="userService" ref="userService" />
+		</bean>
+	    <!-- 書籍情報JSONアクション -->
+		<bean id="bookJsonAction" scope="prototype" class="org.mmpp.impruth.action.BookJsonAction">
+    		<property name="bookService" ref="bookService" />
+		</bean>
+			
 	<bean name="shelfService" class="org.mmpp.impruth.service.ShelfServiceImpl">
 		<property name="mediaService" ref="mediaService" />
 	</bean>
@@ -99,6 +105,5 @@
     <bean id="spScanBarcodeJsonAction" scope="prototype" class="org.mmpp.impruth.action.ScanBarcodeJsonAction">
     	<property name="releaseService" ref="releaseService" />
     </bean>
-
-
+	
 </beans>

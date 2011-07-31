@@ -37,31 +37,13 @@
 				<param name="id">%{currentId}</param>
 			</result>
 		</action>
-
-		<action name="hope" class="spHopePageAction" >
-			<result name="hope_add">/WEB-INF/pages/hope_new.jsp</result>
-			<result name="hope">/WEB-INF/pages/hope.jsp</result>
-			<result name="shelf_list" type="redirectAction">shelf</result>
-			<result >/WEB-INF/pages/hope.jsp</result>
-		</action>
-
-		<action name="shelf" class="org.mmpp.impruth.action.ShelfPageAction" >
-			<result name="hope_list" type="redirectAction">hope</result>
-			<result >/WEB-INF/pages/shelf/list.jsp</result>
-		</action>
-
-		<action name="index" class="spIndexPageAction" >
-			<result name="detail" >/WEB-INF/pages/detail.jsp</result>
-			<result >/WEB-INF/pages/index.jsp</result>
-		</action>
-
 	</package>
 	
 	<package name="json"  extends="json-default">
      <action name="scanBarcode" class="spScanBarcodeJsonAction" >
         <result type="json"/>
      </action>
-     <action name="book" class="org.mmpp.impruth.action.BookJsonAction" >
+     <action name="book" class="bookJsonAction" >
         <result type="json"/>
      </action>
   </package>
