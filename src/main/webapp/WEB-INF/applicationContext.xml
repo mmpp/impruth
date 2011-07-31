@@ -85,10 +85,9 @@
 		<bean id="bookJsonAction" scope="prototype" class="org.mmpp.impruth.action.BookJsonAction">
     		<property name="bookService" ref="bookService" />
 		</bean>
-			
-	<bean name="shelfService" class="org.mmpp.impruth.service.ShelfServiceImpl">
-		<property name="mediaService" ref="mediaService" />
-	</bean>
+	<bean id="spIndexPageAction" scope="prototype" class="org.mmpp.impruth.action.IndexPageAction">
+    	<property name="releaseService" ref="releaseService" />
+    </bean>
 	<bean name="hopeService" class="org.mmpp.impruth.service.HopeServiceImpl">
 		<property name="mediaService" ref="mediaService" />
 	</bean>

@@ -6,6 +6,9 @@
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>所有書籍情報</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/indexCard.css" />
+		
 		<script language="JavaScript" src="js/barcode.js" >
 		</script>
 		<script language="JavaScript">
@@ -51,7 +54,15 @@
 			// ボタン等の表示処理
 			enabledScanButton(true);
 		}
-		
+		function populateError(responseCode){
+			alert('例外が発生しましたので管理者にご連絡下さい。 responseCode:'+ responseCode);
+			// ボタン等の表示処理
+			enabledScanButton(true);
+			// 登録は出来ない
+			myEditForm.regist.disabled=true;
+			myEditForm.edit.disabled=true;
+
+		}
 		/**
 		 * HTTPリクエスト
 		 */
@@ -73,6 +84,9 @@
 			if(httpRequest.readyState==4){
 				if(httpRequest.status==200){
 					populateJSON(httpRequest.responseText);
+				}else{
+					// 正常終了以外
+					populateError(httpRequest.status);
 				}
 			}
 		}
@@ -133,13 +147,14 @@
 		</script>
 	</head>
 	<body >
+	<h1>書庫管理システム ＜蒼のインプルス＞</h1>
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加"  disabled="disabled"/>
 <s:submit method="onClickChangeList" value="□ 表一覧" />
 </s:form>
 <s:form theme="simple">
-		<table border="1">
+		<table border="1" class="indexCard">
 			<thead>
 				<tr>
 					<th>バーコード</th>

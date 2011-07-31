@@ -6,8 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>所有書籍情報</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body>
+<h1>書庫管理システム ＜蒼のインプルス＞</h1>
+
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加" />
@@ -33,7 +36,7 @@
 			</thead>
 			<tbody>
 				<s:iterator status="list" value="ownBooks" id="ownBooks" >
-				<s:url id="urlList" action="index" ><s:param name="isbn" value="{barcode}" /></s:url>
+				<s:url id="urlList" action="detail" ><s:param name="isbn" value="{barcode}" /></s:url>
 				<tr style='background-color:<s:property value="%{#list.index % 2 ==0 ?'#FFFFFF':'#EEEEEE'}" />; ' >
 					<td><s:property value="barcode"/></td>
 					<td><s:a href="%{urlList}"><s:property value="title"/></s:a></td>

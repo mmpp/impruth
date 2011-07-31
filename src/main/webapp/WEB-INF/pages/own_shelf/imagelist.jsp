@@ -3,11 +3,13 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>所有書籍情報</title>
-</head>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>所有書籍情報</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+	</head>
 <body>
+	<h1>書庫管理システム ＜蒼のインプルス＞</h1>
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加" />
@@ -29,7 +31,7 @@
 							<th>ISBN</th>
 							<td><s:property value="barcode"/></td>
 						</tr>
-						<tr>
+						<tr style="height:4em">
 							<th nowrap>タイトル</th>
 							<td><s:property value="title"/></td>
 						</tr>

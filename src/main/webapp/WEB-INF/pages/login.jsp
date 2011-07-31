@@ -6,35 +6,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ログイン画面</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body>
+<h1>書庫管理システム ＜蒼のインプルス＞</h1>
 <div style="float:left;">
-既に登録されている方
-<s:form theme="simple">
-<table>
- <tr>
-  <th>ユーザ名:</th>
-  <td><s:textfield name="user.emailAddress" value="%{user.emailAddress}"/></td>
- </tr>
- <tr>
-  <th>パスワード:</th>
-  <td><s:password name="user.password"/></td>
- </tr>
- <tr>
-  <td colspan=2 align="right" ><s:submit value="ログイン"/></td>
- </tr>
-</table>
-</s:form>
-パスワードを忘れた方<br>
-<input type=button value="メールする"/>
+	既に登録されている方
+	<s:form theme="simple">
+		<table>
+		 <tr>
+		  <th>ユーザ名:</th>
+		  <td><s:textfield name="user.emailAddress" value="%{user.emailAddress}"/></td>
+		 </tr>
+		 <tr>
+		  <th>パスワード:</th>
+		  <td><s:password name="user.password"/></td>
+		 </tr>
+		 <tr>
+		  <td colspan=2 align="right" ><s:submit value="ログイン"/></td>
+		 </tr>
+		</table>
+	</s:form>
+	パスワードを忘れた方<br>
+	<input type=button value="メールする"/><br>
+	<a href="javascript:history.back();" >戻る</a>
 </div>
 <div style="width:50%; float:right; border-left:solid 1px black;">
-新規登録<br>
-<input type=button value="今すぐ登録する"/><br>
-<input type=button value="ゲストとしてログインする"/><br>
-<br>
-<input type=button value="ヘルプの表示"/>
-
+	新規登録<br>
+	<input type=button value="今すぐ登録する"/><br>
+	<input type=button value="ゲストとしてログインする"/><br>
+	<br>
+	<input type=button value="ヘルプの表示"/>
 </div>
 </body>
 </html>

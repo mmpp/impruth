@@ -1,12 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="robots" content="noindex,nofollow" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="noindex,nofollow" />
  
-<title>書庫管理システム ＜蒼のインプルス＞</title>
+	<title>書庫管理システム ＜蒼のインプルス＞</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
 
-		<script language="JavaScript">
+	<script language="JavaScript">
 		
 		var myEditForm;
 
@@ -36,66 +37,67 @@
 			}
 		}
 
-		</script>
+	</script>
+	<style type="text/css">
+		table#shelf{
+			width:1000px;
+			background-image: url("img/wood-texture_P07405.jpg");
+			border-spacing : 5px 5px;
+		}
+		tr {
+			height:250px;
+		}
+		td{
+			width:250px;
+			background-image: url("img/zdmokume.jpg");
+		}
+		div.book{
+			height:180px;
+			position:relative;
+			top:30px;
+		}
+		div.info{
+			position:relative;
+			background-color: #f8f8ff;
+			width:160px;
+			height:180px;
+			top:-180px;
+			left: 75px;
+		}
+		div.cover{
+			position:relative;
+			left: 5px;
+			background-color: #f8f8ff;
+			width: 80px;
+			height:180px;
+		}
+		div.cover img{
+			position:relative;
+			left: 5px;
+			top: 45px;
+			border: 1px;
+		}
+		div.isbn{
+			font-size : 0.7em;
+		}
+	</style>
 </head>
-<body style="background-color: #d2b48c">
-<h1 style="font-size:0.5em; font-style: normal; ">書庫管理システム ＜蒼のインプルス＞</h1>
+<body >
+<h1 >書庫管理システム ＜蒼のインプルス＞</h1>
 <div style="text-align: right;">
  ようこそ○○さん or 
  ログイン
 </div>
-TODO 11/07/29 : このページが登録書籍の一般ページにします。<br>
-ログインが必要な私はここで、ログインをして右にユーザ名がでる！<br>
-そして、管理メニューも追加されます。<br>
-<br>
 <div>
 <span style="background-color: #fffacd">本棚</span>
-<span style="background-color: #bdb76b">管理メニュー</span>
+<span style="background-color: #bdb76b"><a href="login.action">蔵書情報ログイン画面 </a>(作成中)<br /></span>
 </div>
 <div style="background-color: #deb887">
-普通にこのサイトを訪れたら、書籍の一覧が表示されています。<br>
-最初は私の本棚と言う意味合い<br>
-<style type="text/css">
-tabe{
-	width:1000px;
-}
-tr {
-	height:250px;
-}
-td{
-	width:250px;
-}
-div.book{
-	position:relative;
-	background-color: #f8f8ff;
-	width:160px;
-	height:180px;
-	top:-180px;
-	left: 80px;
-}
-div.cover{
-	position:relative;
-	left: 10px;
-	background-color: #f8f8ff;
-	width: 80px;
-	height:180px;
-}
-</style>
+
 <div id="pageStatus"></div>
 <table border="2" id="shelf"></table>
-<p>書籍情報をメンテします。※登録編集はログイン必要、参照はログイン不要</p>
-<a href="userlogin.html?page=hope">ユーザ毎のソーシャル機能（案）</a>(提案中)<br />
-<p>ユーザが探している書籍情報を登録します。※　要ログイン</p>
-<a href="login.action">蔵書情報ログイン画面 </a>(作成中)<br />
-<p>ユーザの所有している書籍情報を登録します。※　要ログイン</p>
-管理メニュー<br>
-1.自分の書籍を登録する。<br>
-2.一般書籍の登録をする<br>
-3.画像を管理する<br>
-4.パスワードを管理する<br>
+<div id="pageStatusBottom"></div>
 
-今後<br>
-検索機能など<br>
 </div>
 	<script language="JavaScript">
 		var pageNo ; 
@@ -118,21 +120,36 @@ div.cover{
 					currentRow = tblShelf.rows.item(nowRow-1);
 				}
 				var newCell = currentRow.insertCell(0);
-				var html="";
-				html += '<div style="height:180px">';
-				html += '<div class="cover">';
-				if(book.imageUrl!=null)
-					html += '<img style="width:55px;" src="'+book.imageUrl+'"　/>';
-				html += '</div>';
-				html += '<div class="book">';
-				html += '<div>'+book.title+'</div>';
-				html += '<div>著：'+book.author+'</div>';
-				html += '<div>ISBN：'+book.barcode+'</div>';
-				html += '</div>';
-				html += '</div>';
-
-				newCell.innerHTML = html;
+				newCell.innerHTML = createBookCellHTML(book);
 			}
+			// 余りの空棚を埋める
+			if(jsonResultObject.results.length%4!=0){
+				for(var i = 0 ; i < (4-jsonResultObject.results.length%4) ; i ++){
+					var newCell = currentRow.insertCell(0);
+					newCell.innerHTML = "";
+				}
+			}
+		}
+		function createBookCellHTML(book){
+			var html="";
+			html += '<div class="book">';
+			html += '<div class="cover">';
+			if(book.imageUrl!=null)
+				html += '<img style="width:55px;" src="'+book.imageUrl+'"　/>';
+			html += '</div>';
+			html += '<div class="info">';
+			html += '<br>';
+			html += '<div>';
+			html += '<a href ="detail.action?isbn='+book.barcode+'" >';
+			html += book.title
+			html += '</a>';
+			html += '</div>';
+			html += '<div>著：'+book.author+'</div>';
+			html += '<div class="isbn">ISBN：'+book.barcode+'</div>';
+			html += '</div>';
+			html += '</div>';
+
+			return html;
 		}
 		function updateStatus(jsonResultObject){
 			// ページングを処理する
@@ -145,16 +162,18 @@ div.cover{
 				html+=' <a href="#" onclick="onClickPrePage();return false;">前有り</a> ';
 			else
 				html+=' 前なし ';
+
+			html+='全'+jsonResultObject.totalCount+'件 '; 
+			html+=pageNo+'ページ'; 
+			html+=' / '+totalPage+'ページ'; 
+			html+='( @ '+jsonResultObject.pageView+'件 )'; 
 			if(isNextPage)
 				html+=' <a href="#" onclick="onClickNextPage();return false;">次有り</a> ';
 			else
 				html+=' 次なし ';
 			
-			html+='全'+jsonResultObject.totalCount+'件 '; 
-			html+=pageNo+'ページ'; 
-			html+=' / '+totalPage+'ページ'; 
-			html+=' @ '+jsonResultObject.pageView+'件 '; 
 			document.getElementById("pageStatus").innerHTML = html;
+			document.getElementById("pageStatusBottom").innerHTML = html;
 		}
 		
 		function onClickPrePage(){
