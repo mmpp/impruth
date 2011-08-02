@@ -1,19 +1,16 @@
-package org.mmpp.impruth.action.models;
+package org.mmpp.impruth.service.model;
 
-import org.mmpp.impruth.service.model.Release;
+import org.mmpp.impruth.model.ReleaseInformation;
+
+import com.ECS.client.jax.Item;
 
 /**
- * バーコード検索JSON結果
+ * リリース情報
  * @author mmpp wataru
  * @since 0.0.3-SNAPSHOT
  */
-public class ScanBarcodeJsonBook {
+public class Release {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	/**
 	 * タイトル
 	 */
@@ -180,21 +177,49 @@ public class ScanBarcodeJsonBook {
 	public void setASIN(String asin) {
 		_asin = asin;
 	}
+
 	/**
-	 * リリース情報からバーコード検索結果JSONクラスを生成します
-	 * @param release リリース情報
-	 * @return バーコード検索結果JSONクラス
+	 * リリース情報の変換を行います
+	 * @param releaseInformation DBリリース情報
+	 * @return ビジネス層リリース情報
 	 */
-	public static ScanBarcodeJsonBook valueOf(Release release) {
-		ScanBarcodeJsonBook jsonBook = new ScanBarcodeJsonBook();
-		jsonBook.setBarcode(release.getBarcode());
-		jsonBook.setAuthorName(release.getAuthorName());
-		jsonBook.setTitle(release.getTitle());
-		jsonBook.setPublishCompanyName(release.getPublishCompanyName());
-		jsonBook.setId(String.valueOf(release.getId()));
-		jsonBook.setReleaseDate("");
-		jsonBook.setASIN(release.getASIN());
-		jsonBook.setImageUrl(release.getImageUrl());
-		return jsonBook;
+	public static Release valueOf(ReleaseInformation releaseInformation) {
+		Release release = new Release();
+		release.setBarcode(releaseInformation.getBarcode());
+		release.setAuthorName(releaseInformation.getAuthor());
+		release.setTitle(releaseInformation.getTitle());
+		release.setPublishCompanyName(releaseInformation.getPublisher());
+		release.setId(String.valueOf(releaseInformation.getId()));
+		release.setReleaseDate("");
+		release.setASIN(releaseInformation.getAmazonId());
+		release.setImageUrl(releaseInformation.getAmazonImage());
+		return release;
+	}
+	/**
+	 * amazon検索結果のItemをリリース情報に変換します
+	 * @param item Amazon検索結果
+	 * @return リリース情報
+	 */
+	public static Release valueOf(Item item) {
+		Release release = new Release();
+		release.setTitle(item.getItemAttributes().getTitle());
+		StringBuffer autorNameResult = new StringBuffer();;
+		for(String authorName : item.getItemAttributes().getAuthor()){
+			if(autorNameResult.length()>0)
+    			autorNameResult.append(",");
+			autorNameResult.append(authorName);
+		}
+		release.setAuthorName(autorNameResult.toString());
+		release.setBarcode(item.getItemAttributes().getEAN());
+		release.setPublishCompanyName(item.getItemAttributes().getPublisher());
+		release.setId(item.getASIN());
+		release.setReleaseDate(item.getItemAttributes().getPublicationDate());
+	    	
+		release.setASIN(item.getASIN());
+		try{
+			release.setImageUrl(item.getImageSets().get(0).getImageSet().get(0).getMediumImage().getURL());
+		}catch(java.lang.IndexOutOfBoundsException e){}
+
+		return release;
 	}
 }

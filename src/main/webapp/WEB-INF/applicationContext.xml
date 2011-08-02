@@ -70,9 +70,14 @@
 
 
 	<!-- ビジネス層 -->	
-	<bean id="bookService" class="org.mmpp.impruth.service.BookServiceImpl">
-    	<property name="releaseService" ref="releaseService" />
-	</bean>
+		<!-- 書籍情報サービス -->
+		<bean id="bookService" class="org.mmpp.impruth.service.BookServiceImpl">
+	    	<property name="releaseService" ref="releaseService" />
+		</bean>
+		<!-- リリース情報サービス -->
+		<bean id="barcodeService" scope="prototype" class="org.mmpp.impruth.service.BarcodeServiceImpl">
+	    	<property name="releaseService" ref="releaseService" />
+	    </bean>
 	
 	<!-- アプリケーション層 -->
 		<!-- 所用書籍情報管理ページ -->    
@@ -85,6 +90,11 @@
 		<bean id="bookJsonAction" scope="prototype" class="org.mmpp.impruth.action.BookJsonAction">
     		<property name="bookService" ref="bookService" />
 		</bean>
+	    <!-- バーコード検索用JSONアクション -->
+	    <bean id="scanBarcodeJsonAction" scope="prototype" class="org.mmpp.impruth.action.ScanBarcodeJsonAction">
+	    	<property name="barcodeService" ref="barcodeService" />
+	    </bean>
+
 	<bean id="spIndexPageAction" scope="prototype" class="org.mmpp.impruth.action.IndexPageAction">
     	<property name="releaseService" ref="releaseService" />
     </bean>
@@ -100,9 +110,5 @@
     	<property name="hopeService" ref="hopeService" />
     </bean>
     
-    
-    <bean id="spScanBarcodeJsonAction" scope="prototype" class="org.mmpp.impruth.action.ScanBarcodeJsonAction">
-    	<property name="releaseService" ref="releaseService" />
-    </bean>
 	
 </beans>

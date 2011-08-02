@@ -1,0 +1,41 @@
+		table#shelf{
+			width:1000px;
+			background-image: url("img/wood-texture_P07405.jpg");
+			border-spacing : 5px 5px;
+		}
+		tr {
+			height:250px;
+		}
+		td{
+			width:250px;
+			background-image: url("img/zdmokume.jpg");
+		}
+		div.book{
+			height:180px;
+			position:relative;
+			top:30px;
+		}
+		div.info{
+			position:relative;
+			background-color: #f8f8ff;
+			width:160px;
+			height:180px;
+			top:-180px;
+			left: 75px;
+		}
+		div.cover{
+			position:relative;
+			left: 5px;
+			background-color: #f8f8ff;
+			width: 80px;
+			height:180px;
+		}
+		div.cover img{
+			position:relative;
+			left: 5px;
+			top: 45px;
+			border: 1px;
+		}
+		div.isbn{
+			font-size : 0.7em;
+		}
