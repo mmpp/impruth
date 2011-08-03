@@ -58,35 +58,40 @@
 
 </div>
 	<script language="JavaScript">
+		var MAX_COLUMN_SIZE = 4;
 		var pageNo ; 
 		function populateJSON(result){
 			// jsonの結果を格納します
 			var jsonResultObject = eval('('+result+')');
 			updateStatus(jsonResultObject);
+			updateShelf(jsonResultObject.results);
+		}
+		function 	updateShelf(datas){
 			var tblShelf = document.getElementById("shelf");
 			tblShelf.innerHTML='';
-			var nowRow = tblShelf.rows.length;
-			if(nowRow==0){
-				tblShelf.insertRow(nowRow++);
-			}
-
-			for(var i = 0 ; i < jsonResultObject.results.length ; i ++){
-				var book = jsonResultObject.results[i];
-				var currentRow = tblShelf.rows.item(nowRow-1);
-				if(currentRow.cells.length>=4){
-					tblShelf.insertRow(nowRow++);
-					currentRow = tblShelf.rows.item(nowRow-1);
+			for(var i = 0 ; i < datas.length ; i ++){
+				var book = datas[i];
+				var currentRow = getLastRow(tblShelf);
+				if(currentRow.cells.length >= MAX_COLUMN_SIZE){
+					currentRow = tblShelf.insertRow(tblShelf.rows.length);
 				}
-				var newCell = currentRow.insertCell(0);
+				var newCell = currentRow.insertCell(currentRow.cells.length);
 				newCell.innerHTML = createBookCellHTML(book);
 			}
-			// 余りの空棚を埋める
-			if(jsonResultObject.results.length%4!=0){
-				for(var i = 0 ; i < (4-jsonResultObject.results.length%4) ; i ++){
-					var newCell = currentRow.insertCell(0);
+			if(datas.length%4!=0){
+				for(var i = 0 ; i < (4-datas.length%4) ; i ++){
+					var newCell = currentRow.insertCell(currentRow.cells.length);
 					newCell.innerHTML = "";
 				}
 			}
+		}
+		function getLastRow(table){
+			var nowRow = table.rows.length;
+			if(nowRow==0){
+				return table.insertRow(0);
+			}
+			// 最終の行番号を取得します
+			return table.rows.item(nowRow-1);
 		}
 		function createBookCellHTML(book){
 			var html="";
@@ -133,16 +138,19 @@
 			document.getElementById("pageStatus").innerHTML = html;
 			document.getElementById("pageStatusBottom").innerHTML = html;
 		}
-		
+		var bookJsonAction = "book.action";
 		function onClickPrePage(){
 			pageNo--;
-			callJson("book.action?pageNo="+pageNo);
+			reloadJson();
 		}
 		function onClickNextPage(){
 			pageNo++;
-			callJson("book.action?pageNo="+pageNo);
+			reloadJson();
 		}
-		callJson("book.action");
+		function reloadJson(){
+			callJson(bookJsonAction+"?pageNo="+pageNo);
+		}
+		callJson(bookJsonAction);
 
 		
 	</script>

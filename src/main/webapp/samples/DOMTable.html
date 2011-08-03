@@ -1,28 +1,42 @@
 <html>
-<body>
-<input type="button" value="+" onclick="onclickPlus()"/>
-<table id="shelf" border="1"></table>
-	<script language="JavaScript">
-		function onclickPlus(){
-			var tblShelf = document.getElementById("shelf");
-			var nowRow = tblShelf.rows.length;
-			if(nowRow==0){
-				tblShelf.insertRow(nowRow++);
+	<head>
+		<title>DOM Tableのセルを埋めていくサンプル</title>
+	</head>
+	<body>
+		<h1>DOM Tableのセルを埋めていくサンプル</h1>
+		<h2>目的</h2>
+		<p>本棚システムで取得したデータの配列を順番に埋めていく方法を調査する</p>
+		<h2>調査結果</h2>
+		<input type="button" value="増やす" onclick="onclickPlus()"/>
+		<table id="shelf" border="1"></table>
+		<script language="JavaScript">
+			var i = 0;
+			var MAX_COLUMN_SIZE = 4;
+			function onclickPlus(){
+				// 格納先テーブルを取得します
+				var tblShelf = document.getElementById("shelf");
+				// 最終の行を取得します
+				var currentRow = getLastRow(tblShelf);
+				// 1行4列で折り返します
+				if(currentRow.cells.length >= MAX_COLUMN_SIZE){
+					currentRow = tblShelf.insertRow(tblShelf.rows.length);
+				}
+				// 新しいセルを追加する
+				var newCell = currentRow.insertCell(currentRow.cells.length);
+				// 値を入れます
+				newCell.innerHTML=(i++)+" ("+tblShelf.rows.length+","+currentRow.cells.length+")";
 			}
-
-			var currentRow = tblShelf.rows.item(nowRow-1);
-			if(currentRow.cells.length>=4){
-				tblShelf.insertRow(nowRow++);
-				currentRow = tblShelf.rows.item(nowRow-1);
+			/**
+			 * 最終の行を取得します
+			 */
+			function getLastRow(table){
+				var nowRow = table.rows.length;
+				if(nowRow==0){
+					return table.insertRow(0);
+				}
+				// 最終の行番号を取得します
+				return table.rows.item(nowRow-1);
 			}
-			var newCell = currentRow.insertCell(0);
-
-			newCell.innerHTML="hoge";
-		}
-
-
-		
-	</script>
-
-</body>
+		</script>
+	</body>
 </html>
