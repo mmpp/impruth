@@ -4,13 +4,9 @@ import javassist.NotFoundException;
 
 
 import org.mmpp.impruth.action.models.ScanBarcodeJsonBook;
-import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.service.BarcodeService;
-import org.mmpp.impruth.service.ReleaseService;
 import org.mmpp.impruth.service.model.Release;
 
-import com.ECS.client.jax.Item;
-import com.ECS.client.jax.ext.AwsHandlerResolver;
 import com.opensymphony.xwork2.ActionSupport;
 
 
