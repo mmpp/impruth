@@ -58,7 +58,7 @@
 	</package>
 	
 	<package name="json"  extends="json-default">
-     <action name="scanBarcode" class="spScanBarcodeJsonAction" >
+     <action name="scanBarcode" class="scanBarcodeJsonAction" >
         <result type="json"/>
      </action>
      <action name="book" class="bookJsonAction" >
