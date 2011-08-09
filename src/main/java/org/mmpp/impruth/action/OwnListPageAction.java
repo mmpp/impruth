@@ -6,22 +6,29 @@ import java.util.Set;
 
 import org.mmpp.impruth.action.models.OwnBookListElement;
 import org.mmpp.impruth.action.models.OwnListPageType;
+import org.mmpp.impruth.action.service.LoginAccessable;
 import org.mmpp.impruth.model.ReleaseInformation;
+import org.mmpp.impruth.model.User;
 import org.mmpp.impruth.service.OwnBookService;
 import org.mmpp.impruth.service.ReleaseService;
 import org.mmpp.impruth.service.UserService;
-import org.mmpp.simplelogin.action.UserAware;
-import org.mmpp.simplelogin.model.User;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.Preparable;
 
-public class OwnListPageAction extends ActionSupport implements UserAware,OwnBookServiceAware,Preparable{
+/**
+ * 蔵書ページアクション
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
+ */
+public class OwnListPageAction extends ActionSupport implements LoginAccessable,OwnBookServiceAware{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 画像表示時の一行に表示する書籍数
+	 */
 	public final int DEFAULT_LINE_BOOK_COUNT=8;
 
 	/**
@@ -37,6 +44,11 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	 * ページの表示タイプ
 	 */
 	private OwnListPageType _showType=OwnListPageType.LIST;
+	/**
+	 * ログインユーザID格納変数
+	 */
+	private String _userid;
+
 	/**
 	 * ページ表示タイプを格納します
 	 * @param showType ページ表示タイプ
@@ -76,35 +88,60 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	public void setPageNumber(int pageNumber){
 		_pageNumber = pageNumber;
 	}
+	/**
+	 * 画像一覧ページで表示します
+	 */
+	private final String SUCCESS_IMAGE_LIST = "imagelist";
 	
-	public String execute() {
-		if(getShowType()==OwnListPageType.IMAGE)
-			return "imagelist";
-		return SUCCESS;
-	}
-
-	private User _user;
-
 	@Override
-	public void setUser(User user) {
-		_user = user;
-	}
-	public User getUser( ) {
-
-
-		return _user;
+	public String execute() throws Exception{
+		return executeNext();
 	}
 	/**
-	 * ユーザ情報を再取得します
+	 * 次のページを取得します
+	 * @return 次のページ名
 	 */
-	protected void reloadUser( ) {
-		setUser(getUserService().releadUser(_user));
+	public String executeNext(){
+		if(isShowImageList())
+			return SUCCESS_IMAGE_LIST;
+		return SUCCESS;
 	}
-	
-	public java.util.List<OwnBookListElement> getOwnBooks(){
+	/**
+	 * 画像一覧表示モードであるかの判断
+	 * @return 画像表示モード (true)
+	 */
+	public boolean isShowImageList(){
+		return (getShowType()==OwnListPageType.IMAGE);
+	}
 
+	/**
+	 * ログインユーザ格納変数
+	 */
+	private User _user=null;
+
+	/**
+	 * ログインユーザ情報を取得します
+	 * @return ログインユーザ情報
+	 */
+	public User getUser( ) {
+		if(_user==null){
+			_user = getUserService().find(getUserID());
+		}
+		return _user;
+	}
+
+	/**
+	 * 表示蔵書情報一覧を取得します
+	 * @return 表示蔵書情報一覧
+	 */
+	public java.util.List<OwnBookListElement> getOwnBooks(){
 		return getOwnBookListElements(getUser());
 	}
+	/**
+	 * 表示蔵書情報一覧を取得します
+	 * @param user ログインユーザ
+	 * @return 表示蔵書情報一覧
+	 */
 	private List<OwnBookListElement> getOwnBookListElements(User user) {
 		return getOwnBookListElements(user.getBooks());
 	}
@@ -165,7 +202,7 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	public String onClickRegist(){
 		// 新規登録処理
 		getOwnBookService().registOwnBook(getUser(),getOwnBook().getBarcode());
-		return execute();
+		return executeNext();
 	}
 	/**
 	 * [メニュー]-[画像一覧]ボタン処理
@@ -173,7 +210,7 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	 */
 	public String onClickChangeImageList(){
 		setShowType(OwnListPageType.IMAGE);
-		return execute();
+		return executeNext();
 	}
 
 	/**
@@ -182,7 +219,7 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	 */
 	public String onClickChangeList(){
 		setShowType(OwnListPageType.LIST);
-		return execute();
+		return executeNext();
 	}
 	
 	/**
@@ -225,7 +262,7 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	public String onClickPrePage(){
 		if(_pageNumber>0)
 			_pageNumber--;
-		return execute();
+		return executeNext();
 	}
 	/**
 	 * ページ送りボタンクリック処理
@@ -234,7 +271,7 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 	public String onClickNextPage(){
 		if(_pageNumber<=getPageMaxNumber())
 			_pageNumber++;
-		return execute();
+		return executeNext();
 	}
 	
 	/**
@@ -269,9 +306,10 @@ public class OwnListPageAction extends ActionSupport implements UserAware,OwnBoo
 		return ownBookListElements;
 	}
 	@Override
-	public void prepare() throws Exception {
-		// ユーザ情報を再取得(DB上のリレーション辿り)
-		reloadUser();
-		
+	public void setUserID(String userid) {
+		_userid = userid;
+	}
+	private String getUserID(){
+		return _userid;
 	}
 }

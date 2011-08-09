@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.mmpp.impruth.model.OwnBook;
 import org.mmpp.impruth.model.ReleaseInformation;
-import org.mmpp.simplelogin.model.User;
+import org.mmpp.impruth.model.User;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 

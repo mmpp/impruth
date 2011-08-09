@@ -8,6 +8,11 @@ import org.junit.Test;
 import org.mmpp.impruth.service.BookService;
 import org.mmpp.impruth.service.model.Book;
 
+/**
+ * 
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
+ */
 public class DetailPageActionTest {
 
 	@Test

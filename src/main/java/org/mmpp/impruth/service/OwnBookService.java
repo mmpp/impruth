@@ -3,12 +3,12 @@ package org.mmpp.impruth.service;
 import java.util.Set;
 
 import org.mmpp.impruth.model.OwnBook;
-import org.mmpp.simplelogin.model.User;
+import org.mmpp.impruth.model.User;
 
 /**
  * 所有書籍情報サービス
- * @author kou
- *
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
  */
 public interface OwnBookService {
 	/**
@@ -33,11 +33,11 @@ public interface OwnBookService {
 	public int findCountBook(User user);
 
 	/**
-	 * ユーザの所有書籍情報を取得します
+	 * ユーザ蔵書情報を取得します
 	 * @param user ユーザ
 	 * @param pageCount 表示件数
 	 * @param pageNumber 表示ページ数 (1..)
-	 * @return
+	 * @return ユーザ蔵書情報
 	 */
 	public Set<OwnBook> findOwnBooksByUser(User user, int pageCount, int pageNumber);
 

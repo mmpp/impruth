@@ -66,14 +66,14 @@
   </package>
   
     <package name="org.mmpp.simplelogin" namespace="/" extends="struts-default">
-    	<action name="login" class="spLoginPageAction" >
+    	<action name="login" class="loginPageAction" >
     		<result name="input">/WEB-INF/pages/login.jsp</result>
 			<result type="redirectAction">ownList</result>
 		</action>
     </package>
     <package name="org.mmpp.impruth.secure" namespace="/" extends="struts-default">
     	<interceptors >
-    		<interceptor name="authorticationInrceptor" class="org.mmpp.simplelogin.interceptor.AuthenticationInterceptor" />
+    		<interceptor name="authorticationInrceptor" class="org.mmpp.impruth.interceptor.AuthenticationInterceptor" />
     		<interceptor-stack name="defaultStack" >
 	    		<interceptor-ref name="authorticationInrceptor" />
 	    		<interceptor-ref name="defaultStack" />

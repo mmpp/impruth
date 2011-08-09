@@ -1,13 +1,13 @@
-package org.mmpp.simplelogin.action;
+package org.mmpp.impruth.action;
 
 import org.apache.struts2.interceptor.SessionAware;
-import org.mmpp.simplelogin.action.models.User;
-import org.mmpp.simplelogin.service.LoginService;
+import org.mmpp.impruth.action.models.LoginUserForm;
+import org.mmpp.impruth.service.UserService;
 
 /**
  * ログインページ
- * @author mmpp kou
- *
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
  */
 public class LoginPageAction extends com.opensymphony.xwork2.ActionSupport implements SessionAware{
 	/**
@@ -16,18 +16,31 @@ public class LoginPageAction extends com.opensymphony.xwork2.ActionSupport imple
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ログインアクションサービス
+	 * ユーザ情報サービス
 	 */
-	private LoginService _loginService;
+	private UserService _userService;
 
 	/**
 	 * 入力メールアドレス
 	 */
-	private User _user= new User();
-	public void setUser(User user){
+	private LoginUserForm _user= new LoginUserForm();
+	/**
+	 * セッション情報格納変数
+	 */
+	private java.util.Map<String, Object> _session;
+
+	/**
+	 * 入力フォームのユーザ情報を格納します
+	 * @param user 入力フォームのユーザ情報
+	 */
+	public void setUser(LoginUserForm user){
 		_user= user;
 	}
-	public User getUser( ){
+	/**
+	 * 入力フォームのユーザ情報を取得します
+	 * @return 入力フォームのユーザ情報
+	 */
+	public LoginUserForm getUser(){
 		return _user;
 	}
 	/**
@@ -44,14 +57,11 @@ public class LoginPageAction extends com.opensymphony.xwork2.ActionSupport imple
 	 * @throws Exception
 	 */
 	private boolean authenticate() throws Exception{
-		if(getLoginService()==null){
-			return false;
-		}
 	
 		if(_user.getEmailAddress()==null){
 			return false;
 		}
-		org.mmpp.simplelogin.model.User user = getLoginService().findUserByEmailAddress(_user.getEmailAddress());
+		org.mmpp.impruth.model.User user = getUserService().find(_user.getEmailAddress());
 		if(user==null){
 			throw new Exception("DBにユーザが存在しません");
 		}
@@ -66,22 +76,26 @@ public class LoginPageAction extends com.opensymphony.xwork2.ActionSupport imple
 			throw new Exception("パスワードが違います");
 		}
 
-		_session.put("USER", user);
-		setUser(User.valueOf(user));
+		_session.put("USERID", user.getEmailAddress());
+		setUser(LoginUserForm.valueOf(user));
 		return true;
 	}
 	/**
-	 *  ログインアクションサービスを格納する
-	 * @param loginService ログインアクションサービス
+	 *  ユーザ情報サービスを格納する
+	 * @param userService ユーザ情報サービス
 	 */
-	public void setLoginService(LoginService loginService){
-		_loginService = loginService;
+	public void setUserService(UserService userService){
+		_userService = userService;
 	}
-	public LoginService getLoginService(){
-		return _loginService;
+	/**
+	 * ユーザ情報サービスを取得します
+	 * @return ユーザ情報サービス
+	 */
+	public UserService getUserService(){
+		return _userService;
 	}
-	
-	private java.util.Map<String, Object> _session;
+
+	@Override
 	public void setSession(java.util.Map<String, Object> session){
 		_session = session;
 	}

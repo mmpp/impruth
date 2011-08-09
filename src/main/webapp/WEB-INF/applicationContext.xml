@@ -36,9 +36,6 @@
 		    <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<!-- データアクセス層 -->	
-    <bean id="loginService" class="org.mmpp.simplelogin.service.LoginServiceImpl" >
-	    <property name="hibernateTemplate" ref="hibernateTemplate" />
-    </bean>
     <bean id="ownBookService" class="org.mmpp.impruth.service.OwnBookServiceImpl" >
 	    <property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
@@ -64,9 +61,6 @@
 	</bean> 
         
     -->
-    <bean id="spLoginPageAction" scope="prototype" class="org.mmpp.simplelogin.action.LoginPageAction">
-    	<property name="loginService" ref="loginService" />
-    </bean>
 
 
 	<!-- ビジネス層 -->	
@@ -80,6 +74,11 @@
 	    </bean>
 	
 	<!-- アプリケーション層 -->
+		<!-- ログインページアクション -->
+	    <bean id="loginPageAction" scope="prototype" class="org.mmpp.impruth.action.LoginPageAction">
+    		<property name="userService" ref="userService" />
+    	</bean>
+	
 		<!-- 所用書籍情報管理ページ -->    
    		<bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
     		<property name="ownBookService" ref="ownBookService" />

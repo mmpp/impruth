@@ -1,6 +1,6 @@
 package org.mmpp.impruth.service;
 
-import org.mmpp.simplelogin.model.User;
+import org.mmpp.impruth.model.User;
 
 /**
  * ユーザ情報サービス
@@ -10,9 +10,9 @@ import org.mmpp.simplelogin.model.User;
 public interface UserService {
 
 	/**
-	 * セッション切れのユーザ情報を再取得します
-	 * @param user ユーザ情報
-	 * @return 新しいユーザ情報
+	 * ユーザ情報を検索します
+	 * @param userID ユーザID
+	 * @return ユーザ情報
 	 */
-	public User releadUser(User user);
+	public User find(String userID);
 }

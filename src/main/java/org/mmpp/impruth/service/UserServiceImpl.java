@@ -2,7 +2,7 @@ package org.mmpp.impruth.service;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.mmpp.simplelogin.model.User;
+import org.mmpp.impruth.model.User;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class UserServiceImpl implements UserService, HibernateTemplateWare {
@@ -16,12 +16,6 @@ public class UserServiceImpl implements UserService, HibernateTemplateWare {
     public HibernateTemplate getHibernateTemplate(){
     	return _hibernateTemplate;
     }
-	@Override
-	public User releadUser(User user) {
-		Criteria criteria = getSession().createCriteria(User.class);
-		criteria.add(Restrictions.eq("id",user.getId()));
-		return (User)criteria.uniqueResult();
-	}
 
 	/**
 	 * DB接続セッション格納変数
@@ -36,5 +30,11 @@ public class UserServiceImpl implements UserService, HibernateTemplateWare {
 			_session = getHibernateTemplate().getSessionFactory().openSession();
 		}
 		return _session;
+	}
+	@Override
+	public User find(String userID) {
+		Criteria criteria = getSession().createCriteria(User.class);
+		criteria.add(Restrictions.eq("emailAddress",userID));
+		return (User)criteria.uniqueResult();
 	}
 }

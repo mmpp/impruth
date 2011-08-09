@@ -1,7 +1,6 @@
-package org.mmpp.simplelogin.interceptor;
+package org.mmpp.impruth.interceptor;
 
-import org.mmpp.simplelogin.action.UserAware;
-import org.mmpp.simplelogin.model.User;
+import org.mmpp.impruth.action.service.LoginAccessable;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -9,7 +8,8 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 
 /**
  * 認証サービスインタセプタクラス
- * @author kou
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
  * 参考 Struts2InAction (isbn ; 978-1933988078 ) p 95
  */
 public class AuthenticationInterceptor implements Interceptor{
@@ -21,13 +21,13 @@ public class AuthenticationInterceptor implements Interceptor{
 
 	@Override
 	public String intercept(ActionInvocation actionInvocation) throws Exception {
-		User user = getUserFromSession(actionInvocation);
-		if(user==null){
+		String userid = getUserFromSession(actionInvocation);
+		if(userid==null){
 			return Action.LOGIN;
 		}
 		Action action = (Action)actionInvocation.getAction();
-		if(action instanceof UserAware){
-			((UserAware)action).setUser(user);
+		if(action instanceof LoginAccessable){
+			((LoginAccessable)action).setUserID(userid);
 		}
 		return actionInvocation.invoke();
 	}
@@ -36,11 +36,11 @@ public class AuthenticationInterceptor implements Interceptor{
 	 * @param actionInvocation 
 	 * @return ログインユーザ情報
 	 */
-	private User getUserFromSession(ActionInvocation actionInvocation){
+	private String getUserFromSession(ActionInvocation actionInvocation){
 		java.util.Map<String,Object> session = actionInvocation.getInvocationContext().getSession();
-		User user  = (User)session.get("USER");
+		String userid  = (String)session.get("USERID");
 
-		return user;
+		return userid;
 	}
 
 	@Override
