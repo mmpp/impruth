@@ -50,7 +50,7 @@
 			<result >/WEB-INF/pages/shelf/list.jsp</result>
 		</action>
 
-		<action name="detail" class="spIndexPageAction" >
+		<action name="detail" class="detailPageAction" >
 			<result >/WEB-INF/pages/detail.jsp</result>
 		</action>
 

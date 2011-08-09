@@ -95,7 +95,7 @@
 	    	<property name="barcodeService" ref="barcodeService" />
 	    </bean>
 		<!-- 書籍詳細情報表示アクション -->
-		<bean id="spIndexPageAction" scope="prototype" class="org.mmpp.impruth.action.IndexPageAction">
+		<bean id="detailPageAction" scope="prototype" class="org.mmpp.impruth.action.DetailPageAction">
 	    	<property name="bookService" ref="bookService" />
 	    </bean>
 	    

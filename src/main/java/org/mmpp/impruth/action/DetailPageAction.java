@@ -1,9 +1,6 @@
 package org.mmpp.impruth.action;
 
-import org.mmpp.impruth.action.models.IndexTableListElement;
-import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.service.BookService;
-import org.mmpp.impruth.service.ReleaseService;
 import org.mmpp.impruth.service.model.Book;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -11,9 +8,9 @@ import com.opensymphony.xwork2.ActionSupport;
 /**
  * 書籍情報ページアクション
  * @author mmpp wataru
- *
+ * @since 0.0.3-SNAPSHOT
  */
-public class IndexPageAction extends ActionSupport {
+public class DetailPageAction extends ActionSupport {
 
 	/**
 	 * 
@@ -64,14 +61,14 @@ public class IndexPageAction extends ActionSupport {
 	 * 詳細情報を取得します
 	 * @return 詳細情報
 	 */
-	public org.mmpp.impruth.action.models.IndexDetailElement getDetail() {
+	public org.mmpp.impruth.action.models.DetailPageElement getDetail() {
 		if(getBookService()==null)
 			return null;
 		String isbn = getIsbn();
 		if(isbn==null)
 			return null;
 		Book book = getBookService().find(isbn);
-		org.mmpp.impruth.action.models.IndexDetailElement result = org.mmpp.impruth.action.models.IndexDetailElement.valueOf(book);
+		org.mmpp.impruth.action.models.DetailPageElement result = org.mmpp.impruth.action.models.DetailPageElement.valueOf(book);
 		return result;
 	}
 

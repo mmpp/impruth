@@ -8,11 +8,11 @@ import org.junit.Test;
 import org.mmpp.impruth.service.BookService;
 import org.mmpp.impruth.service.model.Book;
 
-public class IndexPageActionTest {
+public class DetailPageActionTest {
 
 	@Test
 	public void testDetailTitle() throws Exception {
-		IndexPageAction action = new IndexPageAction();
+		DetailPageAction action = new DetailPageAction();
 		action.setIsbn("97844584");
 		action.setBookService(new BookService() {
 			@Override public List<Book> select(int pageNo, int pageView) {	return null; }
