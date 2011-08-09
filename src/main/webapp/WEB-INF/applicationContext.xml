@@ -94,10 +94,11 @@
 	    <bean id="scanBarcodeJsonAction" scope="prototype" class="org.mmpp.impruth.action.ScanBarcodeJsonAction">
 	    	<property name="barcodeService" ref="barcodeService" />
 	    </bean>
-
-	<bean id="spIndexPageAction" scope="prototype" class="org.mmpp.impruth.action.IndexPageAction">
-    	<property name="releaseService" ref="releaseService" />
-    </bean>
+		<!-- 書籍詳細情報表示アクション -->
+		<bean id="spIndexPageAction" scope="prototype" class="org.mmpp.impruth.action.IndexPageAction">
+	    	<property name="bookService" ref="bookService" />
+	    </bean>
+	    
 	<bean name="hopeService" class="org.mmpp.impruth.service.HopeServiceImpl">
 		<property name="mediaService" ref="mediaService" />
 	</bean>

@@ -7,19 +7,40 @@ import org.mmpp.impruth.service.model.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 書籍情報サービス実装クラス
+ * @author mmpp wataru
+ */
 public class BookServiceImpl implements BookService{
 	/**
 	 * ログ
 	 */
 	protected static Logger log = LoggerFactory.getLogger( BookServiceImpl.class ); 
+	/**
+	 * リリース情報サービス
+	 */
 	private ReleaseService _releaseService=null;
+	/**
+	 * リリース情報サービスを格納します
+	 * @param releaseService リリース情報サービス
+	 */
 	public void setReleaseService(ReleaseService releaseService){
 		_releaseService = releaseService;
 	}
+	/**
+	 * リリース情報サービスを取得します
+	 * @return リリース情報サービス
+	 */
 	public ReleaseService getReleaseService(){
 		return _releaseService;
 	}
+	/**
+	 * 書籍格納総数を格納する変数
+	 */
 	private int _totalCount ;
+	/**
+	 * 取得結果格納変数
+	 */
 	private List<Book> _select =null ;
 	@Override
 	public List<Book> select(int pageNo, int pageView) {
@@ -43,6 +64,14 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public int getTotalCount() {
 		return _totalCount;
+	}
+	@Override
+	public Book find(String isbn) {
+		ReleaseInformation result = getReleaseService().find(isbn);
+		if(result==null)
+			return null;
+		
+		return Book.valueOf(result);
 	}
 
 }

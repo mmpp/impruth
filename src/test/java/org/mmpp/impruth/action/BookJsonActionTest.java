@@ -110,6 +110,10 @@ public class BookJsonActionTest {
 		public int getTotalCount() {
 			return 28;
 		}
+		@Override
+		public Book find(String isbn) {
+			return null;
+		}
 		
 	}
 }

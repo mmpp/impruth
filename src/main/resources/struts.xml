@@ -51,8 +51,7 @@
 		</action>
 
 		<action name="detail" class="spIndexPageAction" >
-			<result name="detail" >/WEB-INF/pages/detail.jsp</result>
-			<result >/WEB-INF/pages/index.jsp</result>
+			<result >/WEB-INF/pages/detail.jsp</result>
 		</action>
 
 	</package>

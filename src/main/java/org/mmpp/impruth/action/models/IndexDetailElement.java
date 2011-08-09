@@ -1,7 +1,13 @@
 package org.mmpp.impruth.action.models;
 
 import org.mmpp.impruth.model.ReleaseInformation;
+import org.mmpp.impruth.service.model.Book;
 
+/**
+ * 書籍詳細情報画面の表示要素
+ * @author mmpp wataru
+ *
+ */
 public class IndexDetailElement {
 
 	private String _title;
@@ -39,12 +45,12 @@ public class IndexDetailElement {
 	public void setImageUrl(String imageUrl) {
 		this._imageUrl = imageUrl;
 	}
-	public static IndexDetailElement valueOf(ReleaseInformation releaseInformation) {
+	public static IndexDetailElement valueOf(Book book) {
 		IndexDetailElement indexDetailElement = new IndexDetailElement();
-		indexDetailElement.setTitle(releaseInformation.getTitle());
-		indexDetailElement.setAuthor(releaseInformation.getAuthor());
-		indexDetailElement.setBarcode(releaseInformation.getBarcode());
-		indexDetailElement.setImageUrl(releaseInformation.getAmazonImage());
+		indexDetailElement.setTitle(book.getTitle());
+		indexDetailElement.setAuthor(book.getAuthor());
+		indexDetailElement.setBarcode(book.getBarcode());
+		indexDetailElement.setImageUrl(book.getImageUrl());
 		return indexDetailElement;
 	}
 

@@ -23,5 +23,12 @@ public interface BookService {
 	 * @return 書籍件数
 	 */
 	public int getTotalCount();
+
+	/**
+	 * 書籍情報を取得します
+	 * @param isbn バーコード
+	 * @return 書籍情報
+	 */
+	public Book find(String isbn);
 	
 }
