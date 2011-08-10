@@ -20,7 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author mmpp wataru
  * @since 0.0.3-SNAPSHOT
  */
-public class OwnListPageAction extends ActionSupport implements LoginAccessable,OwnBookServiceAware{
+public class OwnListPageAction extends ActionSupport implements LoginAccessable{
 
 	/**
 	 * 
@@ -39,11 +39,33 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	 * 表示ページデータ件数
 	 */
 	private int _pageCount = DEFAULT_PAGE_COUNT;
+	/**
+	 * 画像一覧ページで表示します
+	 */
+	private final String SUCCESS_IMAGE_LIST = "imagelist";
+	/**
+	 * 蔵書情報サービス格納変数
+	 */
+	private OwnBookService _ownBookService;
+
+	/**
+	 * ユーザ情報サービス格納変数
+	 */
+	private UserService _userService;
 
 	/**
 	 * ページの表示タイプ
 	 */
 	private OwnListPageType _showType=OwnListPageType.LIST;
+	/**
+	 * 総蔵書件数
+	 */
+	private int _totalBookCount=-1;
+	/**
+	 * 最大表示ページ数
+	 */
+	private int _pageMaxNumber=-1;
+
 	/**
 	 * ログインユーザID格納変数
 	 */
@@ -88,10 +110,6 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	public void setPageNumber(int pageNumber){
 		_pageNumber = pageNumber;
 	}
-	/**
-	 * 画像一覧ページで表示します
-	 */
-	private final String SUCCESS_IMAGE_LIST = "imagelist";
 	
 	@Override
 	public String execute() throws Exception{
@@ -145,28 +163,35 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	private List<OwnBookListElement> getOwnBookListElements(User user) {
 		return getOwnBookListElements(user.getBooks());
 	}
-	private OwnBookService _ownBookService;
+
+	/**
+	 * 蔵書情報サービスを取得します
+	 * @return 蔵書情報サービス
+	 */
 	private OwnBookService getOwnBookService() {
 		return _ownBookService;
 	}
+	
+	/**
+	 * 蔵書情報サービスを取得します
+	 * @param ownBookService 蔵書情報サービス
+	 */
 	public void setOwnBookService(OwnBookService ownBookService) {
 		_ownBookService = ownBookService;
 	}
-	private ReleaseService _releaseService;
-
-	private UserService _userService;
+	/**
+	 * ユーザ情報サービスを格納します
+	 * @param userService ユーザ情報サービス
+	 */
 	public void setUserService(UserService userService){
 		_userService = userService;
 	}
+	/**
+	 * ユーザ情報サービスを取得します
+	 * @return ユーザ情報サービス
+	 */
 	private UserService getUserService(){
 		return _userService;
-	}
-
-	public void setReleaseService(ReleaseService releaseService) {
-		this._releaseService = releaseService;
-	}
-	public ReleaseService getReleaseService() {
-		return _releaseService;
 	}
 
 	/**
@@ -182,14 +207,14 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	}
 	/**
 	 * 編集書籍情報を格納します
-	 * @param ownBook
+	 * @param ownBook 編集書籍情報
 	 */
 	public void setOwnBook(OwnBookListElement ownBook){
 		_ownBook = ownBook;
 	}
 	/**
 	 * [メニュー]-[新規登録]ボタン処理
-	 * @return
+	 * @return 次画面
 	 */
 	public String onClickAddOwnBook(){
 		_ownBook = new OwnBookListElement();
@@ -197,7 +222,7 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	}
 	/**
 	 * 新規登録ボタン処理
-	 * @return
+	 * @return 次画面
 	 */
 	public String onClickRegist(){
 		// 新規登録処理
@@ -206,7 +231,7 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	}
 	/**
 	 * [メニュー]-[画像一覧]ボタン処理
-	 * @return
+	 * @return 次画面
 	 */
 	public String onClickChangeImageList(){
 		setShowType(OwnListPageType.IMAGE);
@@ -215,7 +240,7 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 
 	/**
 	 * [メニュー]-[表一覧]ボタン処理
-	 * @return
+	 * @return 次画面
 	 */
 	public String onClickChangeList(){
 		setShowType(OwnListPageType.LIST);
@@ -228,20 +253,11 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	 */
 	public int getTotalBookCount(){
 		if(_totalBookCount<0){
-//			_totalBookCount = getOwnBookService().findCountBook(getUser());
-			_totalBookCount = getUser().getBooks().size();
+			_totalBookCount = getOwnBookService().findCountBook(getUser());
 		}
 		
 		return _totalBookCount;
 	}
-	/**
-	 * 総蔵書件数
-	 */
-	private int _totalBookCount=-1;
-	/**
-	 * 最大表示ページ数
-	 */
-	private int _pageMaxNumber=-1;
 	/**
 	 * 最大表示ページ番号を取得する
 	 * @return 最大表示ページ番号
@@ -257,7 +273,7 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	}
 	/**
 	 * ページ戻りボタンクリック処理
-	 * @return 結果
+	 * @return 次画面
 	 */
 	public String onClickPrePage(){
 		if(_pageNumber>0)
@@ -266,7 +282,7 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable,
 	}
 	/**
 	 * ページ送りボタンクリック処理
-	 * @return 結果
+	 * @return 次画面
 	 */
 	public String onClickNextPage(){
 		if(_pageNumber<=getPageMaxNumber())

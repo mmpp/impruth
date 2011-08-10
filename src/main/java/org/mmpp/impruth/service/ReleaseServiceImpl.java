@@ -15,23 +15,11 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
  * @author kou
  *
  */
-public class ReleaseServiceImpl implements ReleaseService,HibernateTemplateWare {
+public class ReleaseServiceImpl extends AbstractHibernateService implements ReleaseService,HibernateTemplateWare {
 
-	/**
-	 * 内部格納HibernateTemplateクラス
-	 */
-	private HibernateTemplate _hibernateTemplate;
-	@Override
-	public void setHibernateTemplate(HibernateTemplate hibernateTemplate){
-		this._hibernateTemplate = hibernateTemplate;
-	}
-	public HibernateTemplate getHibernateTemplate(){
-		return _hibernateTemplate;
-	}
 
 	@Override
 	public ReleaseInformation find(String barcode) {
-//		return findSql("select r from ReleaseInformation r where barcode = ?",barcode);
 		return executeCriteria(Restrictions.eq("barcode", barcode));
 	}
 	@Override
@@ -54,20 +42,6 @@ public class ReleaseServiceImpl implements ReleaseService,HibernateTemplateWare 
 
 	}
 
-	/**
-	 * DB接続セッション格納変数
-	 */
-	private org.hibernate.Session _session ;
-	/**
-	 * DB接続セッションを取得します
-	 * @return
-	 */
-	private org.hibernate.Session getSession(){
-		if(!(_session!=null&&_session.isOpen())){
-			_session = getHibernateTemplate().getSessionFactory().openSession();
-		}
-		return _session;
-	}
 	/**
 	 * 書籍情報を取得します
 	 */

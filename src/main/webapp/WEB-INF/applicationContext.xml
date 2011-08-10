@@ -82,7 +82,6 @@
 		<!-- 所用書籍情報管理ページ -->    
    		<bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
     		<property name="ownBookService" ref="ownBookService" />
-    		<property name="releaseService" ref="releaseService" />
 			<property name="userService" ref="userService" />
 		</bean>
 	    <!-- 書籍情報JSONアクション -->

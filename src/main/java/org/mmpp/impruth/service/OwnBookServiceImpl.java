@@ -3,22 +3,19 @@ package org.mmpp.impruth.service;
 import java.util.Set;
 
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.mmpp.impruth.model.OwnBook;
 import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.model.User;
-import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWare {
-
-    private HibernateTemplate _hibernateTemplate;
-
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate){
-    	this._hibernateTemplate = hibernateTemplate;
-    }
-    public HibernateTemplate getHibernateTemplate(){
-    	return _hibernateTemplate;
-    }
+/**
+ * 蔵書サービス実装クラス
+ * @author mmpp wataru
+ *
+ */
+public class OwnBookServiceImpl extends AbstractHibernateService implements OwnBookService , HibernateTemplateWare {
 
     private final String SELECT_OWNBOOKS = "select o FROM OwnBook o,ReleaseInformation r where o.releaseId = r.id and o.userId = ? order by r.barcode ";
 	@Override
@@ -51,24 +48,9 @@ public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWar
 	}
 	@Override
 	public OwnBook registOwnBook(User user, String barcode) {
-
-//		String slectSql = "select o FROM OwnBook o ,ReleaseInformation r where o.releaseId = r.id and o.userId = ? and r.barcode = ?";
-//		java.util.List<OwnBook> results = getHibernateTemplate().find(slectSql,new Object[]{user.getId(),barcode});
-//		if(results.size()!=0)
-//			return null;
-//		HibernateTemplate hibernateTemplate = getHibernateTemplate();
-//		User tmpUser = (User)(hibernateTemplate.find("select u FROM User u where id = ?",user.getId())).get(0);
-//		ReleaseInformation tmpReleaseInformation = (ReleaseInformation)(hibernateTemplate.find("select r FROM ReleaseInformation r where barcode = ? ",barcode)).get(0);
-		
-//		OwnBook ownBook = new OwnBook(tmpUser.getId(),tmpReleaseInformation.getId());
-//		hibernateTemplate.save(ownBook);
-
-//		results = hibernateTemplate.find(slectSql,new Object[]{user.getId(),barcode});
-//		if(results.size()!=1)
-//			return null;
-//			
-//		return (OwnBook) results.get(0);
-		ReleaseInformation tmpReleaseInformation = (ReleaseInformation)(getHibernateTemplate().find("select r FROM ReleaseInformation r where barcode = ? ",barcode)).get(0);
+		Criteria criteria = getSession().createCriteria(ReleaseInformation.class);
+		criteria.add(Restrictions.eq("barcode", barcode));
+		ReleaseInformation tmpReleaseInformation = (ReleaseInformation)criteria.uniqueResult();
 		OwnBook bookOwn = new OwnBook(user.getId(),tmpReleaseInformation.getId());
 		// メモリ上でのリレーション追加 TODO 本来は不要
 		user.getBooks().add(tmpReleaseInformation);
@@ -78,7 +60,14 @@ public class OwnBookServiceImpl implements OwnBookService , HibernateTemplateWar
 	}
 	@Override
 	public int findCountBook(User user) {
-		return DataAccessUtils.intResult( getHibernateTemplate().find("select count(*) FROM OwnBook o  where userId = "+user.getId()));
+		// http://docs.jboss.org/hibernate/core/3.5/reference/ja-JP/html/querycriteria.html
+		// http://ryoji.sakura.ne.jp/mt/archives/2005/05/hibernate_crite_1.html
+		// http://www.syboos.jp/hibernate/doc/20080821182623833.html
+	    Criteria crit = getSession().createCriteria(OwnBook.class);
+	    crit.add(Restrictions.eq("userId",user.getId()));
+
+	    Integer rowCount = (Integer)crit.setProjection(Projections.rowCount()).uniqueResult();
+		return rowCount.intValue();
 	}
 
 	@SuppressWarnings("unchecked")
