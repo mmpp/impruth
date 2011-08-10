@@ -1,5 +1,7 @@
 package org.mmpp.impruth.service;
 
+import java.util.List;
+
 import org.mmpp.impruth.model.ReleaseInformation;
 
 /**
@@ -9,9 +11,9 @@ import org.mmpp.impruth.model.ReleaseInformation;
  */
 public interface ReleaseService {
 	 /**
-	  * 情報を検索する
-	  * @param barcode
-	  * @return
+	  * リリース情報を取得します
+	  * @param barcode バーコード
+	  * @return リリース情報
 	  */
 	public ReleaseInformation find(String barcode);
 	 /**
@@ -20,9 +22,9 @@ public interface ReleaseService {
 	  */
 	public java.util.List<ReleaseInformation> findAll();
 	/**
-	 * 
-	 * @param releaseId
-	 * @return
+	 * リリース情報を取得します
+	 * @param releaseId リリース管理番号
+	 * @return リリース情報
 	 */
 	public ReleaseInformation findReleaseInformationById(int releaseId);
 
@@ -36,4 +38,11 @@ public interface ReleaseService {
 	 * @return 情報総数
 	 */
 	public int getTotalCount();
+	/**
+	 * リリース情報をページに表示して取得します
+	 * @param pageView 表示件数
+	 * @param pageNo ページ番号
+	 * @return リリース情報一覧
+	 */
+	public List<ReleaseInformation> find(int pageView, int pageNo);
 }

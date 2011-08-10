@@ -35,26 +35,14 @@ public class BookServiceImpl implements BookService{
 	public ReleaseService getReleaseService(){
 		return _releaseService;
 	}
-	/**
-	 * 取得結果格納変数
-	 */
-	private List<Book> _select =null ;
 	@Override
 	public List<Book> select(int pageNo, int pageView) {
-		_select = new java.util.LinkedList<Book>();
-		List<ReleaseInformation> results = getReleaseService().findAll();
-		int firstNum = (pageNo-1) * pageView;
-		int lastNum = pageNo * pageView ;
-		log.info(firstNum+" - " + lastNum);
-		if(lastNum>results.size()){
-			lastNum = results.size();
+		List<ReleaseInformation> results = getReleaseService().find(pageView,pageNo);
+		java.util.List<Book>  select = new java.util.LinkedList<Book>();
+		for(ReleaseInformation shelfObject:results){
+			select.add(Book.valueOf(shelfObject));
 		}
-		
-		for(int i = firstNum ; i < lastNum ; i ++){
-			ReleaseInformation shelfObject = results.get(i);
-			_select.add(Book.valueOf(shelfObject));
-		}
-		return _select;
+		return select;
 	}
 
 	@Override

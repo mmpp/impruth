@@ -1,5 +1,6 @@
 package org.mmpp.impruth.service;
 
+import org.hibernate.Criteria;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
@@ -40,5 +41,13 @@ public class AbstractHibernateService {
 			_session = getHibernateTemplate().getSessionFactory().openSession();
 		}
 		return _session;
+	}
+	
+	protected Criteria addPagingCriteria(Criteria criteria, int pageView, int pageNumber){
+		int firstCount = (pageNumber-1)*pageView;
+
+		criteria.setMaxResults(pageView);
+		criteria.setFirstResult(firstCount);
+		return criteria;
 	}
 }

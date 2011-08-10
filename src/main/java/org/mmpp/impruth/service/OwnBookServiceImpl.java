@@ -17,33 +17,20 @@ import org.mmpp.impruth.model.User;
  */
 public class OwnBookServiceImpl extends AbstractHibernateService implements OwnBookService , HibernateTemplateWare {
 
-    private final String SELECT_OWNBOOKS = "select o FROM OwnBook o,ReleaseInformation r where o.releaseId = r.id and o.userId = ? order by r.barcode ";
+	@SuppressWarnings("unchecked")
 	@Override
-	public Set<OwnBook> findOwnBooksByUser(User user) {
-		java.util.List<OwnBook> results =  findUserBooks(user);
-		java.util.Set<OwnBook> ownBooks = new java.util.HashSet<OwnBook>();
-		for(OwnBook ownBook : results){
-			ownBooks.add(ownBook);
-		}
-		return ownBooks;
+	public java.util.List<OwnBook> findOwnBooksByUser(User user) {
+	    Criteria crit = getSession().createCriteria(OwnBook.class);
+	    crit.add(Restrictions.eq("userId",user.getId()));
+		return (java.util.List<OwnBook>)crit.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Set<OwnBook> findOwnBooksByUser(User user, int pageCount, int pageNumber) {
-		java.util.List<OwnBook> results =  findUserBooks(user);
-		java.util.Set<OwnBook> ownBooks = new java.util.HashSet<OwnBook>();
-		int firstCount = (pageNumber-1)*pageCount;
-		int lastCount = pageNumber*pageCount;
-		for(OwnBook ownBook : results){
-			int i = results.indexOf(ownBook);
-			if(firstCount>i)
-				continue;
-			if(lastCount<=i)
-				continue;
-
-			ownBooks.add(ownBook);
-		}
-		return ownBooks;
+	public java.util.List<OwnBook> findOwnBooksByUser(User user, int pageView, int pageNumber) {
+	    Criteria crit = getSession().createCriteria(OwnBook.class);
+	    crit.add(Restrictions.eq("userId",user.getId()));
+		return (java.util.List<OwnBook>)addPagingCriteria(crit,pageView,pageNumber).list();
 
 	}
 	@Override
@@ -70,8 +57,4 @@ public class OwnBookServiceImpl extends AbstractHibernateService implements OwnB
 		return rowCount.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
-	private java.util.List<OwnBook>  findUserBooks(User user){ 
-		return getHibernateTemplate().find(SELECT_OWNBOOKS,user.getId());
-	}
 }

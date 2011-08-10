@@ -42,20 +42,30 @@ public class ReleaseServiceImpl extends AbstractHibernateService implements Rele
 
 	}
 
-	/**
-	 * 書籍情報を取得します
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ReleaseInformation> findAll() {
+		return getFindAllCriteria().list();
+	}
+	/**
+	 * 全件取得のCriteriaを取得します
+	 * @return Criteria
+	 */
+	private Criteria getFindAllCriteria(){
 		Criteria criteria = getSession().createCriteria(ReleaseInformation.class);
 		criteria.addOrder(Order.asc("barcode"));	
-		return criteria.list();
+		return criteria;
 	}
 	@Override
 	public int getTotalCount() {
 	    Criteria crit = getSession().createCriteria(ReleaseInformation.class);
 	    Integer rowCount = (Integer)crit.setProjection(Projections.rowCount()).uniqueResult();
 		return rowCount.intValue();
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReleaseInformation> find(int pageView, int pageNo) {
+		Criteria criteria = getFindAllCriteria();
+		return addPagingCriteria(criteria, pageView, pageNo).list();
 	}
 }
