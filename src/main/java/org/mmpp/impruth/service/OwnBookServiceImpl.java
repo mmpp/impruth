@@ -1,9 +1,7 @@
 package org.mmpp.impruth.service;
 
-import java.util.Set;
-
-
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.mmpp.impruth.model.OwnBook;
@@ -20,17 +18,17 @@ public class OwnBookServiceImpl extends AbstractHibernateService implements OwnB
 	@SuppressWarnings("unchecked")
 	@Override
 	public java.util.List<OwnBook> findOwnBooksByUser(User user) {
-	    Criteria crit = getSession().createCriteria(OwnBook.class);
-	    crit.add(Restrictions.eq("userId",user.getId()));
-		return (java.util.List<OwnBook>)crit.list();
+		Criteria criteria = getSession().createCriteria(OwnBook.class);
+		criteria.add(Restrictions.eq("userId",user.getId()));
+		return (java.util.List<OwnBook>)criteria.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public java.util.List<OwnBook> findOwnBooksByUser(User user, int pageView, int pageNumber) {
-	    Criteria crit = getSession().createCriteria(OwnBook.class);
-	    crit.add(Restrictions.eq("userId",user.getId()));
-		return (java.util.List<OwnBook>)addPagingCriteria(crit,pageView,pageNumber).list();
+		Criteria criteria = getSession().createCriteria(OwnBook.class);
+		criteria.add(Restrictions.eq("userId",user.getId()));
+		return (java.util.List<OwnBook>)addPagingCriteria(criteria,pageView,pageNumber).list();
 
 	}
 	@Override

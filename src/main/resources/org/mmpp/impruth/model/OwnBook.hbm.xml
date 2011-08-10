@@ -10,7 +10,7 @@
 		<key-property name="releaseId" column="release_id" type="int" />
 	</composite-id>
 	<!--  many-to-one name="user" class="org.mmpp.simplelogin.model.User" column="user_id" insert="false" update="false" lazy="false" / -->
-	<!-- many-to-one name="release" class="org.mmpp.simplelogin.model.ReleaseInformation" column="release_id"  foreign-key="id"/ -->
+	<many-to-one name="release" class="org.mmpp.impruth.model.ReleaseInformation" column="release_id"  foreign-key="id" insert="false" update="false"/>
 	<property name="releaseId" column="release_id" type="int"  insert="false" update="false"/>
   </class>
 </hibernate-mapping>

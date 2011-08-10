@@ -42,7 +42,13 @@ public class AbstractHibernateService {
 		}
 		return _session;
 	}
-	
+	/**
+	 * Criteriaにページング機能を追加します
+	 * @param criteria Criteria
+	 * @param pageView ページ表示件数
+	 * @param pageNumber ページ番号
+	 * @return Criteria
+	 */
 	protected Criteria addPagingCriteria(Criteria criteria, int pageView, int pageNumber){
 		int firstCount = (pageNumber-1)*pageView;
 
@@ -50,4 +56,5 @@ public class AbstractHibernateService {
 		criteria.setFirstResult(firstCount);
 		return criteria;
 	}
+	
 }

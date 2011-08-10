@@ -84,5 +84,13 @@ public class OwnBookListElement {
 		ownBookListElement.setImageUrl(amazonImage);
 		return ownBookListElement;
 	}
+	public static OwnBookListElement valueOf(OwnBook ownBook) {
+		ReleaseInformation release = ownBook.getRelease();
+		return valueOf(release.getBarcode(),
+				release.getTitle(),
+				release.getAuthor(),
+				release.getPublisher(),
+				release.getAmazonImage());
+	}
 	
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 import org.mmpp.impruth.action.models.OwnBookListElement;
 import org.mmpp.impruth.action.models.OwnListPageType;
 import org.mmpp.impruth.action.service.LoginAccessable;
+import org.mmpp.impruth.model.OwnBook;
 import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.model.User;
 import org.mmpp.impruth.service.OwnBookService;
@@ -153,17 +154,12 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable{
 	 * @return 表示蔵書情報一覧
 	 */
 	public java.util.List<OwnBookListElement> getOwnBooks(){
-		return getOwnBookListElements(getUser());
+		java.util.List<OwnBookListElement> results = new java.util.LinkedList<OwnBookListElement>();
+		for(OwnBook ownBook : getOwnBookService().findOwnBooksByUser(getUser(), getPageCount(), getPageNumber())){
+			results.add(OwnBookListElement.valueOf(ownBook));
+		}
+		return results;
 	}
-	/**
-	 * 表示蔵書情報一覧を取得します
-	 * @param user ログインユーザ
-	 * @return 表示蔵書情報一覧
-	 */
-	private List<OwnBookListElement> getOwnBookListElements(User user) {
-		return getOwnBookListElements(user.getBooks());
-	}
-
 	/**
 	 * 蔵書情報サービスを取得します
 	 * @return 蔵書情報サービス
@@ -290,37 +286,6 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable{
 		return executeNext();
 	}
 	
-	/**
-	 * 表示書籍一覧を変換します
-	 * @param ownBooks 書籍情報DB情報
-	 * @return 表表示書籍一覧
-	 */
-	private List<OwnBookListElement> getOwnBookListElements(Set<ReleaseInformation> books) {
-		int pageNumber = getPageNumber();
-		int pageCount = DEFAULT_PAGE_COUNT;
-		
-		int firstCount = (pageNumber-1)*pageCount;
-		int lastCount = pageNumber*pageCount;
-		java.util.List<OwnBookListElement> ownBookListElements = new java.util.LinkedList<OwnBookListElement>();
-		int i =-1;
-		for(ReleaseInformation releaseInformation:books){
-			i++;
-			if(firstCount>i)
-				continue;
-			if(lastCount<=i)
-				continue;
-			ownBookListElements.add(OwnBookListElement.valueOf(releaseInformation));
-		}
-		java.util.Collections.sort( ownBookListElements , new Comparator<OwnBookListElement>() {
-
-			@Override
-			public int compare(OwnBookListElement ownBook1, OwnBookListElement ownBook2) {
-				return ownBook1.getBarcode().compareTo(ownBook2.getBarcode());
-			}
-		});
-			
-		return ownBookListElements;
-	}
 	@Override
 	public void setUserID(String userid) {
 		_userid = userid;
