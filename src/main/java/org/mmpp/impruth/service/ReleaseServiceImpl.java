@@ -6,14 +6,14 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.mmpp.impruth.model.ReleaseInformation;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
  * 書籍リリース情報サービス実装クラス
- * @author kou
- *
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
  */
 public class ReleaseServiceImpl extends AbstractHibernateService implements ReleaseService,HibernateTemplateWare {
 
@@ -51,5 +51,11 @@ public class ReleaseServiceImpl extends AbstractHibernateService implements Rele
 		Criteria criteria = getSession().createCriteria(ReleaseInformation.class);
 		criteria.addOrder(Order.asc("barcode"));	
 		return criteria.list();
+	}
+	@Override
+	public int getTotalCount() {
+	    Criteria crit = getSession().createCriteria(ReleaseInformation.class);
+	    Integer rowCount = (Integer)crit.setProjection(Projections.rowCount()).uniqueResult();
+		return rowCount.intValue();
 	}
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 書籍情報サービス実装クラス
  * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
  */
 public class BookServiceImpl implements BookService{
 	/**
@@ -35,10 +36,6 @@ public class BookServiceImpl implements BookService{
 		return _releaseService;
 	}
 	/**
-	 * 書籍格納総数を格納する変数
-	 */
-	private int _totalCount ;
-	/**
 	 * 取得結果格納変数
 	 */
 	private List<Book> _select =null ;
@@ -46,7 +43,6 @@ public class BookServiceImpl implements BookService{
 	public List<Book> select(int pageNo, int pageView) {
 		_select = new java.util.LinkedList<Book>();
 		List<ReleaseInformation> results = getReleaseService().findAll();
-		_totalCount = results.size();
 		int firstNum = (pageNo-1) * pageView;
 		int lastNum = pageNo * pageView ;
 		log.info(firstNum+" - " + lastNum);
@@ -63,7 +59,7 @@ public class BookServiceImpl implements BookService{
 
 	@Override
 	public int getTotalCount() {
-		return _totalCount;
+		return getReleaseService().getTotalCount();
 	}
 	@Override
 	public Book find(String isbn) {

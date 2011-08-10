@@ -4,8 +4,8 @@ import org.mmpp.impruth.model.ReleaseInformation;
 
 /**
  * リリース情報取得サービス
- * @author kou
- *
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
  */
 public interface ReleaseService {
 	 /**
@@ -31,4 +31,9 @@ public interface ReleaseService {
 	 * @param releaseInformation
 	 */
 	public void save(ReleaseInformation releaseInformation);
+	/**
+	 * 情報総数を取得します
+	 * @return 情報総数
+	 */
+	public int getTotalCount();
 }

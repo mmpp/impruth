@@ -13,7 +13,7 @@ import org.mmpp.impruth.model.User;
 /**
  * 蔵書サービス実装クラス
  * @author mmpp wataru
- *
+ * @since 0.0.3-SNAPSHOT
  */
 public class OwnBookServiceImpl extends AbstractHibernateService implements OwnBookService , HibernateTemplateWare {
 
