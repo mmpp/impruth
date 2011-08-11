@@ -1,17 +1,12 @@
 package org.mmpp.impruth.action;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
 
 import org.mmpp.impruth.action.models.OwnBookListElement;
 import org.mmpp.impruth.action.models.OwnListPageType;
 import org.mmpp.impruth.action.service.LoginAccessable;
 import org.mmpp.impruth.model.OwnBook;
-import org.mmpp.impruth.model.ReleaseInformation;
 import org.mmpp.impruth.model.User;
 import org.mmpp.impruth.service.OwnBookService;
-import org.mmpp.impruth.service.ReleaseService;
 import org.mmpp.impruth.service.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -193,7 +188,7 @@ public class OwnListPageAction extends ActionSupport implements LoginAccessable{
 	/**
 	 * 一時編集書籍情報格納変数
 	 */
-	private OwnBookListElement _ownBook;
+	private OwnBookListElement _ownBook=null;
 	/**
 	 * 編集書籍情報を取得します
 	 * @return
