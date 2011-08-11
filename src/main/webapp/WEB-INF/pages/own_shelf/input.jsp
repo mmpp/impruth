@@ -60,7 +60,6 @@
 			enabledScanButton(true);
 			// 登録は出来ない
 			myEditForm.regist.disabled=true;
-			myEditForm.edit.disabled=true;
 
 		}
 		/**
@@ -102,12 +101,6 @@
 				return false;
 			} 
 		}
-		function onClickEdit(form){
-			form.ownList_ownBook_barcode.disabled=true;
-			form.scan.disabled=true;
-
-		}
-		
 		function enabledScanButton(flag){
 			var scanWaitAnimation = document.getElementById("scanWaitingImg");
 			if(flag){
@@ -118,7 +111,7 @@
 	
 				// 登録ボタンを戻す
 				myEditForm.regist.disabled=false;
-				myEditForm.edit.disabled=false;
+
 				scanWaitAnimation.style.display="none";
 				return ;
 			}
@@ -126,7 +119,6 @@
 			myEditForm.scan.disabled=true;
 			// 登録ボタンを戻す
 			myEditForm.regist.disabled=true;
-			myEditForm.edit.disabled=true;
 
 			// 待ち時間中のイメージ表示 //
 			scanWaitAnimation.style.display="";
@@ -151,6 +143,7 @@
 所有書籍情報 : <s:property value="user.firstName" /><Br>
 <s:form theme="simple">
 <s:submit method="onClickAddOwnBook" value="+ 新規追加"  disabled="disabled"/>
+<s:submit method="onClickChangeImageList" value="□ 画像一覧" disabled="%{showType.toString()=='IMAGE'}"/>
 <s:submit method="onClickChangeList" value="□ 表一覧" />
 </s:form>
 <s:form theme="simple">
@@ -165,7 +158,6 @@
 						<input name="scan" type="button" value="スキャン"  onclick="onClickScanBarcodeButton(this.form,'<s:property value="%{urlBarcodeJson}" />')"/>
 						<img id="scanWaitingImg" src="img/wait.gif" style="display:none;"/>
 						</span><span>
-						<input type="button" id="edit" disabled="disabled" value="内容編集" onclick="onClickEdit(this.form)"/>
 						</span>
 					</td>
 				</tr>

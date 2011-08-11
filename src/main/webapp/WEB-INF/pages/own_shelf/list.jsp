@@ -36,10 +36,9 @@
 			</thead>
 			<tbody>
 				<s:iterator status="list" value="ownBooks" id="ownBooks" >
-				<s:url id="urlList" action="detail" ><s:param name="isbn" value="{barcode}" /></s:url>
 				<tr style='background-color:<s:property value="%{#list.index % 2 ==0 ?'#FFFFFF':'#EEEEEE'}" />; ' >
 					<td><s:property value="barcode"/></td>
-					<td><s:a href="%{urlList}"><s:property value="title"/></s:a></td>
+					<td><s:property value="title"/></td>
 					<td><s:property value="author"/></td>
 					<td><s:property value="publisher"/></td>
 				</tr>
