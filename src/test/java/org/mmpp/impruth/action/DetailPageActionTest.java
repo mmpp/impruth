@@ -28,6 +28,16 @@ public class DetailPageActionTest {
 				book.setTitle("結果");
 				return book;
 			}
+			@Override
+			public List<Book> select(int pageNo, int pageView, String title) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			@Override
+			public int getTotalCount(String title) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
 		});
 		action.execute();
 		assertEquals("結果", action.getDetail().getTitle());

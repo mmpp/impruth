@@ -114,6 +114,16 @@ public class BookJsonActionTest {
 		public Book find(String isbn) {
 			return null;
 		}
+		@Override
+		public List<Book> select(int pageNo, int pageView, String title) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public int getTotalCount(String title) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 		
 	}
 }
