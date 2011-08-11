@@ -1,8 +1,11 @@
 package org.mmpp.impruth.action;
 
+import org.apache.commons.codec.binary.Base64;
 import org.mmpp.impruth.action.models.BookJson;
 import org.mmpp.impruth.service.BookService;
 import org.mmpp.impruth.service.model.Book;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -12,6 +15,10 @@ import com.opensymphony.xwork2.ActionSupport;
  * @since 0.0.3-SNAPSHOT
  */
 public class BookJsonAction extends ActionSupport{
+	/**
+	 * ログ
+	 */
+	protected static Logger log = LoggerFactory.getLogger( BookJsonAction.class ); 
 
 	/**
 	 * 
@@ -30,6 +37,10 @@ public class BookJsonAction extends ActionSupport{
 	 * 書籍情報サービス
 	 */
 	private BookService _bookService=null;
+	/**
+	 * 検索タイトルを格納する変数
+	 */
+	private String _title=null;
 	
 	/**
 	 * 表示ページ番号を取得します
@@ -64,6 +75,9 @@ public class BookJsonAction extends ActionSupport{
 	 * @return 蓄積書籍数 
 	 */
 	public int getTotalCount(){
+		if(getTitle()!=null)
+			return getBookService().getTotalCount(getTitle());
+
 		return getBookService().getTotalCount();
 	}
 	/**
@@ -72,8 +86,14 @@ public class BookJsonAction extends ActionSupport{
 	 */
 	public java.util.List<BookJson> getResults(){
 		java.util.List<BookJson> results = new java.util.LinkedList<BookJson>();
-		
-		for(Book book : getBookService().select(getPageNo(), getPageView()))
+		java.util.List<Book> books;
+		// 検索を行うかの判断
+		if(getTitle()!=null){
+			books = getBookService().select(getPageNo(), getPageView(),getTitle());
+		}else{
+			books = getBookService().select(getPageNo(), getPageView());
+		}
+		for(Book book : books)
 			results.add(BookJson.valueOf(book));
 		return results;
 	}
@@ -90,5 +110,19 @@ public class BookJsonAction extends ActionSupport{
 	 */
 	private BookService getBookService(){
 		return _bookService;
+	}
+	/**
+	 * タイトルで検索します
+	 * @param title タイトル
+	 */
+	public void setTitle(String title){
+		_title = new String(Base64.decodeBase64(title.getBytes()));
+	}
+	/**
+	 * 検索タイトルを取得します
+	 * @return 検索タイトル
+	 */
+	public String getTitle(){
+		return _title;
 	}
 }

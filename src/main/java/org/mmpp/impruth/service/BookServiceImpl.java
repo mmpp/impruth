@@ -38,13 +38,21 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public List<Book> select(int pageNo, int pageView) {
 		List<ReleaseInformation> results = getReleaseService().find(pageView,pageNo);
-		java.util.List<Book>  select = new java.util.LinkedList<Book>();
-		for(ReleaseInformation shelfObject:results){
-			select.add(Book.valueOf(shelfObject));
-		}
-		return select;
+		return castReleaseInformations2Books(results);
 	}
-
+	/**
+	 * 
+	 * @param releaseInformations
+	 * @return
+	 */
+	private List<Book> castReleaseInformations2Books(List<ReleaseInformation> releaseInformations){
+		java.util.List<Book>  books = new java.util.LinkedList<Book>();
+		for(ReleaseInformation shelfObject:releaseInformations){
+			books.add(Book.valueOf(shelfObject));
+		}
+		return books;
+	}
+	
 	@Override
 	public int getTotalCount() {
 		return getReleaseService().getTotalCount();
@@ -56,6 +64,15 @@ public class BookServiceImpl implements BookService{
 			return null;
 		
 		return Book.valueOf(result);
+	}
+	@Override
+	public List<Book> select(int pageNo, int pageView, String title) {
+		List<ReleaseInformation> results = getReleaseService().find(pageView,pageNo,title);
+		return castReleaseInformations2Books(results);
+	}
+	@Override
+	public int getTotalCount(String title) {
+		return getReleaseService().getTotalCount(title);
 	}
 
 }

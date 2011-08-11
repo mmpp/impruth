@@ -68,4 +68,18 @@ public class ReleaseServiceImpl extends AbstractHibernateService implements Rele
 		Criteria criteria = getFindAllCriteria();
 		return addPagingCriteria(criteria, pageView, pageNo).list();
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReleaseInformation> find(int pageView, int pageNo, String title) {
+		Criteria criteria = getFindAllCriteria();
+		criteria.add( Restrictions.like("title", "%"+title+"%") );
+		return addPagingCriteria(criteria, pageView, pageNo).list();
+	}
+	@Override
+	public int getTotalCount(String title) {
+		Criteria criteria = getSession().createCriteria(ReleaseInformation.class);
+		criteria.add( Restrictions.like("title", "%"+title+"%") );
+		Integer rowCount = (Integer)criteria.setProjection(Projections.rowCount()).uniqueResult();
+		return rowCount.intValue();
+	}
 }

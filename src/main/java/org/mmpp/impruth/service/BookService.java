@@ -1,5 +1,7 @@
 package org.mmpp.impruth.service;
 
+import java.util.List;
+
 import org.mmpp.impruth.service.model.Book;
 
 
@@ -30,5 +32,20 @@ public interface BookService {
 	 * @return 書籍情報
 	 */
 	public Book find(String isbn);
-	
+
+	/**
+	 * 書籍をタイトルで検索します
+	 * @param pageNo ページ番号
+	 * @param pageView ページ件数
+	 * @param title 検索タイトル
+	 * @return 書籍情報
+	 */
+	public List<Book> select(int pageNo, int pageView, String title);
+	/**
+	 * 書籍件数を取得します
+	 * @param title 検索タイトル
+	 * @return 書籍件数
+	 */
+	public int getTotalCount(String title);
+
 }

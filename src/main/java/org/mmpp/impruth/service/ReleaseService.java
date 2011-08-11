@@ -45,4 +45,18 @@ public interface ReleaseService {
 	 * @return リリース情報一覧
 	 */
 	public List<ReleaseInformation> find(int pageView, int pageNo);
+	/**
+	 * リリース情報を検索してページングして表示します
+	 * @param pageView 表示件数
+	 * @param pageNo ページ番号
+	 * @param title 検索タイトル
+	 * @return リリース情報一覧
+	 */
+	public List<ReleaseInformation> find(int pageView, int pageNo, String title);
+	/**
+	 * 情報総数を取得します
+	 * @param title 検索タイトル
+	 * @return 情報総数
+	 */
+	public int getTotalCount(String title);
 }

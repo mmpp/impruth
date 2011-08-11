@@ -7,6 +7,7 @@
 	<title>書庫管理システム ＜蒼のインプルス＞</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
 	<link rel="stylesheet" type="text/css" href="css/bookShelf.css" />
+	<script language="JavaScript" src="js/base64.js"></script>
 
 	<script language="JavaScript">
 		
@@ -42,14 +43,13 @@
 </head>
 <body >
 <h1 >書庫管理システム ＜蒼のインプルス＞</h1>
-<div style="text-align: right;">
- ようこそ○○さん or 
- ログイン
-</div>
 <div>
 <span style="background-color: #fffacd">本棚</span>
-<span style="background-color: #bdb76b"><a href="login.action">蔵書情報ログイン画面 </a>(作成中)<br /></span>
+<span style="background-color: #bdb76b"><a href="login.action">蔵書情報ログイン画面 </a></span>
+<br />
 </div>
+<div style="text-align: right; background-color: #6bbdb7"><form><input type="text" name="query" /><input type=button value="検索" onClick="onClickSearch(this.form.query.value)" />(作成中)</from></div>
+
 <div style="background-color: #deb887">
 
 <div id="pageStatus"></div>
@@ -139,6 +139,8 @@
 			document.getElementById("pageStatusBottom").innerHTML = html;
 		}
 		var bookJsonAction = "book.action";
+		var searchTitle = "";
+		
 		function onClickPrePage(){
 			pageNo--;
 			reloadJson();
@@ -147,8 +149,16 @@
 			pageNo++;
 			reloadJson();
 		}
+		function onClickSearch(query){
+			searchTitle = query;
+			pageNo=1;
+			reloadJson();
+		}
 		function reloadJson(){
-			callJson(bookJsonAction+"?pageNo="+pageNo);
+			var url = bookJsonAction+"?pageNo="+pageNo;
+			if(searchTitle.length!=0)
+				url += "&title="+Base64.encodeURI(searchTitle);
+			callJson(url);
 		}
 		callJson(bookJsonAction);
 
