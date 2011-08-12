@@ -59,6 +59,7 @@
 </div>
 	<script language="JavaScript">
 		var MAX_COLUMN_SIZE = 4;
+		/** 現在表示中のページ番号 */
 		var pageNo ; 
 		function populateJSON(result){
 			// jsonの結果を格納します
@@ -114,6 +115,10 @@
 
 			return html;
 		}
+		/**
+		 * ページング操作用のエレメントを生成します
+		 * @param jsonResultObject JSON通信結果オブジェクト
+		 */
 		function updateStatus(jsonResultObject){
 			// ページングを処理する
 			var html = '';
@@ -127,7 +132,8 @@
 				html+=' 前なし ';
 
 			html+='全'+jsonResultObject.totalCount+'件 '; 
-			html+=pageNo+'ページ'; 
+			html+=createPageElement(pageNo,totalPage); 
+			html+='ページ'; 
 			html+=' / '+totalPage+'ページ'; 
 			html+='( @ '+jsonResultObject.pageView+'件 )'; 
 			if(isNextPage)
@@ -138,20 +144,61 @@
 			document.getElementById("pageStatus").innerHTML = html;
 			document.getElementById("pageStatusBottom").innerHTML = html;
 		}
+		/**
+		 * 現在ページの選択エレメントを作成します
+		 * @param selectedNum 現在ページ
+		 * @param maxNum 最大ページ
+		 */
+		function createPageElement(selectedNum,maxNum){
+			var html = '';
+			html += '<select onchange="onChangePage(this.value)">';
+			for(var i = 1 ; i <= maxNum ; i ++){
+				html += '<option';
+				html += (i==selectedNum)?' selected ':'';
+				html += ' value='+i;				
+				html += ' >';
+				html += i;				
+				html += '</option>';
+			}
+			html += '</select>';
+			return html;
+		}
 		var bookJsonAction = "book.action";
 		var searchTitle = "";
-		
+		/**
+		 * ページ戻りのアクション
+		 */
 		function onClickPrePage(){
 			pageNo--;
 			reloadJson();
 		}
+		/**
+		 * ページ送りのアクション
+		 */
 		function onClickNextPage(){
 			pageNo++;
 			reloadJson();
 		}
+		/**
+		 * 情報検索のアクション
+		 */
 		function onClickSearch(query){
 			searchTitle = query;
-			pageNo=1;
+			jumpPage(1);
+		}
+		/**
+		 * ページを変更します
+		 * @param num 表示ページ番号
+		 */
+		function onChangePage(num){
+			jumpPage(num);
+		}
+		/**
+		 * 指定ページにジャンプします
+		 * @param num 表示ページ番号
+		 */
+		function jumpPage(num){
+			pageNo = num;
 			reloadJson();
 		}
 		function reloadJson(){
@@ -161,9 +208,6 @@
 			callJson(url);
 		}
 		callJson(bookJsonAction);
-
-		
 	</script>
-
 </body>
 </html>
