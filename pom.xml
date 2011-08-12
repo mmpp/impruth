@@ -4,7 +4,7 @@
   </properties>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.mmpp.impruth</groupId>
-  <version>0.0.5</version>
+  <version>0.0.5-SNAPSHOT</version>
   <artifactId>impruth</artifactId>
   <name>impruth website</name>
   <packaging>war</packaging>
