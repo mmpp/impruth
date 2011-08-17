@@ -41,9 +41,9 @@ public class BookServiceImpl implements BookService{
 		return castReleaseInformations2Books(results);
 	}
 	/**
-	 * 
-	 * @param releaseInformations
-	 * @return
+	 * DBマッピングリリース情報を書籍情報に変換します
+	 * @param releaseInformations DBマッピングリリース情報
+	 * @return 書籍情報
 	 */
 	private List<Book> castReleaseInformations2Books(List<ReleaseInformation> releaseInformations){
 		java.util.List<Book>  books = new java.util.LinkedList<Book>();
@@ -66,8 +66,8 @@ public class BookServiceImpl implements BookService{
 		return Book.valueOf(result);
 	}
 	@Override
-	public List<Book> select(int pageNo, int pageView, String title) {
-		List<ReleaseInformation> results = getReleaseService().find(pageView,pageNo,title);
+	public List<Book> select(int pageNo, int pageView, String search) {
+		List<ReleaseInformation> results = getReleaseService().find(pageView,pageNo,search);
 		return castReleaseInformations2Books(results);
 	}
 	@Override

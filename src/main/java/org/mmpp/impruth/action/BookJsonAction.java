@@ -40,7 +40,7 @@ public class BookJsonAction extends ActionSupport{
 	/**
 	 * 検索タイトルを格納する変数
 	 */
-	private String _title=null;
+	private String _search=null;
 	
 	/**
 	 * 表示ページ番号を取得します
@@ -75,8 +75,8 @@ public class BookJsonAction extends ActionSupport{
 	 * @return 蓄積書籍数 
 	 */
 	public int getTotalCount(){
-		if(getTitle()!=null)
-			return getBookService().getTotalCount(getTitle());
+		if(getSearch()!=null)
+			return getBookService().getTotalCount(getSearch());
 
 		return getBookService().getTotalCount();
 	}
@@ -88,8 +88,8 @@ public class BookJsonAction extends ActionSupport{
 		java.util.List<BookJson> results = new java.util.LinkedList<BookJson>();
 		java.util.List<Book> books;
 		// 検索を行うかの判断
-		if(getTitle()!=null){
-			books = getBookService().select(getPageNo(), getPageView(),getTitle());
+		if(getSearch()!=null){
+			books = getBookService().select(getPageNo(), getPageView(),getSearch());
 		}else{
 			books = getBookService().select(getPageNo(), getPageView());
 		}
@@ -112,17 +112,17 @@ public class BookJsonAction extends ActionSupport{
 		return _bookService;
 	}
 	/**
-	 * タイトルで検索します
-	 * @param title タイトル
+	 * 検索情報で検索します
+	 * @param search 検索情報
 	 */
-	public void setTitle(String title){
-		_title = new String(Base64.decodeBase64(title.getBytes()));
+	public void setSearch(String search){
+		_search = new String(Base64.decodeBase64(search.getBytes()));
 	}
 	/**
-	 * 検索タイトルを取得します
-	 * @return 検索タイトル
+	 * 検索情報を取得します
+	 * @return 検索情報
 	 */
-	public String getTitle(){
-		return _title;
+	public String getSearch(){
+		return _search;
 	}
 }

@@ -49,10 +49,10 @@ public interface ReleaseService {
 	 * リリース情報を検索してページングして表示します
 	 * @param pageView 表示件数
 	 * @param pageNo ページ番号
-	 * @param title 検索タイトル
+	 * @param search 書籍情報
 	 * @return リリース情報一覧
 	 */
-	public List<ReleaseInformation> find(int pageView, int pageNo, String title);
+	public List<ReleaseInformation> find(int pageView, int pageNo, String search);
 	/**
 	 * 情報総数を取得します
 	 * @param title 検索タイトル

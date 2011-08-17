@@ -37,10 +37,10 @@ public interface BookService {
 	 * 書籍をタイトルで検索します
 	 * @param pageNo ページ番号
 	 * @param pageView ページ件数
-	 * @param title 検索タイトル
+	 * @param search 検索情報
 	 * @return 書籍情報
 	 */
-	public List<Book> select(int pageNo, int pageView, String title);
+	public List<Book> select(int pageNo, int pageView, String search);
 	/**
 	 * 書籍件数を取得します
 	 * @param title 検索タイトル
