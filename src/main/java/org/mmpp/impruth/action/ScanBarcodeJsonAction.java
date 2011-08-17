@@ -12,8 +12,8 @@ import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * 指定バーコードの検索を行い、JSON形式で返します.
- * @author mmpp kou
- *
+ * @author mmpp wataru
+ * @since 0.0.3-SNAPSHOT
  */
 public class ScanBarcodeJsonAction extends ActionSupport{
 
@@ -59,16 +59,20 @@ public class ScanBarcodeJsonAction extends ActionSupport{
 	private String _barcode = null;
 	/**
 	 * バーコードを格納します
-	 * @param barcode
+	 * @param barcode バーコード
 	 */
 	public void setBarcode(String barcode){
 		_barcode = barcode;
 	}
+	/**
+	 * バーコードを取得します
+	 * @return バーコード
+	 */
 	private String getBarcode(){
 		return _barcode;
 	}
 	/**
-	 * 結果を格納します
+	 * JSON結果格納変数
 	 */
 	private ScanBarcodeJsonBook _jsonBook = null;
 	/**
