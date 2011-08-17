@@ -80,7 +80,7 @@
     	</bean>
 	
 		<!-- 所用書籍情報管理ページ -->    
-   		<bean id="spOwnListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
+   		<bean id="ownListPageAction" scope="prototype" class="org.mmpp.impruth.action.OwnListPageAction">
     		<property name="ownBookService" ref="ownBookService" />
 			<property name="userService" ref="userService" />
 		</bean>
@@ -95,19 +95,6 @@
 		<!-- 書籍詳細情報表示アクション -->
 		<bean id="detailPageAction" scope="prototype" class="org.mmpp.impruth.action.DetailPageAction">
 	    	<property name="bookService" ref="bookService" />
-	    </bean>
-	    
-	<bean name="hopeService" class="org.mmpp.impruth.service.HopeServiceImpl">
-		<property name="mediaService" ref="mediaService" />
-	</bean>
-	
-	<bean id="spNewPageAction" scope="prototype" class="org.mmpp.impruth.action.NewPageAction">
-    	<property name="mediaService" ref="mediaService" />
-    </bean>
-    
-    <bean id="spHopePageAction" scope="prototype" class="org.mmpp.impruth.action.HopePageAction">
-    	<property name="hopeService" ref="hopeService" />
-    </bean>
-    
+	    </bean>    
 	
 </beans>

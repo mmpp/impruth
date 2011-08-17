@@ -27,29 +27,6 @@
 			</result>
 		</action>
 		
-		<action name="delete" class="spDeletePageAction" >
-			<result type="redirectAction">list</result>
-		</action>
-		<action name="new" class="spNewPageAction" >
-			<result name="input" >/WEB-INF/pages/new.jsp</result>
-			<result type="redirectAction">
-				<param name="actionName">detail</param>
-				<param name="id">%{currentId}</param>
-			</result>
-		</action>
-
-		<action name="hope" class="spHopePageAction" >
-			<result name="hope_add">/WEB-INF/pages/hope_new.jsp</result>
-			<result name="hope">/WEB-INF/pages/hope.jsp</result>
-			<result name="shelf_list" type="redirectAction">shelf</result>
-			<result >/WEB-INF/pages/hope.jsp</result>
-		</action>
-
-		<action name="shelf" class="org.mmpp.impruth.action.ShelfPageAction" >
-			<result name="hope_list" type="redirectAction">hope</result>
-			<result >/WEB-INF/pages/shelf/list.jsp</result>
-		</action>
-
 		<action name="detail" class="detailPageAction" >
 			<result >/WEB-INF/pages/detail.jsp</result>
 		</action>
@@ -65,7 +42,7 @@
      </action>
   </package>
   
-    <package name="org.mmpp.simplelogin" namespace="/" extends="struts-default">
+    <package name="org.mmpp.impruth.login" namespace="/" extends="struts-default">
     	<action name="login" class="loginPageAction" >
     		<result name="input">/WEB-INF/pages/login.jsp</result>
 			<result type="redirectAction">ownList</result>
@@ -83,7 +60,7 @@
     	<global-results>
     		<result name="login" type="redirectAction">login</result>
     	</global-results>
-    	<action name="ownList" class="spOwnListPageAction" >
+    	<action name="ownList" class="ownListPageAction" >
 			<result name="input">/WEB-INF/pages/own_shelf/input.jsp</result>
 			<result name="imagelist">/WEB-INF/pages/own_shelf/imagelist.jsp</result>
 			<result >/WEB-INF/pages/own_shelf/list.jsp</result>
